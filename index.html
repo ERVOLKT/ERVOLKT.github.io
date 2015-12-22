@@ -1,10 +1,324 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>ERVOLKT on github</title>
+    <title>OL2 switch and BS template</title>
+      <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+   
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="OSMBuildingsGL.css" />
+    <link rel="stylesheet" href="GLMap/GLMap.css"/>
+    
+    <script src="jquery/jquery-2.1.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="OpenLayers-2.13.1/OpenLayers.js"></script> 
+    <script src="OSMBuildings-OpenLayers.debug.js"></script>
+    <script src="GLMap/GLMap.debug.js"></script>   
+    <script src="OSMBuildings/OSMBuildings-GLMap.debug.js"></script>
+    <!-- Additional GeoJSON Data -->
+    <script src="bugabuildings.js"></script>
+       
+    <style>
+       
+     #glmap {
+      width: 100%;           
+      height: 200px;
+ /*     position:absolute;*/
+      left:10%;
+      float:left;
+    }
+    
+    #olmap {
+      width: 35%;           
+      height: 35%;
+  /*    position:absolute;*/
+      left: 60%;
+      float:left;
+    }
+    
+    .olControlAttribution {
+        bottom: 5px !important;
+        font-size: 11px;
+      } 
+
+    .olControlLayerSwitcher {
+      top: 5px !important;
+    }
+    .jumbotron {
+    padding-bottom: 8px;
+    }
+    </style>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js does not work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+/*habe ganzes Javasctipt ausgewechselt. 
+ Aber wo ist jetzt die olmap? hat das wieder mit der Reihenfolge und inner/außerhalb von document.ready zu tun?
+ Und wo sind jetzt die Controls ?
+ Müssen die Divs andere Klassen haben?
+ 
+ */
+
+
+
+$( document ).ready(function() {
+   
+var buildingstyle = {roofColor: 'rgba(204, 102, 0, 0.6)', color: 'rgb(190,158,150)'};
+    //++++3D
+
+// SO gehen die COntrols wieder(?) 
+var controlButtons = document.querySelectorAll('.control button');
+
+for (var i = 0; i < controlButtons.length; i++) {
+  controlButtons[i].addEventListener('click', function(e) {
+    var button = this;
+    var parentClassList = button.parentNode.classList;
+    var direction = button.classList.contains('inc') ? 1 : -1;
+    var increment;
+    var property;
+
+    if (parentClassList.contains('tilt')) {
+      property = 'Tilt';
+      increment = direction*10;
+    }
+    if (parentClassList.contains('rotation')) {
+      property = 'Rotation';
+      increment = direction*10;
+    }
+    if (parentClassList.contains('zoom')) {
+      property = 'Zoom';
+      increment = direction*1;
+    }
+     
+    if (parentClassList.contains('bend')) {
+      property = 'Bend';
+      increment = direction*5;
+    }
+    if (property) {
+      glmap['set'+ property](glmap['get'+ property]()+increment);
+    }
+    
+  });
+}
+    $("#glhide").click(function(){
+          $("#olmap").show();
+         $("#glmap").hide();
+        });
+        
+    $("#glshow").click(function(){
+         $("#glmap").show();
+         $("#olmap").hide();
+        });
+
+
+
+   glmap = new GLMap('glmap', {
+    position: { latitude:49.14740, longitude:9.20392 },
+    zoom: 15,
+    rotation: 340,
+    tilt: 40,
+    bend: 20,  //???
+    // disabled: true, // disables user input
+    minZoom: 11,
+    maxZoom: 22,
+    state: true // stores map position/rotation in url
+  });
+
+  //  osmb = {};
+    glosmb = new OSMBuildings({
+    minZoom: 12,
+    maxZoom: 22,
+    // showBackfaces: true, // render front and backsides of polygons. false increases performance, true might be needed for bad geometries
+    attribution: '© 3D <a href="http://osmbuildings.org/copyright/">OSM Buildings</a>'
+  }).addTo(glmap);
+  
+    glosmb.setStyle(buildingstyle);
+    //maybe use older maptiles-fu.:
+    /*
+    osmb.addTileLayer('http://{s}.tiles.mapbox.com/v3/osmbuildings.kbpalbpk/{z}/{x}/{y}.png');
+    */
+  
+     //this is the latest maptiles-fu.:
+     glosmb.addMapTiles(
+ //   'http://{s}.tiles.mapbox.com/v3/osmbuildings.kbpalbpk/{z}/{x}/{y}.png',
+    'https://{s}.tiles.mapbox.com/v3/volker6457.no773m04/{z}/{x}/{y}.png',
+    {
+      attribution: '© Data <a href="http://openstreetmap.org/copyright/">OpenStreetMap</a> · © Map <a href="http://mapbox.com">MapBox</a>'
+    }
+  );
+  
+   glosmb.addGeoJSONTiles(
+    'http://{s}.data.osmbuildings.org/0.2/anonymous/tile/{z}/{x}/{y}.json',
+    {
+  //     buffer: 0, // how many tiles to preload around visible area - not working yet
+    });
+    
+    //ruft natürlich einen events-Fehler bei OL auf, ist aber fürs highlighting praktisch, und evtl. später für Popup-Position und POpup-Inhalte:
+  glmap.on('pointermove', function(e) {
+    var id = glosmb.getTarget(e.x, e.y);
+    if (id) {
+    //    console.log(id);
+      document.body.style.cursor = 'pointer';
+      glosmb.highlight(id, '#BDE693');
+    } else {
+      document.body.style.cursor = 'default';
+      glosmb.highlight(null);
+    }
+  });
+
+
+obj = glosmb.addGeoJSON('geojson/esplanade.geojson', { 
+    "color": 'rgb(243,194,80)'
+    }
+    );
+                                       
+obj = glosmb.addGeoJSON('geojson/insel.geojson', {
+    "color": 'rgb(188,230,73)'
+} );
+
+obj = glosmb.addGeoJSON('geojson/neckar.geojson', {
+    //if (obj.item.id ===  "way/-705") {    //filter this way (?)
+    "color": 'rgb(204,221,221)'
+} );
+/*
+obj = osmb.addGeoJSON('geojson/BUGA.geojson', {
+    "color": 'rgba(88,130,173, 0.5)'
+} );
+
+
+obj = osmb.addGeoJSON('geojson/water.geojson', {} );
+obj.color = {
+              r:13,
+              g:7,
+              b:73
+            };
+
+obj = osmb.addGeoJSON('geojson/grass.geojson', {} );
+obj.color = {
+              r:184,
+              g:211,
+              b:143
+            };
+            
+obj = osmb.addGeoJSON('geojson/weinberge.geojson', {} );
+obj.color = {
+              r:174,
+              g:255,
+              b:133
+            };            
+*/
+    
+//++++2.5D
+ olmap = new OpenLayers.Map('olmap'
+    , 
+            {eventListeners: {
+                move: function(e) {
+                threedz = olmap.getZoom();
+                threedxy = olmap.getCenter();
+                
+                 if (threedz > 16){
+                     console.log("zoom ist "+threedz);
+    //            dswitch('turnon', threedz, threedxy);      
+                }
+                
+                }
+            }
+            }
+            );
+      olmap.addControl(new OpenLayers.Control.LayerSwitcher());
+   
+      olmap.addLayer(new OpenLayers.Layer.OSM("Mapbox_outdoors_volker",
+       ['https://a.tiles.mapbox.com/v3/volker6457.no773m04/${z}/${x}/${y}.png',
+       'https://b.tiles.mapbox.com/v3/volker6457.no773m04/${z}/${x}/${y}.png',
+       'https://c.tiles.mapbox.com/v3/volker6457.no773m04/${z}/${x}/${y}.png'
+       ]
+      ));
+
+    olmap.setCenter(
+      new OpenLayers.LonLat(9.209123253822327, 49.14630295624662)
+      .transform(
+        new OpenLayers.Projection('EPSG:4326'),
+        olmap.getProjectionObject()
+      ), 16);
+// DID IT!!!!!!!!!!!!!!!!!!!!!
+// Das OSMBuildings-Objekt musste umbenannt werden, siehe auch in der osmb-ol-debug-Datei!      
+    olosmb = new olOSMBuildings(olmap).load();
+     olosmb.style(buildingstyle);
+     
+});
+    
+    </script> 
+
+
   </head>
-  <body>	
-  <h1>just a little example</h1>
-  </body>   
+  
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">BUGABUILDINGS</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#glmap">3D Map</a></li>
+            <li><a href="#olmap">2D Map</a></li>
+            <li><a href="#info">Info</a></li>
+            <li><a href="#tour">Tour</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Etc <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container theme-showcase">
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <h3>Hello, world!</h3>
+        <p>This is a template for a simple marketing or informational website. </p>
+        <p><a href="#" class="btn btn-primary btn-sm" role="button">OK &raquo;</a></p>
+      </div>
+      
+      <div id='glmap'>glmap</div>
+      <div class="page-header">
+        <h1>Click to turn on/off</h1>
+      </div>
+      
+      <div id='olmap'>olmap</div>
+      <div class="page-header">
+        <h1>Click to turn on/off</h1>
+      </div>
+      
+      
+
+      <p>
+        <button type="button" class="btn btn-lg btn-warning" id="glhide"  >HIDE GL</button>
+        <button type="button" class="btn btn-lg btn-success" id="glshow">SHOW GL</button>
+      </p>
+    
+
+    </div> <!-- /container -->
+  </body>
 </html>
