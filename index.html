@@ -9,7 +9,6 @@
    
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-  <!--  <link rel="stylesheet" href="OSMBuildingsGL.css" /> -->
     <link rel="stylesheet" href="GLMap/GLMap.css"/>
     
     <script src="jquery/jquery-2.1.1.min.js"></script>
@@ -31,11 +30,12 @@
       float:left;
     }
     
+    /*Achte hierauf sonst könnte die olmap nicht sichtbar sein!*/
     #olmap {
-      width: 35%;           
-      height: 35%;
+      width: 100%;           
+      height: 200px;
   /*    position:absolute;*/
-      left: 60%;
+      left: 10%;
       float:left;
     }
     
@@ -51,29 +51,60 @@
     padding-bottom: 8px;
     }
     </style>
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js does not work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
+   
     <script type="text/javascript">
-/*habe ganzes Javasctipt ausgewechselt. 
- Aber wo ist jetzt die olmap? hat das wieder mit der Reihenfolge und inner/außerhalb von document.ready zu tun?
- Und wo sind jetzt die Controls ?
+/* wo sind jetzt die Controls ? Kann der User übraupt interagieren? und auf Mobile?
  Müssen die Divs andere Klassen haben?
  
  */
 
+var buildingstyle = {roofColor: 'rgba(204, 102, 0, 0.6)', color: 'rgb(190,158,150)'};
+var controlButtons = document.querySelectorAll('.control button');
 
+
+   
 
 $( document ).ready(function() {
+    
+   //++++2.5D
+ olmap = new OpenLayers.Map('olmap'
+    , 
+            {eventListeners: {
+                move: function(e) {
+                threedz = olmap.getZoom();
+                threedxy = olmap.getCenter();
+                
+                 if (threedz > 16){
+                     console.log("zoom ist "+threedz);
+    //            dswitch('turnon', threedz, threedxy);      
+                }
+                
+                }
+            }
+            }
+            );
+      olmap.addControl(new OpenLayers.Control.LayerSwitcher());
    
-var buildingstyle = {roofColor: 'rgba(204, 102, 0, 0.6)', color: 'rgb(190,158,150)'};
+      olmap.addLayer(new OpenLayers.Layer.OSM("Mapbox_outdoors_volker",
+       ['https://a.tiles.mapbox.com/v3/volker6457.no773m04/${z}/${x}/${y}.png',
+       'https://b.tiles.mapbox.com/v3/volker6457.no773m04/${z}/${x}/${y}.png',
+       'https://c.tiles.mapbox.com/v3/volker6457.no773m04/${z}/${x}/${y}.png'
+       ]
+      ));
+
+    olmap.setCenter(
+      new OpenLayers.LonLat(9.209123253822327, 49.14630295624662)
+      .transform(
+        new OpenLayers.Projection('EPSG:4326'),
+        olmap.getProjectionObject()
+      ), 16);
+// Das OSMBuildings-Objekt musste umbenannt werden, siehe auch in der osmb-ol-debug-Datei!      
+    olosmb = new olOSMBuildings(olmap).load();
+     olosmb.style(buildingstyle);
+     
     //++++3D
 
-// SO gehen die COntrols wieder(?) 
-var controlButtons = document.querySelectorAll('.control button');
+// Hierüber werden die Controls aktiviert(?) 
 
 for (var i = 0; i < controlButtons.length; i++) {
   controlButtons[i].addEventListener('click', function(e) {
@@ -130,7 +161,6 @@ for (var i = 0; i < controlButtons.length; i++) {
     state: true // stores map position/rotation in url
   });
 
-  //  osmb = {};
     glosmb = new OSMBuildings({
     minZoom: 12,
     maxZoom: 22,
@@ -139,13 +169,11 @@ for (var i = 0; i < controlButtons.length; i++) {
   }).addTo(glmap);
   
     glosmb.setStyle(buildingstyle);
-    //maybe use older maptiles-fu.:
+    //historic maptiles-method:
     /*
     osmb.addTileLayer('http://{s}.tiles.mapbox.com/v3/osmbuildings.kbpalbpk/{z}/{x}/{y}.png');
     */
-  
-     //this is the latest maptiles-fu.:
-     glosmb.addMapTiles(
+    glosmb.addMapTiles(
  //   'http://{s}.tiles.mapbox.com/v3/osmbuildings.kbpalbpk/{z}/{x}/{y}.png',
     'https://{s}.tiles.mapbox.com/v3/volker6457.no773m04/{z}/{x}/{y}.png',
     {
@@ -159,7 +187,7 @@ for (var i = 0; i < controlButtons.length; i++) {
   //     buffer: 0, // how many tiles to preload around visible area - not working yet
     });
     
-    //ruft natürlich einen events-Fehler bei OL auf, ist aber fürs highlighting praktisch, und evtl. später für Popup-Position und POpup-Inhalte:
+    //ruft  events-Fehler bei OL auf, ist aber für highlighting praktisch, und evtl. später für Popup-Position und POpup-Inhalte:
   glmap.on('pointermove', function(e) {
     var id = glosmb.getTarget(e.x, e.y);
     if (id) {
@@ -214,43 +242,7 @@ obj.color = {
             };            
 */
     
-//++++2.5D
- olmap = new OpenLayers.Map('olmap'
-    , 
-            {eventListeners: {
-                move: function(e) {
-                threedz = olmap.getZoom();
-                threedxy = olmap.getCenter();
-                
-                 if (threedz > 16){
-                     console.log("zoom ist "+threedz);
-    //            dswitch('turnon', threedz, threedxy);      
-                }
-                
-                }
-            }
-            }
-            );
-      olmap.addControl(new OpenLayers.Control.LayerSwitcher());
-   
-      olmap.addLayer(new OpenLayers.Layer.OSM("Mapbox_outdoors_volker",
-       ['https://a.tiles.mapbox.com/v3/volker6457.no773m04/${z}/${x}/${y}.png',
-       'https://b.tiles.mapbox.com/v3/volker6457.no773m04/${z}/${x}/${y}.png',
-       'https://c.tiles.mapbox.com/v3/volker6457.no773m04/${z}/${x}/${y}.png'
-       ]
-      ));
 
-    olmap.setCenter(
-      new OpenLayers.LonLat(9.209123253822327, 49.14630295624662)
-      .transform(
-        new OpenLayers.Projection('EPSG:4326'),
-        olmap.getProjectionObject()
-      ), 16);
-// DID IT!!!!!!!!!!!!!!!!!!!!!
-// Das OSMBuildings-Objekt musste umbenannt werden, siehe auch in der osmb-ol-debug-Datei!      
-    olosmb = new olOSMBuildings(olmap).load();
-     olosmb.style(buildingstyle);
-     
 });
     
     </script> 
@@ -297,25 +289,18 @@ obj.color = {
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
         <h3>Hello, world!</h3>
-        <p>This is a template for a simple marketing or informational website. </p>
+        <p>This is my webdev playground for the visualisation of the BUGA Heilbronn. It uses  mainly OSMBuildings code. </p>
         <p><a href="#" class="btn btn-primary btn-sm" role="button">OK &raquo;</a></p>
       </div>
       
+      <div class="page-header">
+        <h1>Feel free to click these buttons</h1>
+      </div>
       <div id='glmap'>glmap</div>
-      <div class="page-header">
-        <h1>Click to turn on/off</h1>
-      </div>
-      
       <div id='olmap'>olmap</div>
-      <div class="page-header">
-        <h1>Click to turn on/off</h1>
-      </div>
-      
-      
-
       <p>
-        <button type="button" class="btn btn-lg btn-warning" id="glhide"  >HIDE GL</button>
-        <button type="button" class="btn btn-lg btn-success" id="glshow">SHOW GL</button>
+        <button type="button" class="btn btn-lg btn-warning" id="glhide"  >2d Version</button>
+        <button type="button" class="btn btn-lg btn-success" id="glshow">3d Version</button>
       </p>
     
 
