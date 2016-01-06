@@ -21,22 +21,34 @@
     <script src="bugabuildings.js"></script>
        
     <style>
-       
+     
+    .btn-round {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    }
+
+    .btn-round.btn-sm {
+    width: 34px;
+    height: 34px;
+    }
+
+
      #glmap {
-      width: 100%;           
-      height: 200px;
- /*     position:absolute;*/
+  /*    width: 100%;     */      
+      height: 500px;
+ /*     position:absolute;
       left:10%;
-      float:left;
+      float:left;*/
     }
     
     /*Achte hierauf sonst könnte die olmap nicht sichtbar sein!*/
     #olmap {
-      width: 100%;           
-      height: 200px;
-  /*    position:absolute;*/
+ /*     width: 100%;      */     
+      height: 500px;
+  /*    position:absolute;
       left: 10%;
-      float:left;
+      float:left;   */
     }
     
     .olControlAttribution {
@@ -61,7 +73,15 @@
 var buildingstyle = {roofColor: 'rgba(204, 102, 0, 0.6)', color: 'rgb(190,158,150)'};
 var controlButtons = document.querySelectorAll('.control button');
 
+function glhide(){
+  $("#olmap").show();
+  $("#glmap").hide();
+}
 
+function glshow(){
+  $("#glmap").show();
+  $("#olmap").hide();
+}
    
 
 $( document ).ready(function() {
@@ -137,14 +157,12 @@ for (var i = 0; i < controlButtons.length; i++) {
     
   });
 }
-    $("#glhide").click(function(){
-          $("#olmap").show();
-         $("#glmap").hide();
+    $(".glhide").click(function(){
+         glhide();
         });
         
-    $("#glshow").click(function(){
-         $("#glmap").show();
-         $("#olmap").hide();
+    $(".glshow").click(function(){
+        glshow();
         });
 
 
@@ -241,23 +259,24 @@ obj.color = {
               b:133
             };            
 */
-    
+  //adapted from   https://developer.mozilla.org/en-US/Learn/WebGL/By_example/Detect_WebGL
      (function detectWebGLContext () {
-    // Create canvas element. The canvas is not added to the
-    // document itself, so it is never displayed in the
-    // browser window.
+   
     var canvas = document.createElement("canvas");
     // Get WebGLRenderingContext from canvas element.
     var gl = canvas.getContext("webgl")
       || canvas.getContext("experimental-webgl");
     // Report the result.
     if (gl && gl instanceof WebGLRenderingContext) {
-      alert("Congratulations! Your browser supports WebGL.");
+      console.log("Browser supports WebGL.");
     } else {
-      alert("Failed to get WebGL context. "
-        + "Your browser or device may not support WebGL.");
+      console.log("Failed to get WebGL context. "
+        + "Browser or device may not support WebGL.");
     }
   })();
+  
+
+  
 
 });
     
@@ -280,10 +299,11 @@ obj.color = {
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#glmap">3D Map</a></li>
-            <li><a href="#olmap">2D Map</a></li>
-            <li><a href="#info">Info</a></li>
-            <li><a href="#tour">Tour</a></li>
+            <li class="active glshow"><a href="#3dmap" data-toggle="tab">Übersicht</a></li>
+            <li class="glhide" ><a href="#2dmap" data-toggle="tab">2D Map</a></li>
+            <li><a href="#Neckar">Neckarschenkel</a></li>
+            <li><a href="#Esplanade">Esplanade</a></li>
+            <li><a href="#Insel">Inselschenkel</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Etc <b class="caret"></b></a>
               <ul class="dropdown-menu">
@@ -312,14 +332,15 @@ obj.color = {
       <div class="page-header">
         <h1>Feel free to click these buttons</h1>
       </div>
-      <div id='glmap'>glmap</div>
-      <div id='olmap'>olmap</div>
-      <p>
-        <button type="button" class="btn btn-lg btn-warning" id="glhide"  >2d Version</button>
-        <button type="button" class="btn btn-lg btn-success" id="glshow">3d Version</button>
-      </p>
-    
-
+      <div class="row">
+        <div class="col-xs-3">sample-text sample-text sample-text sample-text sample-text sample-text sample-text sample-text sample-text sample-text sample-text sample-text sample-text sample-text sample-text sample-text sample-textsample-textsample-textsample-text sample-textsample-text sample-text sample-textsample-textsample-text sample-text sample-textsample-textsample-textsample-textsample-textsample-textsample-textsample-textsample-textsample-textsample-text</div>
+        <div id='glmap'class="col-xs-7"></div>
+        <div id='olmap'class="col-xs-7"></div>
+        <div class="col-xs-1">
+          <button type="button" class="btn btn-round btn-sm btn-warning glhide"  >2d</button>
+          <button type="button" class="btn btn-round btn-sm btn-success glshow" >3d</button>
+        </div>
+      </div>
     </div> <!-- /container -->
   </body>
 </html>
