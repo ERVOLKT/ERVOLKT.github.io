@@ -21,7 +21,11 @@
     <script src="bugabuildings.js"></script>
        
     <style>
-     
+    .dimbutton{
+    position: absolute;
+    left:90%;  
+    } 
+    
     .btn-round {
     width: 40px;
     height: 40px;
@@ -103,7 +107,7 @@ $( document ).ready(function() {
             }
             }
             );
-      olmap.addControl(new OpenLayers.Control.LayerSwitcher());
+    //  olmap.addControl(new OpenLayers.Control.LayerSwitcher());
    
       olmap.addLayer(new OpenLayers.Layer.OSM("Mapbox_outdoors_volker",
        ['https://a.tiles.mapbox.com/v3/volker6457.no773m04/${z}/${x}/${y}.png',
@@ -259,7 +263,7 @@ obj.color = {
               b:133
             };            
 */
-  //adapted from   https://developer.mozilla.org/en-US/Learn/WebGL/By_example/Detect_WebGL
+  //adopted   https://developer.mozilla.org/en-US/Learn/WebGL/By_example/Detect_WebGL
      (function detectWebGLContext () {
    
     var canvas = document.createElement("canvas");
@@ -270,14 +274,12 @@ obj.color = {
     if (gl && gl instanceof WebGLRenderingContext) {
       console.log("Browser supports WebGL.");
     } else {
-      console.log("Failed to get WebGL context. "
-        + "Browser or device may not support WebGL.");
+      //disable 3d button and show a popover info
+          $('[data-toggle="popover"]').addClass('disabled');
+          $('[data-toggle="popover"]').popover();
     }
   })();
   
-
-  
-
 });
     
     </script> 
@@ -326,19 +328,15 @@ obj.color = {
       <div class="jumbotron">
         <h3>Hello, world!</h3>
         <p>This is my webdev playground for the visualisation of the BUGA Heilbronn. It uses  mainly OSMBuildings code. </p>
-        <p><a href="#" class="btn btn-primary btn-sm" role="button">OK &raquo;</a></p>
       </div>
       
-      <div class="page-header">
-        <h1>Feel free to click these buttons</h1>
-      </div>
       <div class="row">
-        <div class="col-xs-3">sample-text sample-text sample-text sample-text sample-text sample-text sample-text sample-text sample-text sample-text sample-text sample-text sample-text sample-text sample-text sample-text sample-textsample-textsample-textsample-text sample-textsample-text sample-text sample-textsample-textsample-text sample-text sample-textsample-textsample-textsample-textsample-textsample-textsample-textsample-textsample-textsample-textsample-text</div>
-        <div id='glmap'class="col-xs-7"></div>
-        <div id='olmap'class="col-xs-7"></div>
-        <div class="col-xs-1">
-          <button type="button" class="btn btn-round btn-sm btn-warning glhide"  >2d</button>
-          <button type="button" class="btn btn-round btn-sm btn-success glshow" >3d</button>
+        <div id='glmap' class="col-xs-12"></div>
+        <div id='olmap' class="col-xs-12"></div>
+        <div class="dimbutton">
+          <button type="button" class="btn btn-round btn-sm btn-success glshow" data-toggle="popover" data-placement="top" data-trigger="hover" title="Sorry," data-content="Your machine and browser need to support WebGL"  >3d</button>
+          <button type="button" class="btn btn-round btn-sm btn-warning glhide" >2d
+          </button>
         </div>
       </div>
     </div> <!-- /container -->
