@@ -77,18 +77,54 @@
 var buildingstyle = {roofColor: 'rgba(204, 102, 0, 0.6)', color: 'rgb(190,158,150)'};
 var controlButtons = document.querySelectorAll('.control button');
 
-function glhide(){
-  $("#olmap").show();
-  $("#glmap").hide();
-}
-
+//closure to enable private variables and interaction betwenn the functions glshow and glhide(the latter is declared as fu.olshow inside fu. glshow) 
 function glshow(){
   $("#glmap").show();
   $("#olmap").hide();
-}
+
+  function olshow(){
+  $("#olmap").show();
+  $("#glmap").hide();
+  }
+
+  return olshow;
+};
+  
+var glhide = glshow();
+//  alert(glhide);
+
+
+
+
    
 
 $( document ).ready(function() {
+
+  //Check for webgl-ability
+//adopted   https://developer.mozilla.org/en-US/Learn/WebGL/By_example/Detect_WebGL
+    (function detectWebGLContext () {
+   
+    var canvas = document.createElement("canvas");
+    // Get WebGLRenderingContext from canvas element.
+    var gl = canvas.getContext("webgl")
+      || canvas.getContext("experimental-webgl");
+    // Report the result.
+    if (gl && gl instanceof WebGLRenderingContext) {
+      console.log("Browser supports WebGL.");
+//statt glshow hier und glhide unten müsten eigentlich Funktionen stehen, die OL (und auch osmb-webgl?) stoppen und starten können...
+     glshow;
+
+    } else {
+      //disable 3d button and show a popover info
+          $('[data-toggle="popover"]').addClass('disabled');
+          $('[data-toggle="popover"]').popover();
+          glhide();
+    }
+  })();
+
+  $('.jumbotron').hide();
+  $('.home').show();
+
     
    //++++2.5D
  olmap = new OpenLayers.Map('olmap'
@@ -127,6 +163,7 @@ $( document ).ready(function() {
      olosmb.style(buildingstyle);
      
     //++++3D
+
 
 // Hierüber werden die Controls aktiviert(?) 
 
@@ -263,23 +300,16 @@ obj.color = {
               b:133
             };            
 */
-  //adopted   https://developer.mozilla.org/en-US/Learn/WebGL/By_example/Detect_WebGL
-     (function detectWebGLContext () {
-   
-    var canvas = document.createElement("canvas");
-    // Get WebGLRenderingContext from canvas element.
-    var gl = canvas.getContext("webgl")
-      || canvas.getContext("experimental-webgl");
-    // Report the result.
-    if (gl && gl instanceof WebGLRenderingContext) {
-      console.log("Browser supports WebGL.");
-    } else {
-      //disable 3d button and show a popover info
-          $('[data-toggle="popover"]').addClass('disabled');
-          $('[data-toggle="popover"]').popover();
-    }
-  })();
-  
+ $('a').click(function(event){
+  event.preventDefault();
+  $('.jumbotron').hide();
+   var idfullstring = this.toString(); 
+   var hashpos = idfullstring.search("#");   
+   var endpos = idfullstring.length; 
+   var idstring = idfullstring.slice(hashpos,endpos);
+   var clstring = idstring.replace("#", "."); 
+  $(clstring).show();
+  });    
 });
     
     </script> 
@@ -301,11 +331,10 @@ obj.color = {
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active glshow"><a href="#3dmap" data-toggle="tab">Übersicht</a></li>
-            <li class="glhide" ><a href="#2dmap" data-toggle="tab">2D Map</a></li>
-            <li><a href="#Neckar">Neckarschenkel</a></li>
-            <li><a href="#Esplanade">Esplanade</a></li>
-            <li><a href="#Insel">Inselschenkel</a></li>
+            <li class="active"><a href="#home" data-toggle="tab">Übersicht</a></li>
+            <li><a href="#neckar">Neckarschenkel</a></li>
+            <li><a href="#esplanade">Esplanadenschenkel</a></li>
+            <li><a href="#insel">Inselschenkel</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Etc <b class="caret"></b></a>
               <ul class="dropdown-menu">
@@ -325,9 +354,21 @@ obj.color = {
 
     <div class="container theme-showcase">
       <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="jumbotron">
+      <div class="jumbotron home">
         <h3>Hello, world!</h3>
         <p>This is my webdev playground for the visualisation of the BUGA Heilbronn. It uses  mainly OSMBuildings code. </p>
+      </div>
+      <div class="jumbotron neckar">
+        <h3>Neckarschenkel</h3>
+        <p>Der Neckarschenkel bildet den Abschluss des Neckardreiecks zum Altneckar und zum Stadtzentrum hin. Hier wird eine halboffene Bebauungsweise dominieren... </p>
+      </div>
+      <div class="jumbotron esplanade">
+        <h3>Esplanadenschenkel</h3>
+        <p>Im Gegensatz zum Insel- und zum Neckarschenkel bildet der Esplanadenschenkel einen breiten Übergang zum hochverdichteten Bahnhofsviertel und ist deshalb hauptsächlich durch eine geschlossene Bebauungsweise charakterisiert... </p>
+      </div>
+      <div class="jumbotron insel">
+        <h3>Inselschenkel</h3>
+        <p>Auf der Hafenseite wird zwischen den beiden geplanten Seen dieser westliche Schenkel des Neckardreiecks eingebettet sein. Sein Merkmal ist die offene Bebauung...</p>
       </div>
       
       <div class="row">
