@@ -309,7 +309,11 @@ obj.color = {
    var idstring = idfullstring.slice(hashpos,endpos);
    var clstring = idstring.replace("#", "."); 
   $(clstring).show();
-  });    
+  });   
+ 
+//initial webgl-map:alright with Firefox, but not Opera ...
+  glshow();
+
 });
     
     </script> 
