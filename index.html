@@ -38,20 +38,16 @@
     }
 
 
-     #glmap {
-  /*    width: 100%;     */      
-      height: 500px;
- /*     position:absolute;
-      left:10%;
-      float:left;*/
+     #glmap {    
+      height: 65%;
+      position:absolute;
     }
     
     /*Achte hierauf sonst könnte die olmap nicht sichtbar sein!*/
-    #olmap {
- /*     width: 100%;      */     
-      height: 500px;
-  /*    position:absolute;
-      left: 10%;
+    #olmap {  
+      height: 65%;
+      position:absolute;
+  /*    left: 10%;
       float:left;   */
     }
     
@@ -93,7 +89,7 @@ function glshow(){
 var glhide = glshow();
 //  alert(glhide);
 
-
+var twodpos = {insel:'hellyeah', esplanade:'omygod', neckar:'baaaam'};
 
 
    
@@ -127,6 +123,7 @@ $( document ).ready(function() {
 
     
    //++++2.5D
+ function twod(){  
  olmap = new OpenLayers.Map('olmap'
     , 
             {eventListeners: {
@@ -161,9 +158,10 @@ $( document ).ready(function() {
 // Das OSMBuildings-Objekt musste umbenannt werden, siehe auch in der osmb-ol-debug-Datei!      
     olosmb = new olOSMBuildings(olmap).load();
      olosmb.style(buildingstyle);
-     
-    //++++3D
+}   
 
+
+    //++++3D
 
 // Hierüber werden die Controls aktiviert(?) 
 
@@ -206,7 +204,7 @@ for (var i = 0; i < controlButtons.length; i++) {
         glshow();
         });
 
-
+function threed(){
 
    glmap = new GLMap('glmap', {
     position: { latitude:49.14740, longitude:9.20392 },
@@ -300,22 +298,21 @@ obj.color = {
               b:133
             };            
 */
- $('a').click(function(event){
+}
+
+//jumbotron toggling, done by classes, e.g. click on #insel w/ id="insel" shows tab w/ class="insel"
+
+$('.toglink').click(function(event){
   event.preventDefault();
   $('.jumbotron').hide();
-   var idfullstring = this.toString(); 
-   var hashpos = idfullstring.search("#");   
-   var endpos = idfullstring.length; 
-   var idstring = idfullstring.slice(hashpos,endpos);
-   var clstring = idstring.replace("#", "."); 
-  $(clstring).show();
-  });   
- 
-//initial webgl-map:alright with Firefox, but not Opera ...
-  glshow();
+  $("."+this.id).show();
+  });  
 
+  //initial webgl-map 
+threed();
 });
     
+
     </script> 
 
 
@@ -335,10 +332,10 @@ obj.color = {
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#home" data-toggle="tab">Übersicht</a></li>
-            <li><a href="#neckar">Neckarschenkel</a></li>
-            <li><a href="#esplanade">Esplanadenschenkel</a></li>
-            <li><a href="#insel">Inselschenkel</a></li>
+            <li class="active"><a class="toglink" id="home" href="#home" data-toggle="tab">Übersicht</a></li>
+            <li><a class="toglink" id="neckar" href="#neckar">Neckarschenkel</a></li>
+            <li><a class="toglink" id="esplanade" href="#esplanade">Esplanadenschenkel</a></li>
+            <li><a class="toglink" id="insel" href="#insel">Inselschenkel</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Etc <b class="caret"></b></a>
               <ul class="dropdown-menu">
