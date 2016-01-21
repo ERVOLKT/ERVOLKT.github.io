@@ -59,8 +59,49 @@
     .olControlLayerSwitcher {
       top: 5px !important;
     }
+
     .jumbotron {
     padding-bottom: 8px;
+    }
+
+     .control {
+     position: absolute; 
+      left: 0;
+      z-index: 1000;
+    }
+
+    .control.tilt {
+      top: 0;
+    }
+
+    .control.rotation {
+      top: 45px;
+    }
+
+    .control.zoom {
+      top: 90px;
+    }
+
+    .control.zoom button{
+      font-weight: normal;
+    }
+
+    .control button {
+      width: 30px;
+      height: 30px;
+      margin: 15px 0 0 15px;
+      border: 1px solid #999999;
+      background: #ffffff;
+      opacity: 0.6;
+      border-radius: 5px;
+      box-shadow: 0 0 5px #666666;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .control button:hover {
+      opacity: 1;
+      cursor: pointer;
     }
     </style>
    
@@ -70,7 +111,11 @@
  
  */
 
-var buildingstyle = {roofColor: 'rgba(204, 102, 0, 0.6)', color: 'rgb(190,158,150)'};
+var buildingstyle = {
+    twodstyle: {roofColor: 'rgba(204, 102, 0, 0.6)', color: 'rgb(190,158,150)'},
+    threedstyle: {roofColor: 'rgba(204, 102, 0, 0.6)', color: 'rgb(243, 188, 112, 0.4)'} 
+    };
+
 var controlButtons = document.querySelectorAll('.control button');
 
 //closure to enable private variables and interaction betwenn the functions glshow and glhide(the latter is declared as fu.olshow inside fu. glshow) 
@@ -116,6 +161,20 @@ $( document ).ready(function() {
           $('[data-toggle="popover"]').popover();
           glhide();
     }
+     /*    try {
+    context = canvas.getContext('webgl', options);
+  } catch (ex) {}*/
+  if (!gl) {
+    try {
+      gl = canvas.getContext('experimental-webgl', options);
+      alert("webgl works ");
+    } catch (ex) {}
+  }
+  if (!gl) {
+    throw new Error('WebGL not supported');
+    alert("nowebgl here dude");
+  }
+
   })();
 
   $('.jumbotron').hide();
@@ -157,7 +216,7 @@ $( document ).ready(function() {
       ), 16);
 // Das OSMBuildings-Objekt musste umbenannt werden, siehe auch in der osmb-ol-debug-Datei!      
     olosmb = new olOSMBuildings(olmap).load();
-     olosmb.style(buildingstyle);
+     olosmb.style(buildingstyle.twodstyle);
 }   
 
 
@@ -222,20 +281,17 @@ function threed(){
     minZoom: 12,
     maxZoom: 22,
     // showBackfaces: true, // render front and backsides of polygons. false increases performance, true might be needed for bad geometries
-    attribution: '© 3D <a href="http://osmbuildings.org/copyright/">OSM Buildings</a>'
+    attribution: '© Data <a href="http://openstreetmap.org/copyright/">OpenStreetMap</a>|© 3D <a href="http://osmbuildings.org/copyright/">OSM Buildings</a> |© Basemap <a href="http://mapbox.com/">MapBox</a> '
   }).addTo(glmap);
   
-    glosmb.setStyle(buildingstyle);
+    glosmb.setStyle(buildingstyle.threedstyle);
     //historic maptiles-method:
     /*
     osmb.addTileLayer('http://{s}.tiles.mapbox.com/v3/osmbuildings.kbpalbpk/{z}/{x}/{y}.png');
     */
     glosmb.addMapTiles(
  //   'http://{s}.tiles.mapbox.com/v3/osmbuildings.kbpalbpk/{z}/{x}/{y}.png',
-    'https://{s}.tiles.mapbox.com/v3/volker6457.no773m04/{z}/{x}/{y}.png',
-    {
-      attribution: '© Data <a href="http://openstreetmap.org/copyright/">OpenStreetMap</a> · © Map <a href="http://mapbox.com">MapBox</a>'
-    }
+    'https://{s}.tiles.mapbox.com/v3/volker6457.no773m04/{z}/{x}/{y}.png'
   );
   
    glosmb.addGeoJSONTiles(
@@ -373,7 +429,25 @@ threed();
       </div>
       
       <div class="row">
-        <div id='glmap' class="col-xs-12"></div>
+        <div id='glmap' class="col-xs-12">
+          <div class="control tilt">
+            <button class="dec">&#8601;</button>
+            <button class="inc">&#8599;</button>
+          </div>
+
+          <div class="control rotation">
+            <button class="inc">&#8630;</button>
+            <button class="dec">&#8631;</button>
+          </div>
+
+          <div class="control zoom">
+            <button class="dec">-</button>
+            <button class="inc">+</button>
+            <div id="button">
+            <button id="switch" class="control" type="button" onclick="buttonswitch(map)">3d</button>
+          </div>
+          </div>
+        </div>
         <div id='olmap' class="col-xs-12"></div>
         <div class="dimbutton">
           <button type="button" class="btn btn-round btn-sm btn-success glshow" data-toggle="popover" data-placement="top" data-trigger="hover" title="Sorry," data-content="Your machine and browser need to support WebGL"  >3d</button>
