@@ -90,33 +90,34 @@ var glhide = glshow();
 //  alert(glhide);
 
 var twodpos = {insel:'hellyeah', esplanade:'omygod', neckar:'baaaam'};
-
-
-   
+ 
 
 $( document ).ready(function() {
 
   //Check for webgl-ability
 //adopted   https://developer.mozilla.org/en-US/Learn/WebGL/By_example/Detect_WebGL
-    (function detectWebGLContext () {
-   
+(function detectWebGLContext1 () {
+  
     var canvas = document.createElement("canvas");
     // Get WebGLRenderingContext from canvas element.
-    var gl = canvas.getContext("webgl")
-      || canvas.getContext("experimental-webgl");
+    var gl = canvas.getContext("webgl");
+    var xgl = canvas.getContext("experimental-webgl");
     // Report the result.
     if (gl && gl instanceof WebGLRenderingContext) {
-      console.log("Browser supports WebGL.");
-//statt glshow hier und glhide unten müsten eigentlich Funktionen stehen, die OL (und auch osmb-webgl?) stoppen und starten können...
-     glshow;
+      alert("Browser supports WebGL.");
 
     } else {
-      //disable 3d button and show a popover info
-          $('[data-toggle="popover"]').addClass('disabled');
-          $('[data-toggle="popover"]').popover();
-          glhide();
+       alert("Browser does NOT support WebGL.");
     }
-  })();
+
+if (xgl && xgl instanceof WebGLRenderingContext) {
+      alert("Browser supports xperimental WebGL.");
+
+    } else {
+       alert("Browser does NOT support xperimental WebGL.");
+    }
+
+ })();
 
   $('.jumbotron').hide();
   $('.home').show();
