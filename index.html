@@ -104,14 +104,14 @@ $( document ).ready(function() {
     var xgl = canvas.getContext("experimental-webgl");
     // Report the result.
     if (gl && gl instanceof WebGLRenderingContext) {
-      alert("Browser supports WebGL.");
+      console.log("Browser supports WebGL.");
 
     } else {
        alert("Browser does NOT support WebGL.");
     }
 
 if (xgl && xgl instanceof WebGLRenderingContext) {
-      alert("Browser supports xperimental WebGL.");
+      console.log("Browser supports xperimental WebGL.");
 
     } else {
        alert("Browser does NOT support xperimental WebGL.");
