@@ -122,7 +122,7 @@ function glshow(){
   function olshow(){
   $("#olmap").show();
   $("#glmap").hide();
-  }
+  } 
 
   return olshow;
 };
@@ -130,8 +130,32 @@ function glshow(){
 var glhide = glshow();
 //  alert(glhide);
 
-var twodpos = {insel:'hellyeah', esplanade:'omygod', neckar:'baaaam'};
- 
+/*
+//New map positioning object:
+ var zentrum = {
+    home: [
+      {new OpenLayers.LonLat(9.209123253822327, 49.14630295624662)},
+      {glxy:{latitude:49.14740, longitude:9.20392}, glz:..., gltilt:..., glangle:...}
+     ],
+     insel: [
+          {olcoord-Obj},
+          {glxy:{}, glz:..., gltilt:..., glangle:...}
+         ],
+     neckar: [
+          {olcoord-Obj},
+          {glxy:{}, glz:..., gltilt:..., glangle:...}
+         ],
+     esplanade: [
+          {olcoord-Obj},
+          {glxy:{}, glz:..., gltilt:..., glangle:...}
+         ],
+    current: [
+          {olcoord-Obj},
+          {glxy:{}, glz:..., gltilt:..., glangle:...}
+         ]
+ }
+
+*/
 
 $( document ).ready(function() {
 
@@ -145,24 +169,20 @@ $( document ).ready(function() {
     var xgl = canvas.getContext("experimental-webgl");
     // Report the result.
     if (gl && gl instanceof WebGLRenderingContext) {
-      console.log("Browser supports WebGL.");
-
+      console.log("Browser supports WebGL.");           
     } else {
        alert("Browser does NOT support WebGL.");
-    }
+        if (xgl && xgl instanceof WebGLRenderingContext) {
+            console.log("Browser supports xperimental WebGL.");
 
-if (xgl && xgl instanceof WebGLRenderingContext) {
-      console.log("Browser supports xperimental WebGL.");
-
-    } else {
-       alert("Browser does NOT support xperimental WebGL.");
-    }
-    /* we should include something like this: 
-    //disable 3d button and show a popover info
-          $('[data-toggle="popover"]').addClass('disabled');
-          $('[data-toggle="popover"]').popover();
-          glhide();
-    */
+          } else {
+             alert("Browser does NEITHER support WebGL NOR xperimental WebGL .");
+             //disable 3d button and show a popover info
+            $('[data-toggle="popover"]').addClass('disabled');
+            $('[data-toggle="popover"]').popover();
+            glhide();
+          }
+    }     
  })();
 
   $('.jumbotron').hide();
