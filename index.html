@@ -130,32 +130,29 @@ function glshow(){
 var glhide = glshow();
 //  alert(glhide);
 
-/*
-//New map positioning object:
- var zentrum = {
-    home: [
-      {new OpenLayers.LonLat(9.209123253822327, 49.14630295624662)},
-      {glxy:{latitude:49.14740, longitude:9.20392}, glz:..., gltilt:..., glangle:...}
-     ],
-     insel: [
-          {olcoord-Obj},
-          {glxy:{}, glz:..., gltilt:..., glangle:...}
-         ],
-     neckar: [
-          {olcoord-Obj},
-          {glxy:{}, glz:..., gltilt:..., glangle:...}
-         ],
-     esplanade: [
-          {olcoord-Obj},
-          {glxy:{}, glz:..., gltilt:..., glangle:...}
-         ],
-    current: [
-          {olcoord-Obj},
-          {glxy:{}, glz:..., gltilt:..., glangle:...}
-         ]
- }
 
-*/
+//New map positioning object:
+var zentrum =
+[{pos: {latitude:49.14740,longitude:9.20392}, 
+    zoom: 17, 
+    tilt: 65, 
+    rot: 180},
+
+  {pos: {latitude:49.1487,longitude:9.20345}, 
+    zoom: 16, 
+    tilt: 89, 
+    rot: 335},
+
+  {pos: {latitude:49.1456,longitude:9.20326}, 
+    zoom: 17, 
+    tilt: 0, 
+    rot: 1},
+
+  {pos: {latitude:49.1487,longitude:9.20345}, 
+    zoom: 16, 
+    tilt: 75, 
+    rot: 45}
+]
 
 $( document ).ready(function() {
 
@@ -370,6 +367,13 @@ $('.toglink').click(function(event){
   event.preventDefault();
   $('.jumbotron').hide();
   $("."+this.id).show();
+//  alert(typeof(this.id)+' and '+ typeof(zentrum.home)+' but also '+typeof(this.attributes[2].value));
+  var no = this.attributes['no'].value;
+  alert(no);
+  glmap.setPosition(zentrum[no].pos);
+  glmap.setZoom(zentrum[no].zoom);
+  glmap.setTilt(zentrum[no].tilt);
+  glmap.setRotation(zentrum[no].rot);
   });  
 
   //initial webgl-map 
@@ -396,10 +400,10 @@ threed();
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a class="toglink" id="home" href="#home" data-toggle="tab">Übersicht</a></li>
-            <li><a class="toglink" id="neckar" href="#neckar">Neckarschenkel</a></li>
-            <li><a class="toglink" id="esplanade" href="#esplanade">Esplanadenschenkel</a></li>
-            <li><a class="toglink" id="insel" href="#insel">Inselschenkel</a></li>
+            <li class="active"><a class="toglink" id="home" no=0 href="#home" data-toggle="tab">Übersicht</a></li>
+            <li><a class="toglink" id="neckar" no=1 href="#neckar">Neckarschenkel</a></li>
+            <li><a class="toglink" id="esplanade" no=2 href="#esplanade">Esplanadenschenkel</a></li>
+            <li><a class="toglink" id="insel" no=3 href="#insel">Inselschenkel</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Etc <b class="caret"></b></a>
               <ul class="dropdown-menu">
