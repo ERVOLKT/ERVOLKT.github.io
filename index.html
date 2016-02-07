@@ -190,11 +190,11 @@ $( document ).ready(function() {
  hammertime.get('rotate').set({ enable: true });
  hammertime.on('pinchin', function(ev) {
    //   alert(ev.type+' registered');
-   glmap.setZoom(glmap.getZoom()*1.05);
+   glmap.setZoom(glmap.getZoom()*1.01);
   });
  hammertime.on('pinchout', function(ev) {
    //   alert(ev.type+' registered');
-   glmap.setZoom(glmap.getZoom()*0.95);
+   glmap.setZoom(glmap.getZoom()*0.99);
   });
 
   $('.jumbotron').hide();
