@@ -17,7 +17,6 @@
     <script src="OSMBuildings-OpenLayers.debug.js"></script>
     <script src="GLMap/GLMap.debug.js"></script>   
     <script src="OSMBuildings/OSMBuildings-GLMap.debug.js"></script>
-    <script src="js/hammer.js"></script>
     <!-- Additional GeoJSON Data -->
     <script src="bugabuildings.js"></script>
        
@@ -182,16 +181,6 @@ $( document ).ready(function() {
           }
     }     
  })();
-
- //touchscreen pinching&rotation interaction
- var hammertime = new Hammer('glmap'
-  //, myOptions
-  );
- hammertime.get('pinch').set({ enable: true });
- hammertime.get('rotate').set({ enable: true });
- hammertime.on('pinch', function(ev) {
-      alert(ev+' registered');
-  });
 
   $('.jumbotron').hide();
   $('.home').show();
@@ -380,7 +369,7 @@ $('.toglink').click(function(event){
   $("."+this.id).show();
 //  alert(typeof(this.id)+' and '+ typeof(zentrum.home)+' but also '+typeof(this.attributes[2].value));
   var no = this.attributes['no'].value;
-//  alert(no);
+  alert(no);
   glmap.setPosition(zentrum[no].pos);
   glmap.setZoom(zentrum[no].zoom);
   glmap.setTilt(zentrum[no].tilt);
