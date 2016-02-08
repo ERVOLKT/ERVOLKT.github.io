@@ -276,8 +276,10 @@ for (var i = 0; i < controlButtons.length; i++) {
    //   alert(ev.type+' registered');
    glmap.setZoom(glmap.getZoom()*0.99);
   });
- hammertime.on('rotation', function(ev) {
+ hammertime.on('rotate', function(ev) {
      alert(ev.type+' registered');
+     //does not register yet
+     // also need to detect DIRECTION_LEFT/RIGHT or similar ...
  //  glmap.setRotation(glmap.getRotation()*0.99);
   });
 
