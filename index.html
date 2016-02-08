@@ -266,8 +266,15 @@ for (var i = 0; i < controlButtons.length; i++) {
 //touchscreen pinching&rotation controls
  var gltouch = document.getElementById('glmap');
  var hammertime = new Hammer(gltouch);
- hammertime.get('pinch').set({ enable: true });
- hammertime.get('rotate').set({ enable: true });
+ hammertime.get('pinch').set({ enable: true
+ //, threshold: 0
+  });
+ hammertime.get('rotate').set({ enable: true
+ //, direction: Hammer.DIRECTION_RIGHT
+  });
+ // new 3 finger pinch
+ hammertime.add( new Hammer.Pinch({ event: 'triplepinch', pointers: 3 }) );
+
  hammertime.on('pinchout', function(ev) {
    //   alert(ev.type+' registered');
    glmap.setZoom(glmap.getZoom()*1.01);
@@ -278,10 +285,14 @@ for (var i = 0; i < controlButtons.length; i++) {
   });
  hammertime.on('rotate', function(ev) {
      alert(ev.type+' registered');
-     //does not register yet
-     // also need to detect DIRECTION_LEFT/RIGHT or similar ...
+     alert(ev.getDirection);
  //  glmap.setRotation(glmap.getRotation()*0.99);
   });
+ hammertime.on('triplepinch', function(ev) {
+      alert(ev.type+' registered');
+  });
+
+
 
     $(".glhide").click(function(){
          glhide();
