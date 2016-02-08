@@ -113,8 +113,6 @@ var buildingstyle = {
     threedstyle: {roofColor: 'rgba(204, 102, 0, 0.6)', color: 'rgba(243, 188, 112, 0.8)'} 
     };
 
-var controlButtons = document.querySelectorAll('.control button');
-
 //closure to enable private variables and interaction betwenn the functions glshow and glhide(the latter is declared as fu.olshow inside fu. glshow) 
 function glshow(){
   $("#glmap").show();
@@ -183,19 +181,7 @@ $( document ).ready(function() {
     }     
  })();
 
- //touchscreen pinching&rotation interaction
- var gltouch = document.getElementById('glmap');
- var hammertime = new Hammer(gltouch);
- hammertime.get('pinch').set({ enable: true });
- hammertime.get('rotate').set({ enable: true });
- hammertime.on('pinchin', function(ev) {
-   //   alert(ev.type+' registered');
-   glmap.setZoom(glmap.getZoom()*1.01);
-  });
- hammertime.on('pinchout', function(ev) {
-   //   alert(ev.type+' registered');
-   glmap.setZoom(glmap.getZoom()*0.99);
-  });
+ 
 
   $('.jumbotron').hide();
   $('.home').show();
@@ -242,7 +228,8 @@ $( document ).ready(function() {
 
     //++++3D
 
-// Hierüber werden die Controls aktiviert(?) 
+// Webgl Control Buttons
+var controlButtons = document.querySelectorAll('.control button');
 
 for (var i = 0; i < controlButtons.length; i++) {
   controlButtons[i].addEventListener('click', function(e) {
@@ -275,6 +262,25 @@ for (var i = 0; i < controlButtons.length; i++) {
     
   });
 }
+
+//touchscreen pinching&rotation controls
+ var gltouch = document.getElementById('glmap');
+ var hammertime = new Hammer(gltouch);
+ hammertime.get('pinch').set({ enable: true });
+ hammertime.get('rotate').set({ enable: true });
+ hammertime.on('pinchout', function(ev) {
+   //   alert(ev.type+' registered');
+   glmap.setZoom(glmap.getZoom()*1.01);
+  });
+ hammertime.on('pinchin', function(ev) {
+   //   alert(ev.type+' registered');
+   glmap.setZoom(glmap.getZoom()*0.99);
+  });
+/* hammertime.on('rotate', function(ev) {
+     alert(ev.type+' registered');
+   glmap.setRotation(glmap.getRotation()*0.99);
+  });*/
+
     $(".glhide").click(function(){
          glhide();
         });
