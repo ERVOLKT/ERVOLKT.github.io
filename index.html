@@ -276,10 +276,10 @@ for (var i = 0; i < controlButtons.length; i++) {
    //   alert(ev.type+' registered');
    glmap.setZoom(glmap.getZoom()*0.99);
   });
-/* hammertime.on('rotate', function(ev) {
+ hammertime.on('pan', function(ev) {
      alert(ev.type+' registered');
-   glmap.setRotation(glmap.getRotation()*0.99);
-  });*/
+ //  glmap.setRotation(glmap.getRotation()*0.99);
+  });
 
     $(".glhide").click(function(){
          glhide();
