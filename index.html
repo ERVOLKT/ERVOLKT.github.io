@@ -264,7 +264,62 @@ for (var i = 0; i < controlButtons.length; i++) {
 }
 
 //touchscreen pinching&rotation controls
- var gltouch = document.getElementById('glmap');
+var myElement = document.getElementById('glmap');
+// We create a manager object, which is the same as Hammer(), but without the presetted recognizers.
+var mc = new Hammer.Manager(myElement);
+
+// ordinary panleft/ panright recognizers
+/*
+mc.add( new Hammer.Pan({ event: 'leftpan',  direction: Hammer.DIRECTION_LEFT
+}) );
+
+mc.add( new Hammer.Pan({ event: 'rightpan',  direction: Hammer.DIRECTION_RIGHT
+}) );
+*/
+
+// 2-finger-Pan recognizers
+
+mc.add( new Hammer.Pan({ event: 'doubleleftpan', pointers: 2, direction: Hammer.DIRECTION_LEFT
+}) );
+mc.add( new Hammer.Pan({ event: 'doublerightpan', pointers: 2,
+direction: Hammer.DIRECTION_RIGHT }) );
+
+mc.add( new Hammer.Pinch({ enable: true}));
+
+mc.add( new Hammer.Rotate({ enable: true
+  , threshold: 0.5
+//, direction: Hammer.DIRECTION_RIGHT
+}));
+
+// we want to recognize these simulatenous, so a 2-finger-pan will be detected even while a pan has been recognized.
+// the ordinary pan event will be emitted on every pan
+/*
+mc.get('doubleleftpan').recognizeWith('leftpan');
+
+mc.get('doublerightpan').recognizeWith('rightpan');
+*/
+mc.on('pinchout', function(ev) {
+   //   alert(ev.type+' registered');
+   //glmap.setZoom(glmap.getZoom()*1.01);
+  });
+mc.on('pinchin', function(ev) {
+   //   alert(ev.type+' registered');
+   //glmap.setZoom(glmap.getZoom()*0.99);
+  });
+mc.on('rotate', function(ev) {
+     alert(ev.type+' registered');
+//  glmap.setRotation(glmap.getRotation()*0.99);
+  });
+mc.on('doubleleftpan', function(ev) {
+     alert(ev.type+' registered');
+//  glmap.setTilt(glmap.getTilt()*0.99);
+  });
+mc.on('doublerightpan', function(ev) {
+     alert(ev.type+' registered');
+//  glmap.setTilt(glmap.getTilt()*1.01);
+  });
+
+ /*var gltouch = document.getElementById('glmap');
  var hammertime = new Hammer(gltouch);
  hammertime.get('pinch').set({ enable: true
  
@@ -274,7 +329,7 @@ for (var i = 0; i < controlButtons.length; i++) {
  //, direction: Hammer.DIRECTION_RIGHT
   });
  // new 3 finger pan .. doesnt seem to work yet...
- hammertime.add( new Hammer.Pinch({ event: 'triplepan', pointers: 3 }) );
+ hammertime.add( new Hammer.Pan({ event: 'triplepan', pointers: 3 }) );
 
  hammertime.on('pinchout', function(ev) {
    //   alert(ev.type+' registered');
@@ -291,7 +346,7 @@ for (var i = 0; i < controlButtons.length; i++) {
  hammertime.on('triplepan', function(ev) {
       alert(ev.type+' registered');
   });
-
+*/
 
 
     $(".glhide").click(function(){
