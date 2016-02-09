@@ -299,12 +299,12 @@ mc.get('doubleleftpan').recognizeWith('leftpan');
 mc.get('doublerightpan').recognizeWith('rightpan');
 */
 mc.on('pinchout', function(ev) {
-   //   alert(ev.type+' registered');
-   //glmap.setZoom(glmap.getZoom()*1.01);
+      alert(ev.type+' registered');
+   glmap.setZoom(glmap.getZoom()*1.01);
   });
 mc.on('pinchin', function(ev) {
-   //   alert(ev.type+' registered');
-   //glmap.setZoom(glmap.getZoom()*0.99);
+      alert(ev.type+' registered');
+   glmap.setZoom(glmap.getZoom()*0.99);
   });
 mc.on('rotate', function(ev) {
      alert(ev.type+' registered');
