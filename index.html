@@ -278,19 +278,19 @@ for (var i = 0; i < controlButtons.length; i++) {
 
    //response to events
   mc.on('swipeleft', function(ev) {
-   glmap.setTilt(glmap.getTilt()+10);
+   glmap.setTilt(glmap.getTilt()+20);
   });
   mc.on('swiperight', function(ev) {
-   glmap.setTilt(glmap.getTilt()-10);
+   glmap.setTilt(glmap.getTilt()-20);
   });
   mc.on('pinchin', function(ev) {
-   glmap.setZoom(glmap.getZoom()*0.99);
+   glmap.setZoom(glmap.getZoom()*0.995);
   });
   mc.on('pinchout', function(ev) {
-   glmap.setZoom(glmap.getZoom()*1.01);
+   glmap.setZoom(glmap.getZoom()*1.005);
   });
   mc.on('rotate', function(ev) {
-    glmap.setRotation(glmap.getRotation()+30);
+    glmap.setRotation(glmap.getRotation()+5);
   });
 
     $(".glhide").click(function(){
