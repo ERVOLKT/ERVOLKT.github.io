@@ -133,25 +133,25 @@ var glhide = glshow();
 
 //New map positioning object:
 var zentrum =
-[{pos: {latitude:49.14740,longitude:9.20392}, 
-    zoom: 17, 
-    tilt: 65, 
-    rot: 180},
+[{pos: {latitude:49.14738,longitude:9.20787}, 
+    zoom: 16.4, 
+    tilt: 30, 
+    rot: 10},
 
-  {pos: {latitude:49.1487,longitude:9.20345}, 
-    zoom: 16, 
-    tilt: 89, 
-    rot: 335},
+  {pos: {latitude:49.1480,longitude:9.20997}, 
+    zoom: 18, 
+    tilt: 50, 
+    rot: 15},
 
-  {pos: {latitude:49.1456,longitude:9.20326}, 
-    zoom: 17, 
-    tilt: 0, 
-    rot: 1},
+  {pos: {latitude:49.14498,longitude:9.21025}, 
+    zoom: 17.4, 
+    tilt: 59.5, 
+    rot: 111.2},
 
-  {pos: {latitude:49.1487,longitude:9.20345}, 
-    zoom: 16, 
-    tilt: 75, 
-    rot: 45}
+  {pos: {latitude:49.14844,longitude:9.20444}, 
+    zoom: 17.2, 
+    tilt: 60, 
+    rot: 312.3}
 ]
 
 $( document ).ready(function() {
@@ -181,15 +181,9 @@ $( document ).ready(function() {
           }
     }     
  })();
-
- 
-
-  $('.jumbotron').hide();
-  $('.home').show();
-
-    
-   //++++2.5D
- function twod(){  
+  
+//++++2.5D
+//OpenLayers2-OSMB-MAP
  olmap = new OpenLayers.Map('olmap'
     , 
             {eventListeners: {
@@ -224,10 +218,10 @@ $( document ).ready(function() {
 // Das OSMBuildings-Objekt musste umbenannt werden, siehe auch in der osmb-ol-debug-Datei!      
     olosmb = new olOSMBuildings(olmap).load();
      olosmb.style(buildingstyle.twodstyle);
-}   
+   
 
 
-    //++++3D
+//++++3D
 
 // Webgl Control Buttons
 var controlButtons = document.querySelectorAll('.control button');
@@ -301,8 +295,7 @@ for (var i = 0; i < controlButtons.length; i++) {
         glshow();
         });
 
-function threed(){
-
+//WEBGL-OSMB-MAP
    glmap = new GLMap('glmap', {
     position: { latitude:49.14740, longitude:9.20392 },
     zoom: 15,
@@ -392,10 +385,12 @@ obj.color = {
               b:133
             };            
 */
-}
+
+$('.jumbotron').hide();
+$('.home').show();
+glshow();
 
 //jumbotron toggling, done by classes, e.g. click on #insel w/ id="insel" shows tab w/ class="insel"
-
 $('.toglink').click(function(event){
   event.preventDefault();
   $('.jumbotron').hide();
@@ -409,8 +404,6 @@ $('.toglink').click(function(event){
   glmap.setRotation(zentrum[no].rot);
   });  
 
-  //initial webgl-map 
-threed();
 });
     
 </script> 
