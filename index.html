@@ -154,6 +154,11 @@ var zentrum =
     rot: 312.3}
 ]
 
+function resetview(){
+  glmap.setTilt(0.0);
+  glmap.setRotation(0.0);
+}
+
 $( document ).ready(function() {
 
   //Check for webgl-ability
@@ -269,7 +274,7 @@ for (var i = 0; i < controlButtons.length; i++) {
     , threshold: 20
    , direction: Hammer.DIRECTION_RIGHT
    }));
-
+  mc.add( new Hammer.Pan({ enable: false}));
    //response to events
   mc.on('swipeleft', function(ev) {
    glmap.setTilt(glmap.getTilt()+20);
@@ -386,6 +391,7 @@ obj.color = {
             };            
 */
 
+//initial setup
 $('.jumbotron').hide();
 $('.home').show();
 glshow();
@@ -484,7 +490,7 @@ $('.toglink').click(function(event){
             <button class="dec">-</button>
             <button class="inc">+</button>
             <div id="button">
-            <button id="switch" class="control" type="button" onclick="buttonswitch(map)">3d</button>
+            <button id="switch" class="control" type="button" onclick="resetview()">N</button>
           </div>
           </div>
         </div>
