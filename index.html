@@ -268,14 +268,12 @@ for (var i = 0; i < controlButtons.length; i++) {
 // Hammer manager object, w/o presetted recognizers.
   var mc = new Hammer.Manager(gltouch);
   //add touch event recognizers
-  mc.add( new Hammer.Swipe({ pointers: 2, threshold: 5, velocity: 0.2}));
+  mc.add( new Hammer.Swipe({ pointers: 1, threshold: 5, velocity: 0.2}));
   mc.add( new Hammer.Pinch({ enable: true}));
   mc.add( new Hammer.Rotate({event: 'rotate', enable: true
     , threshold: 20
    , direction: Hammer.DIRECTION_RIGHT
    }));
-  //register Pan event, just to keep desktop browser gl-version from panning and swiping at one time
-  mc.add( new Hammer.Pan());
 
    //response to events
   mc.on('swipeleft', function(ev) {
