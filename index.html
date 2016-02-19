@@ -116,12 +116,17 @@ var buildingstyle = {
 
 //closure to enable private variables and interaction betwenn the functions glshow and glhide(the latter is declared as fu.olshow inside fu. glshow) 
 function glshow(){
+  threed = true;
+  console.log(threed);
   $("#glmap").show();
   $("#olmap").hide();
+  
 
   function olshow(){
+  threed = false;
+  console.log(threed);
   $("#olmap").show();
-  $("#glmap").hide();
+  $("#glmap").hide();  
   } 
 
   return olshow;
@@ -131,25 +136,25 @@ var glhide = glshow();
 //  alert(glhide);
 
 
-//New map positioning object:
+//New map positioning objectS:
 var zentrum =
-[{pos: {latitude:49.14738,longitude:9.20787}, 
-    zoom: 16.4, 
+[{  pos: [{latitude:49.14738,longitude:9.20787}, {lon: 9.213688373565114,lat: 49.14766022867995} ], 
+    zoom: [16.4, 16], 
     tilt: 30, 
     rot: 10},
 
-  {pos: {latitude:49.1480,longitude:9.20997}, 
-    zoom: 18, 
+  { pos: [{latitude:49.1480,longitude:9.20997},{lon: 9.211124181746541,lat: 49.14574431619457}], 
+    zoom: [18, 18], 
     tilt: 50, 
     rot: 15},
 
-  {pos: {latitude:49.14498,longitude:9.21025}, 
-    zoom: 17.4, 
+  { pos: [{latitude:49.14498,longitude:9.21025}, {lon: 9.209589958189582,lat: 49.147235646404944}], 
+    zoom: [17.4, 18],
     tilt: 59.5, 
     rot: 111.2},
 
-  {pos: {latitude:49.14844,longitude:9.20444}, 
-    zoom: 17.2, 
+  { pos: [{latitude:49.14844,longitude:9.20444}, {lon: 9.210099577903108,lat: 49.14574431619457}], 
+    zoom: [17.2, 17], 
     tilt: 60, 
     rot: 312.3}
 ]
@@ -160,6 +165,9 @@ function resetview(){
 }
 
 $( document ).ready(function() {
+//var threed = true;
+//console.log(threed);
+
 
   //Check for webgl-ability
 //adopted   https://developer.mozilla.org/en-US/Learn/WebGL/By_example/Detect_WebGL
@@ -183,6 +191,8 @@ $( document ).ready(function() {
             $('[data-toggle="popover"]').addClass('disabled');
             $('[data-toggle="popover"]').popover();
             glhide();
+            threed = false;
+            console.log(threed);
           }
     }     
  })();
@@ -402,13 +412,30 @@ $('.toglink').click(function(event){
   $('.jumbotron').hide();
   $("."+this.id).show();
 //  alert(typeof(this.id)+' and '+ typeof(zentrum.home)+' but also '+typeof(this.attributes[2].value));
-  var no = this.attributes['no'].value;
-//  alert(no);
-  glmap.setPosition(zentrum[no].pos);
-  glmap.setZoom(zentrum[no].zoom);
-  glmap.setTilt(zentrum[no].tilt);
-  glmap.setRotation(zentrum[no].rot);
-  });  
+  switch (threed){
+    case true: 
+    //  alert('threed is '+threed);
+      var no = this.attributes['no'].value;
+    //  alert(no);
+      glmap.setPosition(zentrum[no].pos[0]);
+      glmap.setZoom(zentrum[no].zoom[0]);
+      glmap.setTilt(zentrum[no].tilt);
+      glmap.setRotation(zentrum[no].rot);
+    break;
+    default:
+     // alert('threed is '+threed);
+      var nool = this.attributes['no'].value;
+      var proob = olmap.getProjectionObject(); 
+      var wgsproj = new OpenLayers.Projection('EPSG:4326'); 
+      //alert(zentrum[nool]);
+      var lonlatol = new OpenLayers.LonLat(zentrum[nool].pos[1].lon, zentrum[nool].pos[1].lat);
+      var zol = zentrum[nool].zoom[1];
+      olmap.setCenter(lonlatol.transform(wgsproj, proob), zol);
+      
+      break;
+  }
+  }); 
+   
 
 });
     
