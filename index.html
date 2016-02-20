@@ -104,17 +104,15 @@
     </style>
    
     <script type="text/javascript">
-/* wo sind jetzt die Controls ? Kann der User übraupt interagieren? und auf Mobile?
- Müssen die Divs andere Klassen haben?
- 
- */
-
+//global variables
 var buildingstyle = {
     twodstyle: {roofColor: 'rgba(204, 102, 0, 0.6)', color: 'rgb(190,158,150)'},
     threedstyle: {roofColor: 'rgba(204, 102, 0, 0.6)', color: 'rgba(243, 188, 112, 0.8)'} 
     };
 
-//closure to enable private variables and interaction betwenn the functions glshow and glhide(the latter is declared as fu.olshow inside fu. glshow) 
+var no, nool, proob, wgsproj,lonlatol, zol;
+
+//closure to enable private variables and interaction between the functions glshow and glhide(the latter is declared as fu.olshow inside fu. glshow) 
 function glshow(){
   threed = true;
   console.log(threed);
@@ -125,18 +123,39 @@ function glshow(){
   function olshow(){
   threed = false;
   console.log(threed);
-  $("#olmap").show();
-  $("#glmap").hide();  
-  } 
+  var glzoom = glmap.getZoom();
+  zentrum[4].zoom[1] = glzoom;
+  var glxy = glmap.getPosition();
+  var glxx = glxy.longitude.toFixed(4);
+  alert(glxx);
+  var glyy = glxy.latitude.toFixed(4);
+  alert(glyy);
+  zentrum[4].pos[1].lon = glxx;
+  zentrum[4].pos[1].lat = glyy;
 
+  $("#olmap").show();
+  $("#glmap").hide();
+   olmap.setCenter(
+      new OpenLayers.LonLat(zentrum[4].pos[1].lon,  zentrum[4].pos[1].lat)
+      .transform(
+        new OpenLayers.Projection('EPSG:4326'),
+        olmap.getProjectionObject()
+      ), zentrum[4].zoom[1]);
+ 
+  } 
+//olmap.getZoom();
+//olmap.getCenter();
   return olshow;
 };
-  
+ 
+ //eigentlich falsche Übergabe (Fu.glhide = Fu. glshow...), aber irgendwie geht das trotzdem!!!: 
 var glhide = glshow();
 //  alert(glhide);
 
 
-//New map positioning objectS:
+//New map positioning object:
+  //array contains positions for glmap and olmap: 
+  //0:overview, 1: insel, 2:neckar, 3: esplanade, 4: current
 var zentrum =
 [{  pos: [{latitude:49.14738,longitude:9.20787}, {lon: 9.213688373565114,lat: 49.14766022867995} ], 
     zoom: [16.4, 16], 
@@ -152,6 +171,11 @@ var zentrum =
     zoom: [17.4, 18],
     tilt: 59.5, 
     rot: 111.2},
+
+  { pos: [{latitude:49.14844,longitude:9.20444}, {lon: 9.210099577903108,lat: 49.14574431619457}], 
+    zoom: [17.2, 17], 
+    tilt: 60, 
+    rot: 312.3},
 
   { pos: [{latitude:49.14844,longitude:9.20444}, {lon: 9.210099577903108,lat: 49.14574431619457}], 
     zoom: [17.2, 17], 
@@ -191,8 +215,8 @@ $( document ).ready(function() {
             $('[data-toggle="popover"]').addClass('disabled');
             $('[data-toggle="popover"]').popover();
             glhide();
-            threed = false;
-            console.log(threed);
+            /*threed = false;
+            console.log(threed);*/
           }
     }     
  })();
@@ -415,7 +439,7 @@ $('.toglink').click(function(event){
   switch (threed){
     case true: 
     //  alert('threed is '+threed);
-      var no = this.attributes['no'].value;
+      no = this.attributes['no'].value;
     //  alert(no);
       glmap.setPosition(zentrum[no].pos[0]);
       glmap.setZoom(zentrum[no].zoom[0]);
@@ -424,12 +448,12 @@ $('.toglink').click(function(event){
     break;
     default:
      // alert('threed is '+threed);
-      var nool = this.attributes['no'].value;
-      var proob = olmap.getProjectionObject(); 
-      var wgsproj = new OpenLayers.Projection('EPSG:4326'); 
+      nool = this.attributes['no'].value;
+      proob = olmap.getProjectionObject(); 
+      wgsproj = new OpenLayers.Projection('EPSG:4326'); 
       //alert(zentrum[nool]);
-      var lonlatol = new OpenLayers.LonLat(zentrum[nool].pos[1].lon, zentrum[nool].pos[1].lat);
-      var zol = zentrum[nool].zoom[1];
+      lonlatol = new OpenLayers.LonLat(zentrum[nool].pos[1].lon, zentrum[nool].pos[1].lat);
+      zol = zentrum[nool].zoom[1];
       olmap.setCenter(lonlatol.transform(wgsproj, proob), zol);
       
       break;
