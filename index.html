@@ -126,13 +126,13 @@ function glshow(firsttime){
     console.log('zentrum[4].zoom[0]'+zentrum[4].zoom[0]);
     var olxy = olmap.getCenter();
     console.log('olxy'+olxy);
-    var olxx = olxy.lon.transform(olmap.getProjectionObject(),
+    var tolxy = olxy.transform(olmap.getProjectionObject(),
           new OpenLayers.Projection('EPSG:4326')     
         );
+    console.log('tolxy'+tolxy);
+    var olxx = tolxy.lon.toFixed(4);
     console.log('olxx'+olxx);
-    var olyy = olxy.lat.transform(olmap.getProjectionObject(),
-          new OpenLayers.Projection('EPSG:4326')     
-        );
+    var olyy = tolxy.lat.toFixed(4);
     console.log('olyy'+olyy);
     zentrum[4].pos[0].longitude = olxx;
     console.log('zentrum[4].pos[0].longitude'+zentrum[4].pos[0].longitude);
