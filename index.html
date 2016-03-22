@@ -38,6 +38,8 @@
     height: 34px;
     }
 
+    .btn.shrink {width:2%; display:block; margin: 0 auto;}
+
     .olControlAttribution {
         bottom: 5px !important;
         font-size: 11px;
@@ -537,27 +539,46 @@ $('.toglink').click(function(event){
     <div class="container theme-showcase">
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron home">
-        <h3>Hello, world!</h3>
-        <p>This is my webdev playground for the visualisation of the BUGA Heilbronn. It uses  mainly OSMBuildings code. </p>
+        <div id="shrink0" class="collapse in">
+          <h3>Hello, world!</h3>
+          <p>This is my webdev playground for the visualisation of the BUGA Heilbronn. It uses  mainly OSMBuildings code. </p>
+        </div>
+        <button type="button" class="btn btn-xs btn-info shrink" data-toggle="collapse" data-target="#shrink0">i</button>
       </div>
+
       <div class="jumbotron neckar">
-        <h3>Neckarschenkel</h3>
-        <p>Der Neckarschenkel bildet den Abschluss des Neckardreiecks zum Altneckar und zum Stadtzentrum hin. Hier wird eine halboffene Bebauungsweise dominieren... </p>
+        <div id="shrink1" class="collapse in">
+          <h3>Neckarschenkel</h3>
+          <p>Der Neckarschenkel bildet den Abschluss des Neckardreiecks zum Altneckar und zum Stadtzentrum hin. Hier wird eine halboffene Bebauungsweise dominieren... </p>
+        </div>
+        <button type="button" class="btn btn-xs btn-info shrink" data-toggle="collapse" data-target="#shrink1">i</button>
       </div>
+
       <div class="jumbotron esplanade">
-        <h3>Esplanadenschenkel</h3>
-        <p>Im Gegensatz zum Insel- und zum Neckarschenkel bildet der Esplanadenschenkel einen breiten Übergang zum hochverdichteten Bahnhofsviertel und ist deshalb hauptsächlich durch eine geschlossene Bebauungsweise charakterisiert... </p>
+        <div id="shrink2" class="collapse in">
+          <h3>Esplanadenschenkel</h3>
+          <p>Im Gegensatz zum Insel- und zum Neckarschenkel bildet der Esplanadenschenkel einen breiten Übergang zum hochverdichteten Bahnhofsviertel und ist deshalb hauptsächlich durch eine geschlossene Bebauungsweise charakterisiert... </p>
+        </div>
+        <button type="button" class="btn btn-xs btn-info shrink" data-toggle="collapse" data-target="#shrink2">i</button>
       </div>
       <div class="jumbotron insel">
-        <h3>Inselschenkel</h3>
-        <p>Auf der Hafenseite wird zwischen den beiden geplanten Seen dieser westliche Schenkel des Neckardreiecks eingebettet sein. Sein Merkmal ist die offene Bebauung...</p>
+        <div id="shrink3" class="collapse in">
+          <h3>Inselschenkel</h3>
+          <p>Auf der Hafenseite wird zwischen den beiden geplanten Seen dieser westliche Schenkel des Neckardreiecks eingebettet sein. Sein Merkmal ist die offene Bebauung...</p>
+        </div>
+        <button type="button" class="btn btn-xs btn-info shrink" data-toggle="collapse" data-target="#shrink3">i</button>
       </div>
-      
+    </div>
+    <!--
+    <div class="row">
+      <div class="col-xs-6"></div>
+      <div class="col-xs-1"></div>
+        <button type="button" id="binfo" class="btn btn-md btn-info" data-toggle="popover" data-placement="bottom" data-trigger="hover" title="This," data-content="is where we could have the jumbotrons show initial info"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> info</p></button>
+      <div class="col-xs-6"></div>  
+    </div>
+    -->
       <div class="row">
         <div id='glmap' class="col-xs-12">
-          <!-- navigation control buttons are disfunct at this stage; 
-          yet dclicking works in any browser and middle mouse fire works for tilt and rotation in Opera...
-           -->
           <div class="control tilt">
             <button class="dec">&#8601;</button>
             <button class="inc">&#8599;</button>
