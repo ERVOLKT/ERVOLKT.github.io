@@ -38,7 +38,7 @@
     height: 34px;
     }
 
-    .btn.shrink {width:2%; display:block; margin: 0 auto;}
+    .btn.shrink {width:8%; display:block; margin: 0 auto;}
 
     .olControlAttribution {
         bottom: 5px !important;
@@ -220,9 +220,25 @@ function resetview(){
 }
 
 $( document ).ready(function() {
-//var threed = true;
-//console.log(threed);
 
+//collapse functionality
+var inihide = $(function() {
+    // setTimeout() function will be fired after page is loaded
+    // it will wait for 5 sec. and then will fire
+    // $("#successMessage").hide() function
+    setTimeout(function() {
+        $("#shrink0").collapse('hide', {}, 500)
+    }, 8000);
+});
+//inihide();
+$("#shrink0").on('hidden.bs.collapse', function(){
+       console.log('collapsible has been hidden');
+      $("#shrinkbutton0").text('show info').removeClass('btn-warning').addClass('btn-info');
+});
+$("#demo").on('shown.bs.collapse', function(){
+        console.log('collapsible has been shown');
+        $("#shrinkbutton0").text('hide info').removeClass('btn-info').addClass('btn-warning');
+});
 
   //Check for webgl-ability
 //adopted   https://developer.mozilla.org/en-US/Learn/WebGL/By_example/Detect_WebGL
@@ -543,7 +559,7 @@ $('.toglink').click(function(event){
           <h3>Hello, world!</h3>
           <p>This is my webdev playground for the visualisation of the BUGA Heilbronn. It uses  mainly OSMBuildings code. </p>
         </div>
-        <button type="button" class="btn btn-xs btn-info shrink" data-toggle="collapse" data-target="#shrink0">i</button>
+        <button type="button" id="shrinkbutton0"class="btn btn-xs btn-info shrink" data-toggle="collapse" data-target="#shrink0">show info</button>
       </div>
 
       <div class="jumbotron neckar">
