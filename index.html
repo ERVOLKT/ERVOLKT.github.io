@@ -223,21 +223,19 @@ $( document ).ready(function() {
 
 //collapse functionality
 var inihide = $(function() {
-    // setTimeout() function will be fired after page is loaded
-    // it will wait for 5 sec. and then will fire
-    // $("#successMessage").hide() function
+    // setTimeout() collapses info-div after 8 seconds
     setTimeout(function() {
         $("#shrink0").collapse('hide', {}, 500)
     }, 8000);
 });
 //inihide();
-$("#shrink0").on('hidden.bs.collapse', function(){
+$(".shrinkdiv").on('hidden.bs.collapse', function(){
        console.log('collapsible has been hidden');
-      $("#shrinkbutton0").text('show info').removeClass('btn-warning').addClass('btn-info');
+      $(".shrink").text('show info').removeClass('btn-warning').addClass('btn-info');
 });
-$("#shrink0").on('shown.bs.collapse', function(){
+$(".shrinkdiv").on('shown.bs.collapse', function(){
         console.log('collapsible has been shown');
-        $("#shrinkbutton0").text('hide info').removeClass('btn-info').addClass('btn-warning');
+        $(".shrink").text('hide info').removeClass('btn-info').addClass('btn-warning');
 });
 
   //Check for webgl-ability
@@ -555,7 +553,7 @@ $('.toglink').click(function(event){
     <div class="container theme-showcase">
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron home">
-        <div id="shrink0" class="collapse in">
+        <div id="shrink0" class="collapse in shrinkdiv">
           <h3>Hello, world!</h3>
           <p>This is my webdev playground for the visualisation of the BUGA Heilbronn. It uses  mainly OSMBuildings code. </p>
         </div>
@@ -563,7 +561,7 @@ $('.toglink').click(function(event){
       </div>
 
       <div class="jumbotron neckar">
-        <div id="shrink1" class="collapse in">
+        <div id="shrink1" class="collapse in shrinkdiv">
           <h3>Neckarschenkel</h3>
           <p>Der Neckarschenkel bildet den Abschluss des Neckardreiecks zum Altneckar und zum Stadtzentrum hin. Hier wird eine halboffene Bebauungsweise dominieren... </p>
         </div>
@@ -571,14 +569,14 @@ $('.toglink').click(function(event){
       </div>
 
       <div class="jumbotron esplanade">
-        <div id="shrink2" class="collapse in">
+        <div id="shrink2" class="collapse in shrinkdiv">
           <h3>Esplanadenschenkel</h3>
           <p>Im Gegensatz zum Insel- und zum Neckarschenkel bildet der Esplanadenschenkel einen breiten Übergang zum hochverdichteten Bahnhofsviertel und ist deshalb hauptsächlich durch eine geschlossene Bebauungsweise charakterisiert... </p>
         </div>
         <button type="button" class="btn btn-xs btn-info shrink" data-toggle="collapse" data-target="#shrink2">i</button>
       </div>
       <div class="jumbotron insel">
-        <div id="shrink3" class="collapse in">
+        <div id="shrink3" class="collapse in shrinkdiv">
           <h3>Inselschenkel</h3>
           <p>Auf der Hafenseite wird zwischen den beiden geplanten Seen dieser westliche Schenkel des Neckardreiecks eingebettet sein. Sein Merkmal ist die offene Bebauung...</p>
         </div>
