@@ -231,11 +231,11 @@ var inihide = $(function() {
 //inihide();
 $(".shrinkdiv").on('hidden.bs.collapse', function(){
        console.log('collapsible has been hidden');
-      $(".shrink").text('show info').removeClass('btn-warning').addClass('btn-info');
+      $("#"+this.id+"button").text('show info').removeClass('btn-warning').addClass('btn-info');
 });
 $(".shrinkdiv").on('shown.bs.collapse', function(){
         console.log('collapsible has been shown');
-        $(".shrink").text('hide info').removeClass('btn-info').addClass('btn-warning');
+        $("#"+this.id+"button").text('hide info').removeClass('btn-info').addClass('btn-warning');
 });
 
   //Check for webgl-ability
@@ -557,30 +557,30 @@ $('.toglink').click(function(event){
           <h3>Hello, world!</h3>
           <p>This is my webdev playground for the visualisation of the BUGA Heilbronn. It uses  mainly OSMBuildings code. </p>
         </div>
-        <button type="button" id="shrinkbutton0"class="btn btn-xs btn-info shrink" data-toggle="collapse" data-target="#shrink0">show info</button>
+        <button type="button" id="shrink0button"class="btn btn-xs btn-info shrink" data-toggle="collapse" data-target="#shrink0">show info</button>
       </div>
 
       <div class="jumbotron neckar">
-        <div id="shrink1" class="collapse in shrinkdiv">
+        <div id="shrink1" class="collapse shrinkdiv">
           <h3>Neckarschenkel</h3>
           <p>Der Neckarschenkel bildet den Abschluss des Neckardreiecks zum Altneckar und zum Stadtzentrum hin. Hier wird eine halboffene Bebauungsweise dominieren... </p>
         </div>
-        <button type="button" class="btn btn-xs btn-info shrink" data-toggle="collapse" data-target="#shrink1">i</button>
+        <button type="button" id="shrink1button"class="btn btn-xs btn-info shrink" data-toggle="collapse" data-target="#shrink1">show info</button>
       </div>
 
       <div class="jumbotron esplanade">
-        <div id="shrink2" class="collapse in shrinkdiv">
+        <div id="shrink2" class="collapse shrinkdiv">
           <h3>Esplanadenschenkel</h3>
           <p>Im Gegensatz zum Insel- und zum Neckarschenkel bildet der Esplanadenschenkel einen breiten Übergang zum hochverdichteten Bahnhofsviertel und ist deshalb hauptsächlich durch eine geschlossene Bebauungsweise charakterisiert... </p>
         </div>
-        <button type="button" class="btn btn-xs btn-info shrink" data-toggle="collapse" data-target="#shrink2">i</button>
+        <button type="button" id="shrink2button" class="btn btn-xs btn-info shrink" data-toggle="collapse" data-target="#shrink2">show info</button>
       </div>
       <div class="jumbotron insel">
-        <div id="shrink3" class="collapse in shrinkdiv">
+        <div id="shrink3" class="collapse shrinkdiv">
           <h3>Inselschenkel</h3>
           <p>Auf der Hafenseite wird zwischen den beiden geplanten Seen dieser westliche Schenkel des Neckardreiecks eingebettet sein. Sein Merkmal ist die offene Bebauung...</p>
         </div>
-        <button type="button" class="btn btn-xs btn-info shrink" data-toggle="collapse" data-target="#shrink3">i</button>
+        <button type="button" id="shrink3button" class="btn btn-xs btn-info shrink" data-toggle="collapse" data-target="#shrink3">show info</button>
       </div>
     </div>
     <!--
