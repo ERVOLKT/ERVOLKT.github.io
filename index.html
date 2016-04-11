@@ -238,6 +238,47 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
         $("#"+this.id+"button").text('hide info').removeClass('btn-info').addClass('btn-warning');
 });
 
+//check device type and adapt to it
+(function(){
+  var screwi = screen.width;
+  if (screwi<993){
+    alert('screen width is tablet or mobile '+screwi+' pixels');
+  //hide webgl-control-buttons
+    $('.dec, .inc, .north').hide();
+
+  //Touch Screen Controls
+    var gltouch = document.getElementById('glmap');
+      // Hammer manager object, w/o presetted recognizers.
+    var mc = new Hammer.Manager(gltouch);
+      //add touch event recognizers
+    mc.add( new Hammer.Swipe({ pointers: 1, threshold: 5, velocity: 0.2}));
+    mc.add( new Hammer.Pinch({ enable: true}));
+    mc.add( new Hammer.Rotate({event: 'rotate', enable: true
+      , threshold: 20
+     , direction: Hammer.DIRECTION_RIGHT
+     }));
+     //response to touchgevents
+    mc.on('swipeleft', function(ev) {
+     glmap.setTilt(glmap.getTilt()+20);
+    });
+    mc.on('swiperight', function(ev) {
+     glmap.setTilt(glmap.getTilt()-20);
+    });
+    mc.on('pinchin', function(ev) {
+     glmap.setZoom(glmap.getZoom()*0.995);
+    });
+    mc.on('pinchout', function(ev) {
+     glmap.setZoom(glmap.getZoom()*1.005);
+    });
+    mc.on('rotate', function(ev) {
+      glmap.setRotation(glmap.getRotation()+5);
+    });
+  }
+  else {
+    alert('screen width is above tablet '+screwi+' pixels');   
+  }
+})();
+
   //Check for webgl-ability
 //adopted   https://developer.mozilla.org/en-US/Learn/WebGL/By_example/Detect_WebGL
 (function detectWebGLContext1 () {
@@ -341,35 +382,6 @@ for (var i = 0; i < controlButtons.length; i++) {
     
   });
 }
-
-//Touch Screen Controls
- var gltouch = document.getElementById('glmap');
-// Hammer manager object, w/o presetted recognizers.
-  var mc = new Hammer.Manager(gltouch);
-  //add touch event recognizers
-  mc.add( new Hammer.Swipe({ pointers: 1, threshold: 5, velocity: 0.2}));
-  mc.add( new Hammer.Pinch({ enable: true}));
-  mc.add( new Hammer.Rotate({event: 'rotate', enable: true
-    , threshold: 20
-   , direction: Hammer.DIRECTION_RIGHT
-   }));
-
-   //response to events
-  mc.on('swipeleft', function(ev) {
-   glmap.setTilt(glmap.getTilt()+20);
-  });
-  mc.on('swiperight', function(ev) {
-   glmap.setTilt(glmap.getTilt()-20);
-  });
-  mc.on('pinchin', function(ev) {
-   glmap.setZoom(glmap.getZoom()*0.995);
-  });
-  mc.on('pinchout', function(ev) {
-   glmap.setZoom(glmap.getZoom()*1.005);
-  });
-  mc.on('rotate', function(ev) {
-    glmap.setRotation(glmap.getRotation()+5);
-  });
 
     $(".glhide").click(function(){
          glhide();
@@ -607,7 +619,7 @@ $('.toglink').click(function(event){
             <button class="dec">-</button>
             <button class="inc">+</button>
             <div id="button">
-            <button id="switch" class="control" type="button" onclick="resetview()">N</button>
+            <button id="switch" class="control north" type="button" onclick="resetview()">N</button>
           </div>
           </div>
         </div>
