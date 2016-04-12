@@ -249,7 +249,7 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
   if (screwi<993){
     alert('screen width is tablet or mobile '+screwi+' pixels');
   //hide webgl-control-buttons
-    $('.dec, .inc, .north').hide();
+    $('.dec, .inc, .north, .olControlPanPanel').hide();
 
   //Touch Screen Controls
     var gltouch = document.getElementById('glmap');
@@ -279,11 +279,12 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
       glmap.setRotation(glmap.getRotation()+5);
     });
   }
-  else if (screwi>1199){
-    olmap.addControl(new OpenLayers.Control.PanPanel);
+  else if (screwi>1800){
+    alert('screen width is largescreen :  '+screwi+' pixels'); 
   }
-  else {
-    alert('screen width is above tablet and below largescreen:  '+screwi+' pixels');   
+  else {  
+    alert('screen width is between tablet and largescreen:  '+screwi+' pixels');
+    $('.olControlPanPanel').hide();
   }
 })();
 
