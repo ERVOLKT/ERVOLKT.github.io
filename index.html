@@ -50,8 +50,8 @@
     }
 
     .olControlPanPanel{
-      top: 0.5%;
-      left: 15%;
+      bottom: 20px !important;
+      left: 5px !important;
     }
 
     .jumbotron {
@@ -249,7 +249,7 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
   if (screwi<993){
     alert('screen width is tablet or mobile '+screwi+' pixels');
   //hide webgl-control-buttons
-    $('.dec, .inc, .north, .olControlPanPanel').hide();
+    $('.dec, .inc, .north').hide();
 
   //Touch Screen Controls
     var gltouch = document.getElementById('glmap');
@@ -284,7 +284,7 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
   }
   else {  
     alert('screen width is between tablet and largescreen:  '+screwi+' pixels');
-    $('.olControlPanPanel').hide();
+//    $('.olControlPanPanel').hide();
   }
 })();
 
@@ -342,8 +342,11 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
        'https://c.tiles.mapbox.com/v3/volker6457.no773m04/${z}/${x}/${y}.png'
        ]
       ));
-
+    
+  if (screen.width>1800){
+    alert('above 1200px');
     olmap.addControl(new OpenLayers.Control.PanPanel);
+  }
 
     olmap.setCenter(
       new OpenLayers.LonLat(9.209123253822327, 49.14630295624662)
