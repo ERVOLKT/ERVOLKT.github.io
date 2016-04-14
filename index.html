@@ -49,11 +49,6 @@
       top: 5px !important;
     }
 
-    .olControlPanPanel{
-      bottom: 20px !important;
-      left: 5px !important;
-    }
-
     .jumbotron {
     padding-bottom: 8px;
     }
@@ -247,7 +242,7 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
 (function(){
   var screwi = screen.width;
   if (screwi<993){
-    alert('screen width is tablet or mobile '+screwi+' pixels');
+   console.log('screen width is tablet or mobile '+screwi+' pixels');
   //hide webgl-control-buttons
     $('.dec, .inc, .north').hide();
 
@@ -279,12 +274,9 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
       glmap.setRotation(glmap.getRotation()+5);
     });
   }
-  else if (screwi>1800){
-    alert('screen width is largescreen :  '+screwi+' pixels'); 
-  }
+
   else {  
-    alert('screen width is between tablet and largescreen:  '+screwi+' pixels');
-//    $('.olControlPanPanel').hide();
+    console.log('screen width is tablet minimum:  '+screwi+' pixels. If it is 1200px or higher, the 2d map will show an extra PanPanel');
   }
 })();
 
@@ -334,7 +326,6 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
             }
             }
             );
-    //  olmap.addControl(new OpenLayers.Control.LayerSwitcher());
    
       olmap.addLayer(new OpenLayers.Layer.OSM("Mapbox_outdoors_volker",
        ['https://a.tiles.mapbox.com/v3/volker6457.no773m04/${z}/${x}/${y}.png',
@@ -342,10 +333,15 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
        'https://c.tiles.mapbox.com/v3/volker6457.no773m04/${z}/${x}/${y}.png'
        ]
       ));
-    
-  if (screen.width>1800){
-    alert('above 1200px');
+
+  //  olmap.addControl(new OpenLayers.Control.LayerSwitcher());
+  
+  // better handling, e.g. on Smart-TVs  
+  if (screen.width>1199){
+    console.log('screen is =>1200px');
     olmap.addControl(new OpenLayers.Control.PanPanel);
+      // position the PanPanel here, since css is difficult even with !important
+    $( ".olControlPanPanel" ).animate({ "top": "+=75px" }, "fast" );
   }
 
     olmap.setCenter(
