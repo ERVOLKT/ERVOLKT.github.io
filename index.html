@@ -48,6 +48,14 @@
       top: 5px !important;
     }
 
+    div.olControlZoom{
+    background: rgba(0,0,0,0.7);
+    }
+
+    div.olControlZoom a{
+    background: rgba(0, 0, 0, 0.5);
+    }
+
     .jumbotron {
     padding-bottom: 8px;
     }
@@ -275,7 +283,7 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
   }
 
   else {  
-    console.log('screen width is tablet minimum:  '+screwi+' pixels. If it is 1200px or higher, the 2d map will show an extra PanPanel');
+    console.log('screen width is tablet minimum:  '+screwi+' pixels. If it is 1200px or higher, the 2d map will show an extra Control bar');
   }
 })();
 
@@ -333,7 +341,7 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
        ]
       ));
 
-// olmap.addControl(new OpenLayers.Control.Navigation());
+  olmap.addControl(new OpenLayers.Control.Navigation());
   olmap.addControl(new OpenLayers.Control.ArgParser());
   olmap.addControl(new OpenLayers.Control.Attribution());
   
@@ -344,7 +352,7 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
     olmap.addControl(new OpenLayers.Control.PanZoom());
   }
   else {
-     olmap.addControl(new OpenLayers.Control.ZoomBar());
+     olmap.addControl(new OpenLayers.Control.Zoom());
   }
 
     olmap.setCenter(
