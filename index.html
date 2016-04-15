@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-   
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="GLMap/GLMap.css"/>
@@ -307,7 +306,7 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
           }
     }     
  })();
-  
+       
 //++++2.5D
 //OpenLayers2-OSMB-MAP
  olmap = new OpenLayers.Map('olmap'
@@ -320,10 +319,10 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
                  if (threedz > 16){
                      console.log("zoom ist "+threedz);
     //            dswitch('turnon', threedz, threedxy);      
+                }                
                 }
-                
-                }
-            }
+            }, 
+            controls: []
             }
             );
    
@@ -334,14 +333,18 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
        ]
       ));
 
-  //  olmap.addControl(new OpenLayers.Control.LayerSwitcher());
+// olmap.addControl(new OpenLayers.Control.Navigation());
+  olmap.addControl(new OpenLayers.Control.ArgParser());
+  olmap.addControl(new OpenLayers.Control.Attribution());
+  
   
   // better handling, e.g. on Smart-TVs  
   if (screen.width>1199){
     console.log('screen is =>1200px');
-    olmap.addControl(new OpenLayers.Control.PanPanel);
-      // position the PanPanel here, since css is difficult even with !important
-    $( ".olControlPanPanel" ).animate({ "top": "+=75px" }, "fast" );
+    olmap.addControl(new OpenLayers.Control.PanZoom());
+  }
+  else {
+     olmap.addControl(new OpenLayers.Control.ZoomBar());
   }
 
     olmap.setCenter(
