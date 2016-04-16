@@ -48,14 +48,6 @@
       top: 5px !important;
     }
 
-    div.olControlZoom{
-    background: rgba(0,0,0,0.7);
-    }
-
-    div.olControlZoom a{
-    background: rgba(0, 0, 0, 0.5);
-    }
-
     .jumbotron {
     padding-bottom: 8px;
     }
@@ -353,7 +345,9 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
   }
   else {
      olmap.addControl(new OpenLayers.Control.Zoom());
-  }
+     $("div.olControlZoom").css("background", "rgba(0,0,0,0.7)");
+     $("div.olControlZoom a").css("background", "rgba(0,0,0,0.5)");
+    }
 
     olmap.setCenter(
       new OpenLayers.LonLat(9.209123253822327, 49.14630295624662)
