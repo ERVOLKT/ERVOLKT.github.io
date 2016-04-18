@@ -342,8 +342,9 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
   // better handling, e.g. on Smart-TVs  
   if (screen.width>1199){
     console.log('screen is =>1200px');
-    olmap.addControl(new OpenLayers.Control.PanZoom());
+    olmap.addControl(new OpenLayers.Control.PanZoom({'slideRatio':0.3}));
   }
+
   else {
      olmap.addControl(new OpenLayers.Control.Zoom());
      $("div.olControlZoom").css("background", "rgba(0,0,0,0.7)");
