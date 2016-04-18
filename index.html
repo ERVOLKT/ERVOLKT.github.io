@@ -262,19 +262,19 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
      }));
      //response to touchgevents
     mc.on('swipeleft', function(ev) {
-     glmap.setTilt(glmap.getTilt()+20);
+     glmap.setTilt(glmap.getTilt()+13);
     });
     mc.on('swiperight', function(ev) {
-     glmap.setTilt(glmap.getTilt()-20);
+     glmap.setTilt(glmap.getTilt()-13);
     });
     mc.on('pinchin', function(ev) {
-     glmap.setZoom(glmap.getZoom()*0.995);
+     glmap.setZoom(glmap.getZoom()*0.997);
     });
     mc.on('pinchout', function(ev) {
-     glmap.setZoom(glmap.getZoom()*1.005);
+     glmap.setZoom(glmap.getZoom()*1.003);
     });
     mc.on('rotate', function(ev) {
-      glmap.setRotation(glmap.getRotation()+5);
+      glmap.setRotation(glmap.getRotation()+3);
     });
   }
 
