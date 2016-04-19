@@ -352,6 +352,7 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
      olmap.addControl(new OpenLayers.Control.Zoom());
      $("div.olControlZoom").css("background", "rgba(0,0,0,0.7)");
      $("div.olControlZoom a").css("background", "rgba(0,0,0,0.5)");
+     $("div.olControlZoom").animate({ "left": "+=15px" }, "fast" )
     }
 
     olmap.setCenter(
