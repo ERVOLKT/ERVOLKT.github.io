@@ -371,6 +371,11 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
 // Webgl Control Buttons
 var controlButtons = document.querySelectorAll('.control button');
 
+$(controlButtons).dblclick(function() {
+  console.log( "Handler for button .dblclick() called." );
+  return false;
+});
+
 for (var i = 0; i < controlButtons.length; i++) {
   controlButtons[i].addEventListener('click', function(e) {
     var button = this;
