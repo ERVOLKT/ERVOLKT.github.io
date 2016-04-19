@@ -261,23 +261,18 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
      }));
      //response to touchgevents
     mc.on('swipeleft', function(ev) {
-      return false;
      glmap.setTilt(glmap.getTilt()+13);
     });
     mc.on('swiperight', function(ev) {
-      return false;
      glmap.setTilt(glmap.getTilt()-13);
     });
     mc.on('pinchin', function(ev) {
-      return false;
      glmap.setZoom(glmap.getZoom()*0.997);
     });
     mc.on('pinchout', function(ev) {
-      return false;
      glmap.setZoom(glmap.getZoom()*1.003);
     });
     mc.on('rotate', function(ev) {
-      return false;
       glmap.setRotation(glmap.getRotation()+3);
     });
   }
