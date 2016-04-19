@@ -18,8 +18,7 @@
     <script src="OSMBuildings/OSMBuildings-GLMap.debug.js"></script>
    <script src="js/hammer.js"></script>
     <!-- Additional GeoJSON Data -->
-    <script src="bugabuildings.js"></script>
-       
+    <script src="bugabuildings.js"></script>      
     <style>
     .dimbutton{
     position: absolute;
@@ -346,6 +345,7 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
   if (screen.width>1199){
     console.log('screen is =>1200px');
     olmap.addControl(new OpenLayers.Control.PanZoom({'slideRatio':0.3}));
+    $( ".olControlPanZoom" ).animate({ "left": "+=15px" }, "fast" );
   }
 
   else {
