@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="GLMap/GLMap.css"/>
+
+    <link rel="stylesheet" href="./style/mobile-console.min.css">
+    <script src="./mobile-console.min.js"></script>
     
     <script src="jquery/jquery-2.1.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -108,6 +111,9 @@
     </style>
    
     <script type="text/javascript">
+//enable message console on mobile
+mobileConsole.show();
+
 //global variables
 var buildingstyle = {
     twodstyle: {roofColor: 'rgba(204, 102, 0, 0.6)', color: 'rgb(190,158,150)'},
@@ -246,7 +252,7 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
   if (screwi<993){
    console.log('screen width is tablet or mobile '+screwi+' pixels');
   //hide webgl-control-buttons
-    $('.dec, .inc, .north').hide();
+  //  $('.dec, .inc, .north').hide();
 
   //Touch Screen Controls
     var gltouch = document.getElementById('glmap');
