@@ -111,9 +111,6 @@
     </style>
    
     <script type="text/javascript">
-//enable message console on mobile
-mobileConsole.show();
-
 //global variables
 var buildingstyle = {
     twodstyle: {roofColor: 'rgba(204, 102, 0, 0.6)', color: 'rgb(190,158,150)'},
@@ -281,6 +278,9 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
     mc.on('rotate', function(ev) {
       glmap.setRotation(glmap.getRotation()+3);
     });
+
+     //enable message console on mobile
+    mobileConsole.show(); 
   }
 
   else {  
@@ -550,8 +550,6 @@ $('.toglink').click(function(event){
       break;
   }
   }); 
-   
-
 });
     
 </script> 
