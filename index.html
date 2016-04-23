@@ -164,31 +164,29 @@ function glshow(firsttime){
   console.log(threed);
   try {
     var glzoom = glmap.getZoom();
-  zentrum[4].zoom[1] = glzoom;
-  var glxy = glmap.getPosition();
-  var glxx = glxy.longitude.toFixed(4);
-  //alert(glxx);
-  var glyy = glxy.latitude.toFixed(4);
- // alert(glyy);
-  zentrum[4].pos[1].lon = glxx;
-  zentrum[4].pos[1].lat = glyy;
-}
-catch(err) {
-    throw "seems the app´s hung up on sth. Here's the original error message: "+err;
-} 
-  
-
-  $("#glmap").hide();
-  $("#olmap").show();
-   olmap.setCenter(
-      new OpenLayers.LonLat(zentrum[4].pos[1].lon,  zentrum[4].pos[1].lat)
-      .transform(
-        new OpenLayers.Projection('EPSG:4326'),
-        olmap.getProjectionObject()
-      ), zentrum[4].zoom[1]);
- 
+    zentrum[4].zoom[1] = glzoom;
+    var glxy = glmap.getPosition();
+    var glxx = glxy.longitude.toFixed(4);
+    //alert(glxx);
+    var glyy = glxy.latitude.toFixed(4);
+   // alert(glyy);
+    zentrum[4].pos[1].lon = glxx;
+    zentrum[4].pos[1].lat = glyy;
+  }
+  catch(err) {
+      throw "seems the app´s hung up on sth. Here's the original error message: "+err;
   } 
-
+  finally{  
+      $("#glmap").hide();
+      $("#olmap").show();
+      olmap.setCenter(
+        new OpenLayers.LonLat(zentrum[4].pos[1].lon,  zentrum[4].pos[1].lat)
+        .transform(
+          new OpenLayers.Projection('EPSG:4326'),
+          olmap.getProjectionObject()
+        ), zentrum[4].zoom[1]); 
+  } 
+} 
   return olshow;
 }
  
