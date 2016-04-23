@@ -160,7 +160,8 @@ function glshow(firsttime){
 
   function olshow(nowebgl){
   threed = false;
-  alert("started fu olshow/glhide");
+  console.log("started fu olshow/glhide");
+  console.log("var nowebgl is "+nowebgl);
 //  console.log(threed);
   if (nowebgl === undefined){
     var glzoom = glmap.getZoom();
@@ -180,17 +181,18 @@ function glshow(firsttime){
         new OpenLayers.LonLat(zentrum[4].pos[1].lon,  zentrum[4].pos[1].lat)
         .transform(
           new OpenLayers.Projection('EPSG:4326'),
-          new OpenLayers.Projection('EPSG:900913')
+          olmap.getProjectionObject()
         ), zentrum[4].zoom[1]); 
   }
   else {
       $("#glmap").hide();
       $("#olmap").show();
+      console.log("olmap is "+olmap);
       olmap.setCenter(
         new OpenLayers.LonLat(zentrum[4].pos[1].lon,  zentrum[4].pos[1].lat)
         .transform(
           new OpenLayers.Projection('EPSG:4326'),
-          olmap.getProjectionObject()
+          new OpenLayers.Projection('EPSG:900913')
         ), zentrum[4].zoom[1]);
 
   }  
