@@ -160,6 +160,7 @@ function glshow(firsttime){
 
   function olshow(){
   threed = false;
+  alert("started fu olshow/glhide");
   console.log(threed);
   var glzoom = glmap.getZoom();
   zentrum[4].zoom[1] = glzoom;
@@ -298,7 +299,7 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
     var xgl = canvas.getContext("experimental-webgl");
     // Report the result.
     if (gl && gl instanceof WebGLRenderingContext) {
-      console.log("Browser supports WebGL.");           
+      console.log("Browser supports WebGL.");         
     } else {
        alert("Browser does NOT support WebGL.");
         if (xgl && xgl instanceof WebGLRenderingContext) {
@@ -309,9 +310,7 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
              //disable 3d button and show a popover info
             $('[data-toggle="popover"]').addClass('disabled');
             $('[data-toggle="popover"]').popover();
-            glhide();
-            /*threed = false;
-            console.log(threed);*/
+            glhide();            
           }
     }     
  })();
