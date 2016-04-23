@@ -189,12 +189,35 @@ function glshow(firsttime){
       $("#glmap").hide();
       $("#olmap").show();
       console.log("inside else:olmap is "+olmap);
-      olmap.setCenter(
-        new OpenLayers.LonLat(zentrum[4].pos[1].lon,  zentrum[4].pos[1].lat)
-        .transform(
-          new OpenLayers.Projection('EPSG:4326'),
-          new OpenLayers.Projection('EPSG:900913')
-        ), zentrum[4].zoom[1]);
+      
+     olmap = new OpenLayers.Map('olmap'
+    , 
+            {eventListeners: {
+                move: function(e) {
+                threedz = olmap.getZoom();
+                threedxy = olmap.getCenter();
+                
+                 if (threedz > 16){
+                     console.log("zoom ist "+threedz);
+    //            dswitch('turnon', threedz, threedxy);      
+                }                
+                }
+            }, 
+            controls: []
+            }
+            );
+   
+      olmap.addLayer(new OpenLayers.Layer.OSM("Mapbox_outdoors_volker",
+       ['https://a.tiles.mapbox.com/v3/volker6457.no773m04/${z}/${x}/${y}.png',
+       'https://b.tiles.mapbox.com/v3/volker6457.no773m04/${z}/${x}/${y}.png',
+       'https://c.tiles.mapbox.com/v3/volker6457.no773m04/${z}/${x}/${y}.png'
+       ]
+      ));
+
+  olmap.addControl(new OpenLayers.Control.Navigation());
+  olmap.addControl(new OpenLayers.Control.ArgParser());
+  olmap.addControl(new OpenLayers.Control.Attribution());
+  
 
   }  
 } 
