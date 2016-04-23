@@ -158,11 +158,11 @@ function glshow(firsttime){
       $("#olmap").hide();    
   }
 
-  function olshow(){
+  function olshow(nowebgl){
   threed = false;
   alert("started fu olshow/glhide");
-  console.log(threed);
-  try {
+//  console.log(threed);
+  if (nowebgl === undefined){
     var glzoom = glmap.getZoom();
     zentrum[4].zoom[1] = glzoom;
     var glxy = glmap.getPosition();
@@ -172,11 +172,18 @@ function glshow(firsttime){
    // alert(glyy);
     zentrum[4].pos[1].lon = glxx;
     zentrum[4].pos[1].lat = glyy;
+
+   
+      $("#glmap").hide();
+      $("#olmap").show();
+      olmap.setCenter(
+        new OpenLayers.LonLat(zentrum[4].pos[1].lon,  zentrum[4].pos[1].lat)
+        .transform(
+          new OpenLayers.Projection('EPSG:4326'),
+          new OpenLayers.Projection('EPSG:900913')
+        ), zentrum[4].zoom[1]); 
   }
-  catch(err) {
-      throw "seems the app´s hung up on sth. Here's the original error message: "+err;
-  } 
-  finally{  
+  else {
       $("#glmap").hide();
       $("#olmap").show();
       olmap.setCenter(
@@ -184,8 +191,9 @@ function glshow(firsttime){
         .transform(
           new OpenLayers.Projection('EPSG:4326'),
           olmap.getProjectionObject()
-        ), zentrum[4].zoom[1]); 
-  } 
+        ), zentrum[4].zoom[1]);
+
+  }  
 } 
   return olshow;
 }
@@ -314,7 +322,7 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
              //disable 3d button and show a popover info
             $('[data-toggle="popover"]').addClass('disabled');
             $('[data-toggle="popover"]').popover();
-            glhide();            
+            glhide(true);            
           }
     }     
  })();
