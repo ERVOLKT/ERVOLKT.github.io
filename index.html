@@ -162,7 +162,8 @@ function glshow(firsttime){
   threed = false;
   alert("started fu olshow/glhide");
   console.log(threed);
-  var glzoom = glmap.getZoom();
+  try {
+    var glzoom = glmap.getZoom();
   zentrum[4].zoom[1] = glzoom;
   var glxy = glmap.getPosition();
   var glxx = glxy.longitude.toFixed(4);
@@ -171,6 +172,11 @@ function glshow(firsttime){
  // alert(glyy);
   zentrum[4].pos[1].lon = glxx;
   zentrum[4].pos[1].lat = glyy;
+}
+catch(err) {
+    throw "seems the app´s hung up on sth. Here's the original error message: "+err;
+} 
+  
 
   $("#glmap").hide();
   $("#olmap").show();
