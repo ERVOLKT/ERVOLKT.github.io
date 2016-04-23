@@ -164,6 +164,7 @@ function glshow(firsttime){
   console.log("var nowebgl is "+nowebgl);
 //  console.log(threed);
   if (nowebgl === undefined){
+    console.log("inside if:olmap is "+olmap);
     var glzoom = glmap.getZoom();
     zentrum[4].zoom[1] = glzoom;
     var glxy = glmap.getPosition();
@@ -187,7 +188,7 @@ function glshow(firsttime){
   else {
       $("#glmap").hide();
       $("#olmap").show();
-      console.log("olmap is "+olmap);
+      console.log("inside else:olmap is "+olmap);
       olmap.setCenter(
         new OpenLayers.LonLat(zentrum[4].pos[1].lon,  zentrum[4].pos[1].lat)
         .transform(
