@@ -189,7 +189,7 @@ function glshow(firsttime){
       $("#glmap").hide();
       $("#olmap").show();
       console.log("inside else:olmap is "+olmap);
-      
+
      olmap = new OpenLayers.Map('olmap'
     , 
             {eventListeners: {
@@ -214,11 +214,15 @@ function glshow(firsttime){
        ]
       ));
 
-  olmap.addControl(new OpenLayers.Control.Navigation());
-  olmap.addControl(new OpenLayers.Control.ArgParser());
-  olmap.addControl(new OpenLayers.Control.Attribution());
-  
-
+      olmap.addControl(new OpenLayers.Control.Navigation());
+      olmap.addControl(new OpenLayers.Control.ArgParser());
+      olmap.addControl(new OpenLayers.Control.Attribution());
+      olmap.setCenter(
+        new OpenLayers.LonLat(zentrum[4].pos[1].lon,  zentrum[4].pos[1].lat)
+        .transform(
+          new OpenLayers.Projection('EPSG:4326'),
+          new OpenLayers.Projection('EPSG:4326')
+        ), zentrum[4].zoom[1]);
   }  
 } 
   return olshow;
