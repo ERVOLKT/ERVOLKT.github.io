@@ -100,7 +100,7 @@
         height: 500px;
     }
     
-    /*Achte hierauf sonst könnte die olmap nicht sichtbar sein!*/
+    /*olmap-height has to be set - otherwise possibly invisible...*/
     #olmap {  
       height: 500px;
     }
@@ -126,25 +126,25 @@ function glshow(firsttime){
 //  console.log(threed);
   
   if (firsttime === undefined){
-    console.log('with parameter '+firsttime+', complex code should run here');
+   // console.log('with parameter '+firsttime+', complex code should run here');
     var olzoom = olmap.getZoom();
-    console.log('olzoom'+olzoom);
+  //  console.log('olzoom'+olzoom);
     zentrum[4].zoom[0] = olzoom;
-    console.log('zentrum[4].zoom[0]'+zentrum[4].zoom[0]);
+  //  console.log('zentrum[4].zoom[0]'+zentrum[4].zoom[0]);
     var olxy = olmap.getCenter();
-    console.log('olxy'+olxy);
+  //  console.log('olxy'+olxy);
     var tolxy = olxy.transform(olmap.getProjectionObject(),
           new OpenLayers.Projection('EPSG:4326')     
         );
-    console.log('tolxy'+tolxy);
+  //  console.log('tolxy'+tolxy);
     var olxx = tolxy.lon.toFixed(4);
-    console.log('olxx'+olxx);
+  //  console.log('olxx'+olxx);
     var olyy = tolxy.lat.toFixed(4);
-    console.log('olyy'+olyy);
+  //  console.log('olyy'+olyy);
     zentrum[4].pos[0].longitude = olxx;
-    console.log('zentrum[4].pos[0].longitude'+zentrum[4].pos[0].longitude);
+  //  console.log('zentrum[4].pos[0].longitude'+zentrum[4].pos[0].longitude);
     zentrum[4].pos[0].latitude = olyy;
-    console.log('zentrum[4].pos[0].latitude'+zentrum[4].pos[0].latitude);
+  //  console.log('zentrum[4].pos[0].latitude'+zentrum[4].pos[0].latitude);
 
     $("#glmap").show();
     $("#olmap").hide();
@@ -153,7 +153,7 @@ function glshow(firsttime){
     glmap.setPosition(zentrum[4].pos[0]);
 
   } else {  
-      console.log('with parameter '+firsttime+', simple code should run here');
+  //    console.log('with parameter '+firsttime+', simple code should run here');
       $("#glmap").show();
       $("#olmap").hide();    
   }
@@ -214,6 +214,9 @@ function glshow(firsttime){
        ]
       ));
 
+      olmap.addLayer(new OpenLayers.Layer.WMS( "HD Hillshade",
+                    "http://129.206.228.72/osm-proxy/service", {layers: 'europe_wms:hs_srtm_europa', transparent: true}, {opacity: 0.45, projection: new OpenLayers.Projection("EPSG:900913")} ));
+      
       olmap.addControl(new OpenLayers.Control.Navigation());
       olmap.addControl(new OpenLayers.Control.ArgParser());
       olmap.addControl(new OpenLayers.Control.Attribution());
@@ -278,11 +281,11 @@ var inihide = $(function() {
 });
 //inihide();
 $(".shrinkdiv").on('hidden.bs.collapse', function(){
-       console.log('collapsible has been hidden');
+  //     console.log('collapsible has been hidden');
       $("#"+this.id+"button").text('show info').removeClass('btn-warning').addClass('btn-info');
 });
 $(".shrinkdiv").on('shown.bs.collapse', function(){
-        console.log('collapsible has been shown');
+  //      console.log('collapsible has been shown');
         $("#"+this.id+"button").text('hide info').removeClass('btn-info').addClass('btn-warning');
 });
 
@@ -290,7 +293,7 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
 (function(){
   var screwi = screen.width;
   if (screwi<993){
-   console.log('screen width is tablet or mobile '+screwi+' pixels');
+//   console.log('screen width is tablet or mobile '+screwi+' pixels');
   //hide webgl-control-buttons
   //  $('.dec, .inc, .north').hide();
 
@@ -327,7 +330,7 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
   }
 
   else {  
-    console.log('screen width is tablet minimum:  '+screwi+' pixels. If it is 1200px or higher, the 2d map will show an extra Control bar');
+  //  console.log('screen width is tablet minimum:  '+screwi+' pixels. If it is 1200px or higher, the 2d map will show an extra Control bar');
   }
 })();
 
@@ -346,7 +349,6 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
        alert("Browser does NOT support WebGL.");
         if (xgl && xgl instanceof WebGLRenderingContext) {
             console.log("Browser supports xperimental WebGL.");
-
           } else {
              alert("Browser does NEITHER support WebGL NOR xperimental WebGL .");
              //disable 3d button and show a popover info
@@ -367,7 +369,7 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
                 threedxy = olmap.getCenter();
                 
                  if (threedz > 16){
-                     console.log("zoom ist "+threedz);
+     //                console.log("zoom ist "+threedz);
     //            dswitch('turnon', threedz, threedxy);      
                 }                
                 }
@@ -390,8 +392,7 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
   
   // better handling, e.g. on Smart-TVs  
   if (screen.width>1199){
-    console.log('screen is =>1200px');
-    olmap.addControl(new OpenLayers.Control.PanZoom({'slideRatio':0.3}));
+//    olmap.addControl(new OpenLayers.Control.PanZoom({'slideRatio':0.3}));
     $( ".olControlPanZoom" ).animate({ "left": "+=15px" }, "fast" );
   }
 
@@ -420,7 +421,7 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
 var controlButtons = document.querySelectorAll('.control button');
 
 $(controlButtons).dblclick(function() {
-  console.log( "Handler for button .dblclick() called." );
+//  console.log( "Handler for button .dblclick() called." );
   return false;
 });
 
