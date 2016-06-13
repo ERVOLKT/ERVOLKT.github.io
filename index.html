@@ -216,7 +216,7 @@ function glshow(firsttime){
 
       olmap.addLayer(new OpenLayers.Layer.WMS( "HD Hillshade",
                     "http://129.206.228.72/osm-proxy/service", {layers: 'europe_wms:hs_srtm_europa', transparent: true}, {opacity: 0.45, projection: new OpenLayers.Projection("EPSG:900913")} ));
-      
+      olmap.addControl(new OpenLayers.Control.LayerSwitcher());
       olmap.addControl(new OpenLayers.Control.Navigation());
       olmap.addControl(new OpenLayers.Control.ArgParser());
       olmap.addControl(new OpenLayers.Control.Attribution());
@@ -384,6 +384,9 @@ $(".shrinkdiv").on('shown.bs.collapse', function(){
        'https://c.tiles.mapbox.com/v3/volker6457.no773m04/${z}/${x}/${y}.png'
        ]
       ));
+
+      olmap.addLayer(new OpenLayers.Layer.WMS( "HD Hillshade",
+                    "http://129.206.228.72/osm-proxy/service", {layers: 'europe_wms:hs_srtm_europa', transparent: true}, {opacity: 0.45, projection: new OpenLayers.Projection("EPSG:900913")} ));
 
   olmap.addControl(new OpenLayers.Control.Navigation());
   olmap.addControl(new OpenLayers.Control.ArgParser());
