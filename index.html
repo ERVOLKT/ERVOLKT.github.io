@@ -409,7 +409,7 @@ var hdhillshade = new OpenLayers.Layer.WMS( "HD Hillshade",
   
   // better handling, e.g. on Smart-TVs  
   if (screen.width>1199){
-//    olmap.addControl(new OpenLayers.Control.PanZoom({'slideRatio':0.3}));
+    olmap.addControl(new OpenLayers.Control.PanZoom({'slideRatio':0.3}));
     $( ".olControlPanZoom" ).animate({ "left": "+=15px" }, "fast" );
   }
 
