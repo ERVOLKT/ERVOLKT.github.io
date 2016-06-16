@@ -56,7 +56,7 @@
 
      .control {
      position: absolute; 
-      left: 0;
+      left: 40px;
       z-index: 1000;
     }
 
@@ -70,6 +70,10 @@
 
     .control.zoom {
       top: 90px;
+    }
+
+    .control.north {
+      top: 135px;
     }
 
     .control.zoom button{
@@ -708,9 +712,10 @@ $('.toglink').click(function(event){
           <div class="control zoom">
             <button class="dec">-</button>
             <button class="inc">+</button>
-            <div id="button">
-            <button id="switch" class="control north" type="button" onclick="resetview()">N</button>
           </div>
+
+          <div class="control north">
+            <button id="northbutton" class="button_north" onclick="resetview()">N</button>
           </div>
         </div>
         <div id='olmap' class="col-xs-12"></div>
