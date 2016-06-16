@@ -292,7 +292,7 @@ GLMap.prototype = {
   },
 
   setTilt: function(tilt) {
-    tilt = clamp(parseFloat(tilt), 0, 60);
+    tilt = clamp(parseFloat(tilt), 0, 75);
     if (this.tilt !== tilt) {
       this.tilt = tilt;
       this.emit('change');
