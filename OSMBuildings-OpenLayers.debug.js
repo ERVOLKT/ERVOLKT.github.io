@@ -576,7 +576,7 @@ var
   DATA_TILE_SIZE = 0.0075, // data tile size in geo coordinates, smaller: less data to load but more requests
   ZOOM, MAP_SIZE,
 
-  MIN_ZOOM = 15,
+  MIN_ZOOM = 13,
 
   LAT = 'latitude', LON = 'longitude',
 
