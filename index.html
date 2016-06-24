@@ -235,7 +235,12 @@ var hdhillshade = new OpenLayers.Layer.WMS( "HD Hillshade",
 
 
       olmap.addControl(new OpenLayers.Control.LayerSwitcher());
-      olmap.addControl(new OpenLayers.Control.Navigation());
+      
+      olmap.addControl(new OpenLayers.Control.Navigation({
+               dragPanOptions: {enableKinetic: true, kineticInterval: 1
+               }
+           }));
+
       olmap.addControl(new OpenLayers.Control.ArgParser());
       olmap.addControl(new OpenLayers.Control.Attribution());
       olmap.setCenter(
@@ -419,7 +424,11 @@ var hdhillshade = new OpenLayers.Layer.WMS( "HD Hillshade",
                     "http://129.206.228.72/osm-proxy/service", {layers: 'europe_wms:hs_srtm_europa', transparent: true}, {opacity: 0.45, projection: new OpenLayers.Projection("EPSG:900913")} );
       olmap.addLayer( hdhillshade );
 
-  olmap.addControl(new OpenLayers.Control.Navigation());
+  olmap.addControl(new OpenLayers.Control.Navigation({
+               dragPanOptions: {enableKinetic: true, kineticInterval: 1
+               }
+           }));
+
   olmap.addControl(new OpenLayers.Control.ArgParser());
   olmap.addControl(new OpenLayers.Control.Attribution());
   
