@@ -378,7 +378,7 @@ mc.add( new Hammer.Press({event: 'longpress',time: 400}));
     if (gl && gl instanceof WebGLRenderingContext) {
       console.log("Browser supports WebGL.");         
     } else {
-       console.log("Browser does NOT support WebGL.");
+       ("Browser does NOT support WebGL.");
         if (xgl && xgl instanceof WebGLRenderingContext) {
             console.log("Browser supports xperimental WebGL.");
           } else {
@@ -397,11 +397,11 @@ mc.add( new Hammer.Press({event: 'longpress',time: 400}));
     , 
             {eventListeners: {
                 move: function(e) {
-           /*     if ((hdhillshade.getVisibility() === true) && (this.getZoom() > 15)){
+               if ((hdhillshade.getVisibility() === true) && (this.getZoom() > 15)){
                   console.log('AND condition: hillshade still visible and zoom gt 15...turnoff hillshade');
                   hdhillshade.setVisibility(false); 
                 } else if ((hdhillshade.getVisibility() === false) && (this.getZoom()< 16)){console.log('AND condition: hillshade not visible and zoom lt 16... turnon hillshade');hdhillshade.setVisibility(true);} 
-                else {console.log('nothing to do here');} */
+                else {console.log('nothing to do here');} 
                 threedz = olmap.getZoom();
                 threedxy = olmap.getCenter();
                 
