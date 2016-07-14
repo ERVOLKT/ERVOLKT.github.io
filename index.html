@@ -612,7 +612,7 @@ for (var i = 0; i < controlButtons.length; i++) {
     });
     
     //ruft  events-Fehler bei OL auf, ist aber für highlighting praktisch, und evtl. später für Popup-Position und POpup-Inhalte:
-  glmap.on('pointermove', function(e) {
+ /* glmap.on('pointermove', function(e) {
     var id = glosmb.getTarget(e.x, e.y);
     if (id) {
     //    console.log(id);
@@ -622,8 +622,68 @@ for (var i = 0; i < controlButtons.length; i++) {
       document.body.style.cursor = 'default';
       glosmb.highlight(null);
     }
-  });
+  });*/
 
+
+function popajax(url, callback) {
+           var req = new XMLHttpRequest();
+           req.onreadystatechange = function() {
+             if (req.readyState !== 4) {
+               return;
+             }
+             if (!req.status || req.status < 200 || req.status > 299) {
+               return;
+             }
+             callback(JSON.parse(req.responseText));
+           };
+           req.open('GET', url);
+           req.send(null);
+         }
+
+  glmap.on('pointermove', function(e) {
+    var osm_id = glosmb.getTarget(e.x, e.y);
+    if (osm_id) {
+      document.body.style.cursor = 'pointer';
+      glosmb.highlight(osm_id, '#F00540');
+    } else {
+      document.body.style.cursor = 'default';
+      glosmb.highlight(null);
+    }
+  });
+  
+glmap.on('pointerup', function(e) {
+    click_id = glosmb.getTarget(e.x, e.y);
+    if (click_id) {
+    alert(click_id);
+  var bbox = glmap.getBounds();
+             
+              var bound_s = bbox.s.toFixed(6);
+              var bound_w = bbox.w.toFixed(6);
+              var bound_n = bbox.n.toFixed(6);
+              var bound_e = bbox.e.toFixed(6);
+
+              var url ="http://overpass-api.de/api/interpreter?data=[out:json][timeout:25];(way[building][name]("+bound_s+","+bound_w+", "+bound_n+","+bound_e+");relation[building]("+bound_s+","+bound_w+", "+bound_n+","+bound_e+");relation[type=building]("+bound_s+","+bound_w+", "+bound_n+","+bound_e+"););out body;>;out skel qt;";
+
+             popajax(url, function(json) {
+          //     var content = '<b>OSM ID '+ click_id +'</b>';
+              for (var i = 0; i < json.elements.length; i++){
+                  if  (json.elements[i].type==="way" &&
+   "w"+json.elements[i].id===click_id ||json.elements[i].type==="relation"&& "r"+json.elements[i].id===click_id
+                     ){
+                   var gl_name_of_building = json.elements[i].tags.name;
+                   var gl_buildingname;
+                    if(gl_name_of_building){
+                      gl_buildingname = gl_name_of_building;
+                    } else {
+                      gl_buildingname = 'Kein Name auf OSM';
+                    }
+                  }
+                }
+             alert(gl_buildingname);
+             });
+
+} else {}
+  });
 
 obj = glosmb.addGeoJSON('geojson/esplanade.geojson', { 
     "color": 'rgb(243,194,80)'
