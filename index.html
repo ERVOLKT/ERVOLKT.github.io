@@ -486,9 +486,7 @@ var hdhillshade = new OpenLayers.Layer.WMS( "HD Hillshade",
                                 true
                             );
              olmap.addPopup(pospop);
-//there can be only 1!
-if(olmap.popups[0]){
-olmap.popups[0].destroy();}        pospop.events.register('click', null, function(ev){
+                     pospop.events.register('click', null, function(ev){
               pospop.destroy();             
              });
            //Vorauswahl per json: der Kartenausschnitt:
