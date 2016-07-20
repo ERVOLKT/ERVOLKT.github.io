@@ -457,7 +457,7 @@ var hdhillshade = new OpenLayers.Layer.WMS( "HD Hillshade",
     olosmb = new olOSMBuildings(olmap).load();
      olosmb.style(buildingstyle.twodstyle);
 
-// Popups
+//2d Popups
          function popajax(url, callback) {
            var req = new XMLHttpRequest();
            req.onreadystatechange = function() {
@@ -472,7 +472,7 @@ var hdhillshade = new OpenLayers.Layer.WMS( "HD Hillshade",
            req.open('GET', url);
            req.send(null);
          }
- 
+
          var pospop;
 
          olosmb.click(function(e) {
@@ -483,7 +483,7 @@ var hdhillshade = new OpenLayers.Layer.WMS( "HD Hillshade",
                                 new OpenLayers.Size(25,25),
                                '<b>...lade OSM ID '+e.feature+'...</b><br><img src="ajax-loader.gif" alt="loading"></br>',
                                 null,
-                                true
+                                false
                             );
              olmap.addPopup(pospop);
 // only 2 popups
@@ -612,22 +612,9 @@ for (var i = 0; i < controlButtons.length; i++) {
     {
   //     buffer: 0, // how many tiles to preload around visible area - not working yet
     });
-    
-    //ruft  events-Fehler bei OL auf, ist aber für highlighting praktisch, und evtl. später für Popup-Position und POpup-Inhalte:
- /* glmap.on('pointermove', function(e) {
-    var id = glosmb.getTarget(e.x, e.y);
-    if (id) {
-    //    console.log(id);
-      document.body.style.cursor = 'pointer';
-      glosmb.highlight(id, '#BDE693');
-    } else {
-      document.body.style.cursor = 'default';
-      glosmb.highlight(null);
-    }
-  });*/
 
-
-function popajax(url, callback) {
+//3dmap Popups
+function gl_popajax(url, callback) {
            var req = new XMLHttpRequest();
            req.onreadystatechange = function() {
              if (req.readyState !== 4) {
@@ -666,7 +653,7 @@ glmap.on('pointerup', function(e) {
 
               var url ="http://overpass-api.de/api/interpreter?data=[out:json][timeout:25];(way[building][name]("+bound_s+","+bound_w+", "+bound_n+","+bound_e+");relation[building]("+bound_s+","+bound_w+", "+bound_n+","+bound_e+");relation[type=building]("+bound_s+","+bound_w+", "+bound_n+","+bound_e+"););out body;>;out skel qt;";
 
-             popajax(url, function(json) {
+             gl_popajax(url, function(json) {
           //     var content = '<b>OSM ID '+ click_id +'</b>';
               for (var i = 0; i < json.elements.length; i++){
                   if  (json.elements[i].type==="way" &&
