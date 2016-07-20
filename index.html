@@ -444,7 +444,7 @@ var hdhillshade = new OpenLayers.Layer.WMS( "HD Hillshade",
      olmap.addControl(new OpenLayers.Control.Zoom());
      $("div.olControlZoom").css("background", "rgba(0,0,0,0.7)");
      $("div.olControlZoom a").css("background", "rgba(0,0,0,0.5)");
-     $("div.olControlZoom").animate({ "left": "+=40px" }, "fast" )
+     $("div.olControlZoom").animate({ "left": "+=40px" }, "fast" );
     }
 
     olmap.setCenter(
@@ -488,44 +488,40 @@ var hdhillshade = new OpenLayers.Layer.WMS( "HD Hillshade",
              olmap.addPopup(pospop);
 // only 2 popups
 var poplength = olmap.popups.length; 
-          if(poplength === 3){olmap.removePopup(olmap.popups[0]);};                     pospop.events.register('click', null, function(ev){
+          if(poplength === 3){olmap.removePopup(olmap.popups[0]);}
+          pospop.events.register('click', null, function(ev){
               pospop.destroy();             
              });
-           //Vorauswahl per json: der Kartenausschnitt:
-              var bibi = olmap.getExtent();
-              var sw = new OpenLayers.LonLat(bibi.left, bibi.bottom);
-              var ne = new OpenLayers.LonLat(bibi.right, bibi.top);
-              var sw_trans = sw.transform(olmap.getProjectionObject(), new
-   OpenLayers.Projection('EPSG:4326'));
-              var ne_trans = ne.transform(olmap.getProjectionObject(), new
-   OpenLayers.Projection('EPSG:4326'));
-              var sw_lat = sw_trans.lat.toFixed(6);
-              var sw_lng = sw_trans.lon.toFixed(6);
-              var ne_lat= ne_trans.lat.toFixed(6);
-              var ne_lng= ne_trans.lon.toFixed(6);
+           
 
-              var url ="http://overpass-api.de/api/interpreter?data=[out:json][timeout:25];(way[building][name]("+sw_lat+","+sw_lng+", "+ne_lat+","+ne_lng+");relation[building]("+sw_lat+","+sw_lng+", "+ne_lat+","+ne_lng+");relation[type=building]("+sw_lat+","+sw_lng+", "+ne_lat+","+ne_lng+"););out body;>;out skel qt;";
+            var zoomi;
+           if(olmap.getZoom()<12){
+             zoomi = 12;
+           } else {
+             zoomi = olmap.getZoom();
+           }
 
-             popajax(url, function(json) {
-               var content = '<b>OSM ID '+ e.feature +'</b>';
-              for (var i = 0; i < json.elements.length; i++){
-                  if  (json.elements[i].type==="way" &&
-   "w"+json.elements[i].id===e.feature ||json.elements[i].type==="relation"&& "r"+json.elements[i].id===e.feature
-                     ){
-                   var name_of_building = json.elements[i].tags.name;
-                   var buildingname;
-                    if(name_of_building){
-                      buildingname = name_of_building;
-                    } else {
-                      buildingname = 'Kein Name auf OSM';
-                    }
-                  }
-                }
-               pospop.setContentHTML('<div style="color:#f9856d;"><b>'+ buildingname +'</b></div>');
-               pospop.panMapIfOutOfView = true;
-               pospop.autoSize = true;
-             });
+            var url="https://nominatim.openstreetmap.org/reverse?format=json&lat="+e.lat+"&lon="+e.lon+"&zoom=18&addressdetails=1";
+
+           popajax(url, function(json) {console.log(json.display_name);
+            var edifice_comma = json.display_name.indexOf(",");
+             var edifice_name = json.display_name.slice(0,edifice_comma);
+             var firstbit = edifice_name.slice(0,1);
+             var firstbitno =  Number(firstbit);
+             if (isNaN(firstbitno) === false ){
+           console.log(' initial number detected!. Now find second comma and then add string between 1st and 2nd string in front of edifice name...edifice name =...')
+            edifice_name = json.address.road+" "+json.address.house_number;
+
+             }  else {
+               console.log('do nothing, we have possibly got a building strin')
+               console.log(json);
+             }
+             pospop.setContentHTML('<div style="color:#f9856d;"><b>'+
+edifice_name +'</b></div>');
+             pospop.panMapIfOutOfView = true;
+             pospop.autoSize = true;
            });
+         });
 
 //++++3D
 
