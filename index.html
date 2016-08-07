@@ -104,6 +104,13 @@
       opacity: 1;
       cursor: pointer;
     }
+     .gl_popdiv {
+       width:10px;
+       height:10px;
+       position: relative;
+       border:0px solid green;
+       z-index: 5000;
+     }
 
     /*changes into relative height and/or absolute positioning may cause the app to be VERY SLOW!!!*/
      #glmap {    
@@ -636,39 +643,57 @@ function gl_popajax(url, callback) {
     }
   });
   
-glmap.on('pointerup', function(e) {
-    click_id = glosmb.getTarget(e.x, e.y);
-    if (click_id) {
-    alert(click_id);
-  var bbox = glmap.getBounds();
-             
-              var bound_s = bbox.s.toFixed(6);
-              var bound_w = bbox.w.toFixed(6);
-              var bound_n = bbox.n.toFixed(6);
-              var bound_e = bbox.e.toFixed(6);
+ glmap.on('pointerup', function(eve) {
+      
+       var click_id = glosmb.getTarget(eve.x, eve.y);
+       //in case of clicked building
+       if (click_id) {
+          $('.gl_popdiv').popover("hide");
+         
+          var id_ucase = click_id.toUpperCase();
+          var url="http://nominatim.openstreetmap.org/lookup?format=json&addressdetails=1&osm_ids="+id_ucase;
+          gl_popajax(url, function(json) {
+          var buildname = json[0].address.building;
+          window_x = eve.x;
+          window_y = eve.y;
 
-              var url ="http://overpass-api.de/api/interpreter?data=[out:json][timeout:25];(way[building][name]("+bound_s+","+bound_w+", "+bound_n+","+bound_e+");relation[building]("+bound_s+","+bound_w+", "+bound_n+","+bound_e+");relation[type=building]("+bound_s+","+bound_w+", "+bound_n+","+bound_e+"););out body;>;out skel qt;";
+          if(buildname){
+            //building name is already in addres.building
+          }
+            else {
+            //generating the building name
+            build_comma = json[0].display_name.indexOf(",");
+            buildname = json[0].display_name.slice(0,build_comma);
+          
+            var firstchar = buildname.slice(0,1);
+            var firstcharno =  Number(firstchar);
+            if (isNaN(firstcharno) === false ){
+              buildname = json[0].address.road+" "+json[0].address.house_number;      
+              }  else {}  
+          }
+          $('.gl_popdiv').attr("title", "<b>OSM-ID "+click_id+": </b>");
+          $('.gl_popdiv').attr("data-content", "<p>"+buildname+"</p");
+          $('.gl_popdiv').css('position', 'absolute');
+          $('.gl_popdiv').css('top', window_y); //or wherever you want it
+          $('.gl_popdiv').css('left', window_x); //or wherever you want it
+          $('.gl_popdiv').popover("show");
+          console.log(buildname);
+        
+          });
+  
+     } else{
+        //no building clicked
+     }
 
-             gl_popajax(url, function(json) {
-          //     var content = '<b>OSM ID '+ click_id +'</b>';
-              for (var i = 0; i < json.elements.length; i++){
-                  if  (json.elements[i].type==="way" &&
-   "w"+json.elements[i].id===click_id ||json.elements[i].type==="relation"&& "r"+json.elements[i].id===click_id
-                     ){
-                   var gl_name_of_building = json.elements[i].tags.name;
-                   var gl_buildingname;
-                    if(gl_name_of_building){
-                      gl_buildingname = gl_name_of_building;
-                    } else {
-                      gl_buildingname = 'Kein Name auf OSM';
-                    }
-                  }
-                }
-             alert(gl_buildingname);
-             });
-
-} else {}
-  });
+     });
+  
+    //debugging w/ popover hide/show events
+     $('.gl_popdiv').on('shown.bs.popover', function(){
+   //       console.log('The popover is about to be shown.');
+     });
+      $('.gl_popdiv').on('hidden.bs.popover', function(){
+         // console.log('The popover is about to be hidden.');
+    });
 
 obj = glosmb.addGeoJSON('geojson/esplanade.geojson', { 
     "color": 'rgb(243,194,80)'
@@ -833,6 +858,9 @@ $('.toglink').click(function(event){
     -->
       <div class="row">
         <div id='glmap' class="col-xs-12">
+          <div  title="" class="gl_popdiv"
+            data-placement="auto" data-toggle="popover" data-content="...loading..." data-html ="true" data-trigger="manual hover">
+          </div>
           <div class="control tilt">
             <button class="dec">&#8601;</button>
             <button class="inc">&#8599;</button>
