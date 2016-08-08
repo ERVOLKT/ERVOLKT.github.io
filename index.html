@@ -695,6 +695,10 @@ function gl_popajax(url, callback) {
          // console.log('The popover is about to be hidden.');
     });
 
+  glmap.on('moveMap', function(event) {   
+                        $('.gl_popdiv').popover("destroy");
+  });
+
 obj = glosmb.addGeoJSON('geojson/esplanade.geojson', { 
     "color": 'rgb(243,194,80)'
     }
@@ -859,7 +863,7 @@ $('.toglink').click(function(event){
       <div class="row">
         <div id='glmap' class="col-xs-12">
           <div  title="" class="gl_popdiv"
-            data-placement="auto" data-toggle="popover" data-content="...loading..." data-html ="true" data-trigger="manual hover">
+            data-placement="auto" data-toggle="popover" data-content="...loading..." data-html ="true" data-trigger="manual">
           </div>
           <div class="control tilt">
             <button class="dec">&#8601;</button>
