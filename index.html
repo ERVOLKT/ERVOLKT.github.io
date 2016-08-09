@@ -695,7 +695,7 @@ function gl_popajax(url, callback) {
          // console.log('The popover is about to be hidden.');
     });
 
-  glmap.on('moveMap', function(event) {   
+  glmap.on('change', function(event) {   
                         $('.gl_popdiv').popover("destroy");
   });
 
