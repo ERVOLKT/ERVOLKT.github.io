@@ -652,8 +652,20 @@ function gl_popajax(url, callback) {
          
           var id_ucase = click_id.toUpperCase();
           var url="http://nominatim.openstreetmap.org/lookup?format=json&addressdetails=1&osm_ids="+id_ucase;
-          gl_popajax(url, function(json) {
-          var buildname = json[0].address.building;
+          
+          
+ gl_popajax(url, function(json) {
+          
+          try{  
+            var buildname = json[0].address.building;
+          }catch(err){
+            console.log(err);
+            console.log(id_ucase);
+            if (id_ucase === "R6087272"){
+              console.log("Kilianskirche");
+              buildname = "Kilianskirche";
+            } else if (id_ucase === "R6027251"){
+              buildname = "St. Augustinus-Kirche"}}
           window_x = eve.x;
           window_y = eve.y;
 
