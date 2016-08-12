@@ -633,9 +633,14 @@ function gl_popajax(url, callback) {
          }
 
   glmap.on('pointermove', function(e) {
-    var osm_id = glosmb.getTarget(e.x, e.y);
+  var map2 = document.getElementById("glmap");
+var bodyRect = document.body.getBoundingClientRect();
+   var elemRect = map2.getBoundingClientRect();
+  var  gl_offset   = elemRect.top - bodyRect.top;
+    console.log (gl_offset);
+    var osm_id = glosmb.getTarget(e.x, e.y-gl_offset);
     if (osm_id) {
-      document.body.style.cursor = 'pointer';
+     document.body.style.cursor = 'pointer';
       glosmb.highlight(osm_id, '#F00540');
     } else {
       document.body.style.cursor = 'default';
