@@ -636,7 +636,7 @@ function gl_popajax(url, callback) {
   var map2 = document.getElementById("glmap");
 var bodyRect = document.body.getBoundingClientRect();
    var elemRect = map2.getBoundingClientRect();
-  var  gl_offset   = elemRect.top - bodyRect.top;
+  gl_offset   = elemRect.top - bodyRect.top;
     console.log (gl_offset);
     var osm_id = glosmb.getTarget(e.x, e.y-gl_offset);
     if (osm_id) {
@@ -650,7 +650,7 @@ var bodyRect = document.body.getBoundingClientRect();
   
  glmap.on('pointerup', function(eve) {
       
-       var click_id = glosmb.getTarget(eve.x, eve.y);
+       var click_id = glosmb.getTarget(eve.x, eve.y-gl_offset);
        //in case of clicked building
        if (click_id) {
           $('.gl_popdiv').popover("hide");
@@ -672,7 +672,7 @@ var bodyRect = document.body.getBoundingClientRect();
             } else if (id_ucase === "R6027251"){
               buildname = "St. Augustinus-Kirche"}}
           window_x = eve.x;
-          window_y = eve.y;
+          window_y = eve.y-gl_offset;
 
           if(buildname){
             //building name is already in addres.building
