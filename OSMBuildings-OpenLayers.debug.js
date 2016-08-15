@@ -564,7 +564,7 @@ var GeoJSON = (function() {
 
 var
   VERSION      = '0.2.2b',
-  ATTRIBUTION  = '&copy; <a href="http://openstreetmap.org/copyright/">OpenStreetMap</a>|&copy; 3D <a href="http://osmbuildings.org/copyright/">OSM Buildings</a>|&copy;<a href="http://www.osm-wms.de/">Osm-wms</a> |&copy; Basemap <a href="http://mapbox.com/">MapBox</a> ',
+  ATTRIBUTION  = 'Data: &copy; <a href="http://openstreetmap.org/copyright/">OpenStreetMap</a>|&copy; Buildings: <a href="http://osmbuildings.org/copyright/">OSM Buildings</a>|&copy; Hillshade: <a href="http://www.osm-wms.de/">Osm-wms</a> |&copy; Tiles: <a href="http://mapbox.com/">MapBox</a> ',
 
   DATA_SRC = 'http://{s}.data.osmbuildings.org/0.2/{k}/tile/{z}/{x}/{y}.json',
 
