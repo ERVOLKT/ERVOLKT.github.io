@@ -1729,7 +1729,7 @@ var OSMBuildings = function(options) {
 };
 
 OSMBuildings.VERSION = '1.0.1';
-OSMBuildings.ATTRIBUTION = '© OSM Buildings <a href="http://osmbuildings.org">http://osmbuildings.org</a>';
+OSMBuildings.ATTRIBUTION = © Data <a href="http://openstreetmap.org/copyright/">OpenStreetMap</a>|© 3D <a href="http://osmbuildings.org/copyright/">OSM Buildings</a> |© Basemap <a href="http://mapbox.com/">MapBox</a>    |' ;
 
 OSMBuildings.prototype = {
 
