@@ -275,255 +275,241 @@
         glmap.setRotation(0.0);
       }
 
+//************************docready- function *********************************************
       $( document ).ready(function() {
 
-      //collapse functionality
-      var inihide = $(function() {
-          // setTimeout() collapses info-div after 8 seconds
-          setTimeout(function() {
-              $("#shrink0").collapse('hide', {}, 500)
-          }, 8000);
-      });
-
-      $(".shrinkdiv").on('hidden.bs.collapse', function(){
-            $("#"+this.id+"button").text('show info').removeClass('btn-warning').addClass('btn-info');
-      });
-      $(".shrinkdiv").on('shown.bs.collapse', function(){
-            $("#"+this.id+"button").text('hide info').removeClass('btn-info').addClass('btn-warning');
-      });
-
-      //check device type and adapt to it
-      (function(){
-        var screwi = screen.width;
-        if (screwi<993){ //tablet or mobile 
-        //Touch Screen Controls
-          var gltouch = document.getElementById('glmap');
-            // Hammer manager object, w/o presetted recognizers.
-          var mc = new Hammer.Manager(gltouch);
-            //add touch event recognizers
-          mc.add( new Hammer.Press({event: 'press',time:200}));
-          mc.add( new Hammer.Press({event: 'longpress',time: 400}));
-          mc.add( new Hammer.Pinch({ enable: true}));          
-          mc.add( new Hammer.Rotate({event: 'rotate', enable: true
-            , threshold: 20
-           , direction: Hammer.DIRECTION_RIGHT
-           }));
-           //responses to touchevents
-           
-           /*mc.on("press longpress rotate pinchin pinchout", function(ev) {
-           alert(ev.type);
-          });*/
-           
-          mc.on('press', function(ev) {
-           glmap.setTilt(glmap.getTilt()+13);
-          });
-          mc.on('longpress', function(ev) {
-           glmap.setTilt(glmap.getTilt()-26);
-          });
-          mc.on('pinchin', function(ev) {
-           glmap.setZoom(glmap.getZoom()*0.997);
-          });
-          mc.on('pinchout', function(ev) {
-           glmap.setZoom(glmap.getZoom()*1.003);
-          });
-          mc.on('rotate', function(ev) {
-            glmap.setRotation(glmap.getRotation()+3);
-          });
-           //enable message console on mobile
-          //mobileConsole.show(); 
-        }
-
-        else {//bigger than tablet          
-        }
-      })();
-
-      //Auto-run: Check for webgl-ability
-        //adopted   https://developer.mozilla.org/en-US/Learn/WebGL/By_example/Detect_WebGL
-      (function detectWebGLContext1 () {
-        
-          var canvas = document.createElement("canvas");
-          var gl = canvas.getContext("webgl");
-          var xgl = canvas.getContext("experimental-webgl");
-          if (gl && gl instanceof WebGLRenderingContext) {
-            console.log("Browser supports WebGL.");         
-          } else {
-            console.log("Browser does NOT support WebGL.");
-              if (xgl && xgl instanceof WebGLRenderingContext) {
-                console.log("Browser supports xperimental WebGL.");
-                } else {
-                alert("Browser does NEITHER support WebGL NOR xperimental WebGL .");
-                 //disable 3d button and show a popover info
-                $('[data-toggle="popover"]').addClass('disabled');
-                $('[data-toggle="popover"]').popover();
-                glhide(true);            
-              }
-          }     
-       })();
-             
-      //++++2.5D:OpenLayers2-OSMB-MAP
-      olmap = new OpenLayers.Map('olmap', 
-        {eventListeners: {
-          move: function(e) {
-            if ((hdhillshade.getVisibility() === true) && (this.getZoom() > 15)){
-              hdhillshade.setVisibility(false); 
-            } else if ((hdhillshade.getVisibility() === false) && (this.getZoom()< 16)){hdhillshade.setVisibility(true);} 
-            else {} 
-            threedz = olmap.getZoom();
-            threedxy = olmap.getCenter();                            
-          }
-        }, 
-        controls: []
-        }
-        );
-         
-      olmap.addLayer(new OpenLayers.Layer.OSM("Mapbox_outdoors_volker",
-       ['https://a.tiles.mapbox.com/v3/volker6457.no773m04/${z}/${x}/${y}.png',
-       'https://b.tiles.mapbox.com/v3/volker6457.no773m04/${z}/${x}/${y}.png',
-       'https://c.tiles.mapbox.com/v3/volker6457.no773m04/${z}/${x}/${y}.png'
-       ]
-      ));
-      var hdhillshade = new OpenLayers.Layer.WMS( "HD Hillshade",
-                          "http://129.206.228.72/osm-proxy/service", {layers: 'europe_wms:hs_srtm_europa', transparent: true}, {opacity: 0.45, projection: new OpenLayers.Projection("EPSG:900913")} );
-      olmap.addLayer( hdhillshade );
-      olmap.addControl(new OpenLayers.Control.Navigation({
-        dragPanOptions: {enableKinetic: true, kineticInterval: 1}
-      }));
-
-      olmap.addControl(new OpenLayers.Control.ArgParser());
-      olmap.addControl(new OpenLayers.Control.Attribution());
-
-      // better handling, e.g. on Desktops or Smart-TVs  
-      if (screen.width>1199){
-        olmap.addControl(new OpenLayers.Control.PanZoom({'slideRatio':0.3}));
-        $( ".olControlPanZoom" ).animate({ "left": "+=40px" }, "fast" );
-      }
-
-      else {
-         olmap.addControl(new OpenLayers.Control.Zoom());
-         $("div.olControlZoom").css("background", "rgba(0,0,0,0.7)");
-         $("div.olControlZoom a").css("background", "rgba(0,0,0,0.5)");
-         $("div.olControlZoom").animate({ "left": "+=40px" }, "fast" );
-        }
-
-      olmap.setCenter(
-        new OpenLayers.LonLat(9.209123253822327, 49.14630295624662)
-        .transform(
-          new OpenLayers.Projection('EPSG:4326'),
-          olmap.getProjectionObject()
-        ), 16);
-
-      // The OSMBuildings-Object had to be renamed in order to make the 2.5D+3D-Version work, see osmb-ol-debug-file...      
-      olosmb = new olOSMBuildings(olmap).load();
-      olosmb.style(buildingstyle.twodstyle);
-
-      //2d Popups
-      function popajax(url, callback) {
-        var req = new XMLHttpRequest();
-        req.onreadystatechange = function() {
-          if (req.readyState !== 4) {
-           return;
-          }
-          if (!req.status || req.status < 200 || req.status > 299) {
-           return;
-          }
-          callback(JSON.parse(req.responseText));
-          };
-        req.open('GET', url);
-        req.send(null);
-      }
-
-      var pospop;
-      olosmb.click(function(e) {
-        pospop = new OpenLayers.Popup.FramedCloud("pospop", new OpenLayers.LonLat(e.lon,e.lat).transform(new OpenLayers.Projection('EPSG:4326'),olmap.getProjectionObject()), new OpenLayers.Size(25,25), '<b>...lade OSM ID '+e.feature+'...</b><br><img src="ajax-loader.gif" alt="loading"></br>', null, false
-        );
-      olmap.addPopup(pospop);
-      // only 2 popups
-      var poplength = olmap.popups.length; 
-      if(poplength === 2){olmap.removePopup(olmap.popups[0]);}
-      pospop.events.register('click', null, function(ev){pospop.destroy();});
-                 
-      var zoomi;
-      if(olmap.getZoom()<12){
-        zoomi = 12;
-      } else {
-        zoomi = olmap.getZoom();
-      }
-
-
-      var url="https://nominatim.openstreetmap.org/reverse?format=json&lat="+e.lat+"&lon="+e.lon+"&zoom=18&addressdetails=1";
-
-                 popajax(url, function(json) {console.log(json.display_name);
-                  var edifice_comma = json.display_name.indexOf(",");
-                   var edifice_name = json.display_name.slice(0,edifice_comma);
-                   var firstbit = edifice_name.slice(0,1);
-                   var firstbitno =  Number(firstbit);
-                   if (isNaN(firstbitno) === false ){
-                 console.log(' initial number detected!. Now find second comma and then add string between 1st and 2nd string in front of edifice name...edifice name =...')
-                  edifice_name = json.address.road+" "+json.address.house_number;
-
-                   }  else {
-                     console.log('do nothing, we have possibly got a building strin')
-                     console.log(json);
-                   }
-                   pospop.setContentHTML('<div style="color:#f9856d;"><b>'+
-      edifice_name +'</b></div>');
-                   pospop.panMapIfOutOfView = true;
-                   pospop.autoSize = true;
-                 });
-               });
-
-      //++++3D
-
-      // Webgl Control Buttons
-      var controlButtons = document.querySelectorAll('.control button');
-
-      $(controlButtons).dblclick(function() {
-      //  console.log( "Handler for button .dblclick() called." );
-        return false;
-      });
-
-      for (var i = 0; i < controlButtons.length; i++) {
-        controlButtons[i].addEventListener('click', function(e) {
-          var button = this;
-          var parentClassList = button.parentNode.classList;
-          var direction = button.classList.contains('inc') ? 1 : -1;
-          var increment;
-          var property;
-
-          if (parentClassList.contains('tilt')) {
-            property = 'Tilt';
-            increment = direction*10;
-          }
-          if (parentClassList.contains('rotation')) {
-            property = 'Rotation';
-            increment = direction*10;
-          }
-          if (parentClassList.contains('zoom')) {
-            property = 'Zoom';
-            increment = direction*1;
-          }
-           
-          if (parentClassList.contains('bend')) {
-            property = 'Bend';
-            increment = direction*5;
-          }
-          if (property) {
-            glmap['set'+ property](glmap['get'+ property]()+increment);
-          }
-          
+        //collapse functionality
+        var inihide = $(function() {
+            // setTimeout() collapses info-div after 8 seconds
+            setTimeout(function() {
+                $("#shrink0").collapse('hide', {}, 500)
+            }, 8000);
         });
-      }
 
-          $(".glhide").click(function(){
-               glhide();
-              });
-              
-          $(".glshow").click(function(){
-              glshow();
-              });
+        $(".shrinkdiv").on('hidden.bs.collapse', function(){
+              $("#"+this.id+"button").text('show info').removeClass('btn-warning').addClass('btn-info');
+        });
+        $(".shrinkdiv").on('shown.bs.collapse', function(){
+              $("#"+this.id+"button").text('hide info').removeClass('btn-info').addClass('btn-warning');
+        });
 
-      //WEBGL-OSMB-MAP
-         glmap = new GLMap('glmap', {
+        //check device type and adapt to it
+        (function(){
+          var screwi = screen.width;
+          if (screwi<993){ //tablet or mobile 
+                           //
+          //Hammer.js touch screen controls
+            var gltouch = document.getElementById('glmap');
+              // Hammer manager object, w/o presetted recognizers.
+            var mc = new Hammer.Manager(gltouch);
+              //add touch event recognizers
+            mc.add( new Hammer.Press({event: 'press',time:200}));
+            mc.add( new Hammer.Press({event: 'longpress',time: 400}));
+            mc.add( new Hammer.Pinch({ enable: true}));          
+            mc.add( new Hammer.Rotate({event: 'rotate', enable: true, threshold: 20, direction: Hammer.DIRECTION_RIGHT
+             }));
+             //response to touchevents            
+            mc.on('press', function(ev) {
+             glmap.setTilt(glmap.getTilt()+13);
+            });
+            mc.on('longpress', function(ev) {
+             glmap.setTilt(glmap.getTilt()-26);
+            });
+            mc.on('pinchin', function(ev) {
+             glmap.setZoom(glmap.getZoom()*0.997);
+            });
+            mc.on('pinchout', function(ev) {
+             glmap.setZoom(glmap.getZoom()*1.003);
+            });
+            mc.on('rotate', function(ev) {
+              glmap.setRotation(glmap.getRotation()+3);
+            });
+
+          //enable message console on mobile
+          //mobileConsole.show(); 
+          
+          }
+
+          else {//bigger than tablet          
+          }
+        })();
+
+        //Auto-run: Check for webgl-ability
+          //adopted   https://developer.mozilla.org/en-US/Learn/WebGL/By_example/Detect_WebGL
+        (function detectWebGLContext1 () {     
+            var canvas = document.createElement("canvas");
+            var gl = canvas.getContext("webgl");
+            var xgl = canvas.getContext("experimental-webgl");
+            if (gl && gl instanceof WebGLRenderingContext) {
+              console.log("Browser supports WebGL.");         
+            } else {
+              console.log("Browser does NOT support WebGL.");
+                if (xgl && xgl instanceof WebGLRenderingContext) {
+                  console.log("Browser supports xperimental WebGL.");
+                  } else {
+                  alert("Browser does NEITHER support WebGL NOR xperimental WebGL .");
+                   //disable 3d button and show a popover info
+                  $('[data-toggle="popover"]').addClass('disabled');
+                  $('[data-toggle="popover"]').popover();
+                  glhide(true);            
+                }
+            }     
+         })();
+               
+        //++++2.5D:OpenLayers2-OSMB-MAP
+        olmap = new OpenLayers.Map('olmap', 
+          {eventListeners: {
+            move: function(e) {
+              if ((hdhillshade.getVisibility() === true) && (this.getZoom() > 15)){
+                hdhillshade.setVisibility(false); 
+              } else if ((hdhillshade.getVisibility() === false) && (this.getZoom()< 16)){hdhillshade.setVisibility(true);} 
+              else {} 
+              threedz = olmap.getZoom();
+              threedxy = olmap.getCenter();                            
+            }
+          }, 
+          controls: []
+          }
+          );
+           
+        olmap.addLayer(new OpenLayers.Layer.OSM("Mapbox_outdoors_volker",
+         ['https://a.tiles.mapbox.com/v3/volker6457.no773m04/${z}/${x}/${y}.png',
+         'https://b.tiles.mapbox.com/v3/volker6457.no773m04/${z}/${x}/${y}.png',
+         'https://c.tiles.mapbox.com/v3/volker6457.no773m04/${z}/${x}/${y}.png'
+         ]
+        ));
+        var hdhillshade = new OpenLayers.Layer.WMS( "HD Hillshade",
+                            "http://129.206.228.72/osm-proxy/service", {layers: 'europe_wms:hs_srtm_europa', transparent: true}, {opacity: 0.45, projection: new OpenLayers.Projection("EPSG:900913")} );
+        olmap.addLayer( hdhillshade );
+        olmap.addControl(new OpenLayers.Control.Navigation({
+          dragPanOptions: {enableKinetic: true, kineticInterval: 1}
+        }));
+
+        olmap.addControl(new OpenLayers.Control.ArgParser());
+        olmap.addControl(new OpenLayers.Control.Attribution());
+
+        // better handling, e.g. on Desktops or Smart-TVs  
+        if (screen.width>1199){
+          olmap.addControl(new OpenLayers.Control.PanZoom({'slideRatio':0.3}));
+          $( ".olControlPanZoom" ).animate({ "left": "+=40px" }, "fast" );
+        }
+
+        else {
+           olmap.addControl(new OpenLayers.Control.Zoom());
+           $("div.olControlZoom").css("background", "rgba(0,0,0,0.7)");
+           $("div.olControlZoom a").css("background", "rgba(0,0,0,0.5)");
+           $("div.olControlZoom").animate({ "left": "+=40px" }, "fast" );
+          }
+
+        olmap.setCenter(
+          new OpenLayers.LonLat(9.209123253822327, 49.14630295624662)
+          .transform(
+            new OpenLayers.Projection('EPSG:4326'),
+            olmap.getProjectionObject()
+          ), 16);
+
+        // The OSMBuildings-Object had to be renamed in order to make the 2.5D+3D-Version work, see osmb-ol-debug-file...      
+        olosmb = new olOSMBuildings(olmap).load();
+        olosmb.style(buildingstyle.twodstyle);
+
+        //2d Popups
+        function popajax(url, callback) {
+          var req = new XMLHttpRequest();
+          req.onreadystatechange = function() {
+            if (req.readyState !== 4) {
+             return;
+            }
+            if (!req.status || req.status < 200 || req.status > 299) {
+             return;
+            }
+            callback(JSON.parse(req.responseText));
+            };
+          req.open('GET', url);
+          req.send(null);
+        }
+
+        var pospop;
+        olosmb.click(function(e) {
+          pospop = new OpenLayers.Popup.FramedCloud("pospop", new OpenLayers.LonLat(e.lon,e.lat).transform(new OpenLayers.Projection('EPSG:4326'),olmap.getProjectionObject()), new OpenLayers.Size(25,25), '<b>...lade OSM ID '+e.feature+'...</b><br><img src="ajax-loader.gif" alt="loading"></br>', null, false
+          );
+          olmap.addPopup(pospop);
+          // only 2 popups
+          var poplength = olmap.popups.length; 
+          if(poplength === 2){olmap.removePopup(olmap.popups[0]);}
+          pospop.events.register('click', null, function(ev){pospop.destroy();});
+                     
+          var zoomi;
+          if(olmap.getZoom()<12){
+            zoomi = 12;
+          } else {
+            zoomi = olmap.getZoom();
+          }
+
+          var url="https://nominatim.openstreetmap.org/reverse?format=json&lat="+e.lat+"&lon="+e.lon+"&zoom=18&addressdetails=1";
+
+          popajax(url, function(json) {console.log(json.display_name);
+          var edifice_comma = json.display_name.indexOf(",");
+          var edifice_name = json.display_name.slice(0,edifice_comma);
+          var firstbit = edifice_name.slice(0,1);
+          var firstbitno =  Number(firstbit);
+          if (isNaN(firstbitno) === false ){
+            edifice_name = json.address.road+" "+json.address.house_number;
+          }  else {}
+          pospop.setContentHTML('<div style="color:#f9856d;"><b>'+ edifice_name +'</b></div>');
+          pospop.panMapIfOutOfView = true;
+          pospop.autoSize = true;
+          });
+        });
+
+        //++++3D-glmap
+        // Webgl Control Buttons
+        var controlButtons = document.querySelectorAll('.control button');
+
+        $(controlButtons).dblclick(function() {
+        //  console.log( "Handler for button .dblclick() called." );
+          return false;
+        });
+
+        for (var i = 0; i < controlButtons.length; i++) {
+          controlButtons[i].addEventListener('click', function(e) {
+            var button = this;
+            var parentClassList = button.parentNode.classList;
+            var direction = button.classList.contains('inc') ? 1 : -1;
+            var increment;
+            var property;
+
+            if (parentClassList.contains('tilt')) {
+              property = 'Tilt';
+              increment = direction*10;
+            }
+            if (parentClassList.contains('rotation')) {
+              property = 'Rotation';
+              increment = direction*10;
+            }
+            if (parentClassList.contains('zoom')) {
+              property = 'Zoom';
+              increment = direction*1;
+            }
+            if (parentClassList.contains('bend')) {
+              property = 'Bend';
+              increment = direction*5;
+            }
+            if (property) {
+              glmap['set'+ property](glmap['get'+ property]()+increment);
+            }          
+          });
+        }
+
+        $(".glhide").click(function(){
+             glhide();
+            });
+            
+        $(".glshow").click(function(){
+            glshow();
+            });
+
+        //WEBGL-OSMB-MAP
+        glmap = new GLMap('glmap', {
           position: { latitude:49.14740, longitude:9.20392 },
           zoom: 15,
           rotation: 340,
@@ -535,54 +521,47 @@
           state: true // stores map position/rotation in url
         });
 
-          glosmb = new OSMBuildings({
-          minZoom: 12,
-          maxZoom: 22,
-          // showBackfaces: true, // render front and backsides of polygons. false increases performance, true might be needed for bad geometries
-         attribution: '© Data <a href="http://openstreetmap.org/copyright/">OpenStreetMap</a>|© 3D <a href="http://osmbuildings.org/copyright/">OSM Buildings</a> |© Basemap <a href="http://mapbox.com/">MapBox</a>    |'
+        glosmb = new OSMBuildings({
+        minZoom: 12,
+        maxZoom: 22,
+        // showBackfaces: true, // render front and backsides of polygons. false increases performance, true might be needed for bad geometries
+        attribution: '© Data <a href="http://openstreetmap.org/copyright/">OpenStreetMap</a>|© 3D <a href="http://osmbuildings.org/copyright/">OSM Buildings</a> |© Basemap <a href="http://mapbox.com/">MapBox</a>    |'
         }).addTo(glmap);
         
-          glosmb.setStyle(buildingstyle.threedstyle);
-          //historic maptiles-method:
-          /*
-          osmb.addTileLayer('http://{s}.tiles.mapbox.com/v3/osmbuildings.kbpalbpk/{z}/{x}/{y}.png');
-          */
-          glosmb.addMapTiles(
-       //   'http://{s}.tiles.mapbox.com/v3/osmbuildings.kbpalbpk/{z}/{x}/{y}.png',
-          'https://{s}.tiles.mapbox.com/v3/volker6457.no773m04/{z}/{x}/{y}.png'
-        );
+        glosmb.setStyle(buildingstyle.threedstyle);
+        glosmb.addMapTiles(
+        'https://{s}.tiles.mapbox.com/v3/volker6457.no773m04/{z}/{x}/{y}.png'
+      );
         
-         glosmb.addGeoJSONTiles(
-          'http://{s}.data.osmbuildings.org/0.2/anonymous/tile/{z}/{x}/{y}.json',
-          {
-        //     buffer: 0, // how many tiles to preload around visible area - not working yet
-          });
+        glosmb.addGeoJSONTiles('http://{s}.data.osmbuildings.org/0.2/anonymous/tile/{z}/{x}/{y}.json',
+        {
+        //     buffer: 0, // how many tiles to preload around visible area - not working yet(?)
+        });
 
-      //3dmap Popups
-      function gl_popajax(url, callback) {
-                 var req = new XMLHttpRequest();
-                 req.onreadystatechange = function() {
-                   if (req.readyState !== 4) {
-                     return;
-                   }
-                   if (!req.status || req.status < 200 || req.status > 299) {
-                     return;
-                   }
-                   callback(JSON.parse(req.responseText));
-                 };
-                 req.open('GET', url);
-                 req.send(null);
-               }
-
+        //3dmap Popups
+        function gl_popajax(url, callback) {
+          var req = new XMLHttpRequest();
+          req.onreadystatechange = function() {
+            if (req.readyState !== 4) {
+              return;
+            }
+            if (!req.status || req.status < 200 || req.status > 299) {
+              return;}
+          callback(JSON.parse(req.responseText));
+            };
+           req.open('GET', url);
+           req.send(null);
+        }
+        
+        //highlight glmap buildings on hover
         glmap.on('pointermove', function(e) {
-        var map2 = document.getElementById("glmap");
-      var bodyRect = document.body.getBoundingClientRect();
-         var elemRect = map2.getBoundingClientRect();
-        gl_offset   = elemRect.top - bodyRect.top;
-          console.log (gl_offset);
+          var map2 = document.getElementById("glmap");
+          var bodyRect = document.body.getBoundingClientRect();
+          var elemRect = map2.getBoundingClientRect();
+          gl_offset   = elemRect.top - bodyRect.top;
           var osm_id = glosmb.getTarget(e.x, e.y-gl_offset);
           if (osm_id) {
-           document.body.style.cursor = 'pointer';
+            document.body.style.cursor = 'pointer';
             glosmb.highlight(osm_id, '#F00540');
           } else {
             document.body.style.cursor = 'default';
@@ -590,146 +569,101 @@
           }
         });
         
-       glmap.on('pointerup', function(eve) {
+        //display glmap popover info for clicked buildings  
+        glmap.on('pointerup', function(eve) {     
+          var click_id = glosmb.getTarget(eve.x, eve.y-gl_offset);
+          //in case of clicked building
+          if (click_id) {
+            $('.gl_popdiv').popover("hide");  
+            var id_ucase = click_id.toUpperCase();
+            var url="http://nominatim.openstreetmap.org/lookup?format=json&addressdetails=1&osm_ids="+id_ucase;        
+          gl_popajax(url, function(json) { 
+            try{  
+              var buildname = json[0].address.building;
+            }catch(err){
+              //console.log(err);
+              if (id_ucase === "R6087272"){buildname = "Kilianskirche";
+              } else if (id_ucase === "R6027251"){buildname = "St. Augustinus-Kirche"}
+              }
+            window_x = eve.x;
+            window_y = eve.y-gl_offset;
+
+            if(buildname){
+              //building name is already in addres.building
+            }
+              else {
+              //generating the building name
+              build_comma = json[0].display_name.indexOf(",");
+              buildname = json[0].display_name.slice(0,build_comma);
             
-             var click_id = glosmb.getTarget(eve.x, eve.y-gl_offset);
-             //in case of clicked building
-             if (click_id) {
-                $('.gl_popdiv').popover("hide");
-               
-                var id_ucase = click_id.toUpperCase();
-                var url="http://nominatim.openstreetmap.org/lookup?format=json&addressdetails=1&osm_ids="+id_ucase;
-                
-                
-       gl_popajax(url, function(json) {
-                
-                try{  
-                  var buildname = json[0].address.building;
-                }catch(err){
-                  console.log(err);
-                  console.log(id_ucase);
-                  if (id_ucase === "R6087272"){
-                    console.log("Kilianskirche");
-                    buildname = "Kilianskirche";
-                  } else if (id_ucase === "R6027251"){
-                    buildname = "St. Augustinus-Kirche"}}
-                window_x = eve.x;
-                window_y = eve.y-gl_offset;
-
-                if(buildname){
-                  //building name is already in addres.building
-                }
-                  else {
-                  //generating the building name
-                  build_comma = json[0].display_name.indexOf(",");
-                  buildname = json[0].display_name.slice(0,build_comma);
-                
-                  var firstchar = buildname.slice(0,1);
-                  var firstcharno =  Number(firstchar);
-                  if (isNaN(firstcharno) === false ){
-                    buildname = json[0].address.road+" "+json[0].address.house_number;      
-                    }  else {}  
-                }
-                $('.gl_popdiv').attr("title", "<b>OSM-ID "+click_id+": </b>");
-                $('.gl_popdiv').attr("data-content", "<p>"+buildname+"</p");
-                $('.gl_popdiv').css('position', 'absolute');
-                $('.gl_popdiv').css('top', window_y); //or wherever you want it
-                $('.gl_popdiv').css('left', window_x); //or wherever you want it
-                $('.gl_popdiv').popover("show");
-                console.log(buildname);
-              
-                });
-        
-           } else{
+              var firstchar = buildname.slice(0,1);
+              var firstcharno =  Number(firstchar);
+              if (isNaN(firstcharno) === false ){
+                buildname = json[0].address.road+" "+json[0].address.house_number;      
+                }  else {}  
+            }
+            $('.gl_popdiv').attr("title", "<b>OSM-ID "+click_id+": </b>");
+            $('.gl_popdiv').attr("data-content", "<p>"+buildname+"</p");
+            $('.gl_popdiv').css('position', 'absolute');
+            $('.gl_popdiv').css('top', window_y); //or wherever you want it
+            $('.gl_popdiv').css('left', window_x); //or wherever you want it
+            $('.gl_popdiv').popover("show");                
+            });
+            } else{
               //no building clicked
-           }
-
-           });
-        
-          //debugging w/ popover hide/show events
-           $('.gl_popdiv').on('shown.bs.popover', function(){
-         //       console.log('The popover is about to be shown.');
-           });
-            $('.gl_popdiv').on('hidden.bs.popover', function(){
-               // console.log('The popover is about to be hidden.');
-          });
-
-        glmap.on('change', function(event) {   
-                              $('.gl_popdiv').popover("destroy");
+            }
         });
 
-      obj = glosmb.addGeoJSON('geojson/esplanade.geojson', { 
-          "color": 'rgb(243,194,80)'
-          }
-          );
-                                             
-      obj = glosmb.addGeoJSON('geojson/insel.geojson', {
-          "color": 'rgb(188,230,73)'
-      } );
+        //any map zoom/pan/tilt/rotate will destroy the popover...
+        glmap.on('change', function(event) {   
+          $('.gl_popdiv').popover("destroy");
+        });
 
-      obj = glosmb.addGeoJSON('geojson/neckar.geojson', {
-          //if (obj.item.id ===  "way/-705") {    //filter this way (?)
-          "color": 'rgb(204,221,221)'
-      } );
-      /*
-      obj = osmb.addGeoJSON('geojson/BUGA.geojson', {
-          "color": 'rgba(88,130,173, 0.5)'
-      } );
+        //additional geojson buildings (or features like e.g. water, meadows, vineyards), all generated by overpass queries
+        obj = glosmb.addGeoJSON('geojson/esplanade.geojson', { 
+            "color": 'rgb(243,194,80)'
+        });
+                                               
+        obj = glosmb.addGeoJSON('geojson/insel.geojson', {
+            "color": 'rgb(188,230,73)'
+        });
 
-
-      obj = osmb.addGeoJSON('geojson/water.geojson', {} );
-      obj.color = {
-                    r:13,
-                    g:7,
-                    b:73
-                  };
-
-      obj = osmb.addGeoJSON('geojson/grass.geojson', {} );
-      obj.color = {
-                    r:184,
-                    g:211,
-                    b:143
-                  };
-                  
-      obj = osmb.addGeoJSON('geojson/weinberge.geojson', {} );
-      obj.color = {
-                    r:174,
-                    g:255,
-                    b:133
-                  };            
-      */
-
-      //initial setup
-
-      $('.jumbotron').hide();
-      $('.home').show();
-      $("#olmap").hide();
-      //glshow();
-
-      //jumbotron toggling, done by classes, e.g. click on #insel w/ id="insel" shows tab w/ class="insel"
-      $('.toglink').click(function(event){
-        event.preventDefault();
+        obj = glosmb.addGeoJSON('geojson/neckar.geojson', {
+            //possible filter 
+            //if (obj.item.id ===  "way/-705") {   
+            "color": 'rgb(204,221,221)'
+        });
+ 
+        //initial setup
         $('.jumbotron').hide();
-        $("."+this.id).show();
-        switch (threed){
-          case true: 
-            no = this.attributes['no'].value;
-            glmap.setPosition(zentrum[no].pos[0]);
-            glmap.setZoom(zentrum[no].zoom[0]);
-            glmap.setTilt(zentrum[no].tilt);
-            glmap.setRotation(zentrum[no].rot);
-          break;
-          default:
-            nool = this.attributes['no'].value;
-            proob = olmap.getProjectionObject(); 
-            wgsproj = new OpenLayers.Projection('EPSG:4326'); 
-            lonlatol = new OpenLayers.LonLat(zentrum[nool].pos[1].lon, zentrum[nool].pos[1].lat);
-            zol = zentrum[nool].zoom[1];
-            olmap.setCenter(lonlatol.transform(wgsproj, proob), zol);
-            
+        $('.home').show();
+        $("#olmap").hide();
+
+        //jumbotron toggling, done by classes, e.g. click on #insel w/ id="insel" shows tab w/ class="insel"
+        $('.toglink').click(function(event){
+          event.preventDefault();
+          $('.jumbotron').hide();
+          $("."+this.id).show();
+          switch (threed){
+            case true: 
+              no = this.attributes['no'].value;
+              glmap.setPosition(zentrum[no].pos[0]);
+              glmap.setZoom(zentrum[no].zoom[0]);
+              glmap.setTilt(zentrum[no].tilt);
+              glmap.setRotation(zentrum[no].rot);
             break;
-        }
+            default:
+              nool = this.attributes['no'].value;
+              proob = olmap.getProjectionObject(); 
+              wgsproj = new OpenLayers.Projection('EPSG:4326'); 
+              lonlatol = new OpenLayers.LonLat(zentrum[nool].pos[1].lon, zentrum[nool].pos[1].lat);
+              zol = zentrum[nool].zoom[1];
+              olmap.setCenter(lonlatol.transform(wgsproj, proob), zol);
+              
+              break;
+          }
         }); 
+//********************************End of docready-function:****************************
       });
           
       </script> 
