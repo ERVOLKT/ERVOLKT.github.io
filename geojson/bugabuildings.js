@@ -3,11 +3,14 @@
     "features": [
         {
             "type": "Feature",
-            "id": "way/-705",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/e24",
+            "properties": {"color": "rgb(240,10,10)",
+                //"roofColor":"rgb(100,10,10)",
+                //"roofShape":"cone",
+                //"roofHeight":"5",
                 "maxfloors" : "7",
                 "ensemble": "Suedschenkel","type": "way",
-                "id": "-705",
+                "id": "e24",
                 "tags": {
                     "building": "yes"
                 },
@@ -48,11 +51,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-703",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/e23",
+            "properties": {"color": "rgb(240,10,10)",
                 "maxfloors" : "5",
                 "ensemble": "Suedschenkel","type": "way",
-                "id": "-703",
+                "id": "e23",
                 "tags": {
                     "building": "yes"
                 },
@@ -117,11 +120,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-701",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/e22",
+            "properties": {"color": "rgb(240,10,10)",
                 "maxfloors" : "2",
                 "ensemble": "Suedschenkel","type": "way",
-                "id": "-701",
+                "id": "e22",
                 "tags": {
                     "building": "yes"
                 },
@@ -158,11 +161,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-699",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/e21",
+            "properties": {"color": "rgb(240,10,10)",
                 "maxfloors" : "2",
                 "ensemble": "Suedschenkel","type": "way",
-                "id": "-699",
+                "id": "e21",
                 "tags": {
                     "building": "yes"
                 },
@@ -199,11 +202,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-697",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/e20",
+            "properties": {"color": "rgb(240,10,10)",
                 "maxfloors" : "2",
                 "ensemble": "Suedschenkel","type": "way",
-                "id": "-697",
+                "id": "e20",
                 "tags": {
                     "building": "yes"
                 },
@@ -240,11 +243,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-695",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/e19",
+            "properties": {"color": "rgb(240,10,10)",
                 "maxfloors" : "2",
                 "ensemble": "Suedschenkel","type": "way",
-                "id": "-695",
+                "id": "e19",
                 "tags": {
                     "building": "yes"
                 },
@@ -281,11 +284,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-693",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/e18",
+            "properties": {"color": "rgb(240,10,10)",
                 "maxfloors" : "2",
                 "ensemble": "Suedschenkel","type": "way",
-                "id": "-693",
+                "id": "e18",
                 "tags": {
                     "building": "yes"
                 },
@@ -322,11 +325,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-691",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/e17",
+            "properties": {"color": "rgb(240,10,10)",
                 "maxfloors" : "10",
                 "ensemble": "Suedschenkel","type": "way",
-                "id": "-691",
+                "id": "e17",
                 "tags": {
                     "building": "yes"
                 },
@@ -363,11 +366,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-689",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/e16",
+            "properties": {"color": "rgb(240,10,10)",
                 "maxfloors" : "3",
                 "ensemble": "Suedschenkel","type": "way",
-                "id": "-689",
+                "id": "e16",
                 "tags": {
                     "building": "yes"
                 },
@@ -420,11 +423,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-687",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/e15",
+            "properties": {"color": "rgb(240,10,10)",
                 "maxfloors" : "3",
                 "ensemble": "Suedschenkel","type": "way",
-                "id": "-687",
+                "id": "e15",
                 "tags": {
                     "building": "yes"
                 },
@@ -477,11 +480,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-685",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/e14",
+            "properties": {"color": "rgb(240,10,10)",
                 "maxfloors" : "3",
                 "ensemble": "Suedschenkel","type": "way",
-                "id": "-685",
+                "id": "e14",
                 "tags": {
                     "building": "yes"
                 },
@@ -518,11 +521,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-683",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/e13",
+            "properties": {"color": "rgb(240,10,10)",
                 "maxfloors" : "3",
                 "ensemble": "Suedschenkel","type": "way",
-                "id": "-683",
+                "id": "e13",
                 "tags": {
                     "building": "yes"
                 },
@@ -575,11 +578,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-681",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/e12",
+            "properties": {"color": "rgb(240,10,10)",
                 "maxfloors" : "10",
                 "ensemble": "Suedschenkel","type": "way",
-                "id": "-681",
+                "id": "e12",
                 "tags": {
                     "building": "yes"
                 },
@@ -616,11 +619,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-679",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/e11",
+            "properties": {"color": "rgb(240,10,10)",
                 "maxfloors" : "7",
                 "ensemble": "Suedschenkel","type": "way",
-                "id": "-679",
+                "id": "e11",
                 "tags": {
                     "building": "yes"
                 },
@@ -665,11 +668,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-677",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/e10",
+            "properties": {"color": "rgb(240,10,10)",
                 "maxfloors" : "6",
                 "ensemble": "Suedschenkel","type": "way",
-                "id": "-677",
+                "id": "e10",
                 "tags": {
                     "building": "yes"
                 },
@@ -706,11 +709,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-675",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/e9",
+            "properties": {"color": "rgb(240,10,10)",
                 "maxfloors" : "5",
                 "ensemble": "Suedschenkel","type": "way",
-                "id": "-675",
+                "id": "e9",
                 "tags": {
                     "building": "yes"
                 },
@@ -747,11 +750,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-673",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/n13",
+            "properties": {"color": "rgb(10,10,240)",
                 "maxfloors" : "5",
                 "type": "way",
-                "id": "-673",
+                "id": "n13",
                 "tags": {
                     "building": "yes"
                 },
@@ -788,11 +791,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-671",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/n12",
+            "properties": {"color": "rgb(10,10,240)",
                 "maxfloors" : "4",
                 "type": "way",
-                "id": "-671",
+                "id": "n12",
                 "tags": {
                     "building": "yes"
                 },
@@ -829,11 +832,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-669",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/n11",
+            "properties": {"color": "rgb(10,10,240)",
                 "maxfloors" : "4",
                 "type": "way",
-                "id": "-669",
+                "id": "n11",
                 "tags": {
                     "building": "yes"
                 },
@@ -870,11 +873,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-667",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/n10",
+            "properties": {"color": "rgb(10,10,240)",
                 "maxfloors" : "5",
                 "type": "way",
-                "id": "-667",
+                "id": "n10",
                 "tags": {
                     "building": "yes"
                 },
@@ -911,11 +914,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-665",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/n9",
+            "properties": {"color": "rgb(10,10,240)",
                 "maxfloors" : "5",
                 "type": "way",
-                "id": "-665",
+                "id": "n9",
                 "tags": {
                     "building": "yes"
                 },
@@ -952,11 +955,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-663",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/n8",
+            "properties": {"color": "rgb(10,10,240)",
                 "maxfloors" : "4",
                 "type": "way",
-                "id": "-663",
+                "id": "n8",
                 "tags": {
                     "building": "yes"
                 },
@@ -993,11 +996,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-661",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/n7",
+            "properties": {"color": "rgb(10,10,240)",
                 "maxfloors" : "4",
                 "type": "way",
-                "id": "-661",
+                "id": "n7",
                 "tags": {
                     "building": "yes"
                 },
@@ -1034,11 +1037,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-659",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/n6",
+            "properties": {"color": "rgb(10,10,240)",
                 "maxfloors" : "5",
                 "type": "way",
-                "id": "-659",
+                "id": "n6",
                 "tags": {
                     "building": "yes"
                 },
@@ -1075,11 +1078,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-657",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/n5",
+            "properties": {"color": "rgb(10,10,240)",
                 "maxfloors" : "4",
                 "type": "way",
-                "id": "-657",
+                "id": "n5",
                 "tags": {
                     "building": "yes"
                 },
@@ -1116,11 +1119,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-655",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/n4",
+            "properties": {"color": "rgb(10,10,240)",
                 "maxfloors" : "5",
                 "type": "way",
-                "id": "-655",
+                "id": "n4",
                 "tags": {
                     "building": "yes"
                 },
@@ -1157,11 +1160,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-653",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/n3",
+            "properties": {"color": "rgb(10,10,240)",
                 "maxfloors" : "5",
                 "type": "way",
-                "id": "-653",
+                "id": "n3",
                 "tags": {
                     "building": "yes"
                 },
@@ -1206,11 +1209,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-651",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/i27",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "3",
                 "ensemble": "Westschenkel","type": "way",
-                "id": "-651",
+                "id": "i27",
                 "tags": {
                     "building": "yes"
                 },
@@ -1247,11 +1250,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-649",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/i26",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "7",
                 "ensemble": "Westschenkel","type": "way",
-                "id": "-649",
+                "id": "i26",
                 "tags": {
                     "building": "yes"
                 },
@@ -1288,11 +1291,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-647",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i25",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "4",
                 "ensemble": "Westschenkel","type": "way",
-                "id": "-647",
+                "id": "i25",
                 "tags": {
                     "building": "yes"
                 },
@@ -1329,11 +1332,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-645",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i24",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "5",
                 "ensemble": "Westschenkel","type": "way",
-                "id": "-645",
+                "id": "i24",
                 "tags": {
                     "building": "yes"
                 },
@@ -1370,11 +1373,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-643",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i23",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "3",
                "ensemble": "Westschenkel","type": "way",
-                "id": "-643",
+                "id": "i23",
                 "tags": {
                     "building": "yes"
                 },
@@ -1411,11 +1414,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-641",
-            "properties": {"color": "rgb(20,20,100)",
+            "id": "way/i22",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "4",
                 "ensemble": "Westschenkel","type": "way",
-                "id": "-641",
+                "id": "i22",
                 "tags": {
                     "building": "yes"
                 },
@@ -1452,12 +1455,12 @@
         },
         {
             "type": "Feature",
-            "id": "way/-639",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i21",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "3",
                 "ensemble": "Westschenkel","type": "way",
                 "type": "way",
-                "id": "-639",
+                "id": "i21",
                 "tags": {
                     "building": "yes"
                 },
@@ -1494,11 +1497,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-637",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i20",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "4",
                 "ensemble": "Westschenkel","type": "way",
-                "id": "-637",
+                "id": "i20",
                 "tags": {
                     "building": "yes"
                 },
@@ -1535,11 +1538,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-635",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i19",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "3",
                 "ensemble": "Westschenkel","type": "way",
-                "id": "-635",
+                "id": "i19",
                 "tags": {
                     "building": "yes"
                 },
@@ -1576,11 +1579,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-633",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i18",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "4",
                 "ensemble": "Westschenkel","type": "way",
-                "id": "-633",
+                "id": "i18",
                 "tags": {
                     "building": "yes"
                 },
@@ -1617,11 +1620,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-631",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i17",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "5",
                 "ensemble": "Westschenkel","type": "way",
-                "id": "-631",
+                "id": "i17",
                 "tags": {
                     "building": "yes"
                 },
@@ -1658,12 +1661,12 @@
         },
         {
             "type": "Feature",
-            "id": "way/-629",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i16",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "4",
                 "ensemble": "Westschenkel","type": "way",
                 "type": "way",
-                "id": "-629",
+                "id": "i16",
                 "tags": {
                     "building": "yes"
                 },
@@ -1700,11 +1703,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-627",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i15",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "4",
                 "ensemble": "Westschenkel","type": "way",
-                "id": "-627",
+                "id": "i15",
                 "tags": {
                     "building": "yes"
                 },
@@ -1741,11 +1744,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-625",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i14",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "3",
                 "ensemble": "Westschenkel","type": "way",
-                "id": "-625",
+                "id": "i14",
                 "tags": {
                     "building": "yes"
                 },
@@ -1782,11 +1785,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-623",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i13",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "3",
                 "ensemble": "Westschenkel","type": "way",
-                "id": "-623",
+                "id": "i13",
                 "tags": {
                     "building": "yes"
                 },
@@ -1823,11 +1826,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-621",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i12",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "5",
                 "ensemble": "Westschenkel","type": "way",
-                "id": "-621",
+                "id": "i12",
                 "tags": {
                     "building": "yes"
                 },
@@ -1864,11 +1867,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-619",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i11",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "5",
                 "ensemble": "Westschenkel","type": "way",
-                "id": "-619",
+                "id": "i11",
                 "tags": {
                     "building": "yes"
                 },
@@ -1905,11 +1908,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-617",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/n2",
+            "properties": {"color": "rgb(10,10,240)",
                 "maxfloors" : "6",
                 "type": "way",
-                "id": "-617",
+                "id": "n2",
                 "tags": {
                     "building": "yes"
                 },
@@ -1962,11 +1965,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-615",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/n1",
+            "properties": {"color": "rgb(10,10,240)",
                 "maxfloors" : "7",
                 "type": "way",
-                "id": "-615",
+                "id": "n1",
                 "tags": {
                     "building": "yes"
                 },
@@ -2019,11 +2022,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-613",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/e8",
+            "properties": {"color": "rgb(240,10,10)",
                 "maxfloors" : "7",
                 "ensemble": "Suedschenkel","type": "way",
-                "id": "-613",
+                "id": "e8",
                 "tags": {
                     "building": "yes"
                 },
@@ -2068,11 +2071,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-611",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/e7",
+            "properties": {"color": "rgb(240,10,10)",
                 "maxfloors" : "6",
                 "ensemble": "Suedschenkel","type": "way",
-                "id": "-611",
+                "id": "e7",
                 "tags": {
                     "building": "yes"
                 },
@@ -2109,11 +2112,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-609",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/e6",
+            "properties": {"color": "rgb(240,10,10)",
                 "maxfloors" : "6",
                 "ensemble": "Suedschenkel","type": "way",
-                "id": "-609",
+                "id": "e6",
                 "tags": {
                     "building": "yes"
                 },
@@ -2150,11 +2153,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-607",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/e5",
+            "properties": {"color": "rgb(240,10,10)",
                 "maxfloors" : "5",
                 "ensemble": "Suedschenkel","type": "way",
-                "id": "-607",
+                "id": "e5",
                 "tags": {
                     "building": "yes"
                 },
@@ -2199,11 +2202,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-605",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/e4",
+            "properties": {"color": "rgb(240,10,10)",
                 "maxfloors" : "7",
                 "ensemble": "Suedschenkel","type": "way",
-                "id": "-605",
+                "id": "e4",
                 "tags": {
                     "building": "yes"
                 },
@@ -2240,11 +2243,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-603",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/e3",
+            "properties": {"color": "rgb(240,10,10)",
                 "maxfloors" : "6",
                 "ensemble": "Suedschenkel","type": "way",
-                "id": "-603",
+                "id": "e3",
                 "tags": {
                     "building": "yes"
                 },
@@ -2281,11 +2284,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-601",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i10",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "5",
                 "ensemble": "Westschenkel","type": "way",
-                "id": "-601",
+                "id": "i10",
                 "tags": {
                     "building": "yes"
                 },
@@ -2322,11 +2325,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-599",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i9",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "6",
                 "ensemble": "Westschenkel","type": "way",
-                "id": "-599",
+                "id": "i9",
                 "tags": {
                     "building": "yes"
                 },
@@ -2367,11 +2370,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-597",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i8",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "5",
                 "ensemble": "Westschenkel","type": "way",
-                "id": "-597",
+                "id": "i8",
                 "tags": {
                     "building": "yes"
                 },
@@ -2408,11 +2411,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-595",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i7",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "3",
                 "ensemble": "Westschenkel","type": "way",
-                "id": "-595",
+                "id": "i7",
                 "tags": {
                     "building": "yes"
                 },
@@ -2449,11 +2452,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-593",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i6",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "3",
                 "ensemble": "Westschenkel","type": "way",
-                "id": "-593",
+                "id": "i6",
                 "tags": {
                     "building": "yes"
                 },
@@ -2490,11 +2493,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-591",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i5",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "5",
                 "ensemble": "Westschenkel","type": "way",
-                "id": "-591",
+                "id": "i5",
                 "tags": {
                     "building": "yes"
                 },
@@ -2531,11 +2534,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-589",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i4",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "3",
                 "ensemble": "Westschenkel","type": "way",
-                "id": "-589",
+                "id": "i4",
                 "tags": {
                     "building": "yes"
                 },
@@ -2576,11 +2579,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-587",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i3",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "5",
                 "ensemble": "Westschenkel","type": "way",
-                "id": "-587",
+                "id": "i3",
                 "tags": {
                     "building": "yes"
                 },
@@ -2617,11 +2620,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-585",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i2",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "5",
                  "ensemble": "Westschenkel","type": "way",
-                "id": "-585",
+                "id": "i2",
                 "tags": {
                     "building": "yes"
                 },
@@ -2674,11 +2677,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-583",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/i1",
+            "properties": {"color": "rgb(10,240,10)",
                 "maxfloors" : "5",
                  "ensemble": "Westschenkel","type": "way",
-                "id": "-583",
+                "id": "i1",
                 "tags": {
                     "building": "yes"
                 },
@@ -2723,11 +2726,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-581",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/e2",
+            "properties": {"color": "rgb(240,10,10)",
                 "maxfloors" : "5",
                 "type": "way", "ensemble": "Suedschenkel","type": "way",
-                "id": "-581",
+                "id": "e2",
                 "tags": {
                     "building": "yes"
                 },
@@ -2764,11 +2767,11 @@
         },
         {
             "type": "Feature",
-            "id": "way/-579",
-            "properties": {"color": "rgb(255,200,150)",
+            "id": "way/e1",
+            "properties": {"color": "rgb(240,10,10)",
                 "maxfloors" : "5",
                  "ensemble": "Suedschenkel","type": "way",
-                "id": "-579",
+                "id": "e1",
                 "tags": {
                     "building": "yes"
                 },
