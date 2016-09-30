@@ -16,7 +16,8 @@
     <script src="OSMBuildings-OpenLayers.debug.js"></script>
     <script src="GLMap/GLMap.debug.js"></script>   
     <script src="OSMBuildings/OSMBuildings-GLMap.debug.js"></script>
-   <script src="js/hammer.js"></script>
+    <script src="js/hammer.js"></script>
+    <script src="https://cdn.rawgit.com/tweenjs/tween.js/master/src/Tween.js"></script>
     <!-- Additional GeoJSON Data -->
     <script src="geojson/bugabuildings.js"></script>      
     <style>
@@ -140,21 +141,21 @@
         if (firsttime === undefined){
 
           var olzoom = olmap.getZoom();
-          zentrum[4].zoom[0] = olzoom;
+          zentrum[4].zoom = olzoom;
           var olxy = olmap.getCenter();
           var tolxy = olxy.transform(olmap.getProjectionObject(),
                 new OpenLayers.Projection('EPSG:4326')   
               );
           var olxx = tolxy.lon.toFixed(4);
           var olyy = tolxy.lat.toFixed(4);
-          zentrum[4].pos[0].longitude = olxx;
-          zentrum[4].pos[0].latitude = olyy;
+          zentrum[4].longitude = olxx;
+          zentrum[4].latitude = olyy;
 
           $("#glmap").show();
           $("#olmap").hide();
 
-          glmap.setZoom(zentrum[4].zoom[0]);
-          glmap.setPosition(zentrum[4].pos[0]);
+          glmap.setZoom(zentrum[4].zoom);
+          glmap.setPosition({latitude: zentrum[4].latitude, longitude: zentrum[4].longitude});
 
         } else {  
             $("#glmap").show();
@@ -169,21 +170,21 @@
         if (nowebgl === undefined){
           console.log("inside if:olmap is "+olmap);
           var glzoom = glmap.getZoom();
-          zentrum[4].zoom[1] = glzoom;
+          zentrum[4].olzoom = glzoom;
           var glxy = glmap.getPosition();
           var glxx = glxy.longitude.toFixed(4);
           var glyy = glxy.latitude.toFixed(4);
-          zentrum[4].pos[1].lon = glxx;
-          zentrum[4].pos[1].lat = glyy;
+          zentrum[4].olpos.lon = glxx;
+          zentrum[4].olpos.lat = glyy; 
          
           $("#glmap").hide();
           $("#olmap").show();
           olmap.setCenter(
-            new OpenLayers.LonLat(zentrum[4].pos[1].lon,  zentrum[4].pos[1].lat)
+            new OpenLayers.LonLat(zentrum[4].olpos.lon,  zentrum[4].olpos.lat)
             .transform(
               new OpenLayers.Projection('EPSG:4326'),
               olmap.getProjectionObject()
-            ), zentrum[4].zoom[1]); 
+            ), zentrum[4].olzoom); 
         }
         else {
             $("#glmap").hide();
@@ -228,11 +229,11 @@
           olmap.addControl(new OpenLayers.Control.ArgParser());
           olmap.addControl(new OpenLayers.Control.Attribution());
           olmap.setCenter(
-            new OpenLayers.LonLat(zentrum[4].pos[1].lon,  zentrum[4].pos[1].lat)
+            new OpenLayers.LonLat(zentrum[4].olpos.lon,  zentrum[4].olpos.lat)
             .transform(
               new OpenLayers.Projection('EPSG:4326'),
               new OpenLayers.Projection('EPSG:900913')
-            ), zentrum[4].zoom[1]);
+            ), zentrum[4].olzoom);
         }  
         } 
         return olshow;
@@ -244,30 +245,45 @@
         //array contains positions for glmap and olmap: 
         //0:overview, 1: insel, 2:neckar, 3: esplanade, 4: current
       var zentrum =
-      [{  pos: [{latitude:49.14738,longitude:9.20787}, {lon: 9.213688373565114,lat: 49.14766022867995} ], 
-          zoom: [16.4, 16], 
+      [{  latitude:49.14738,
+          longitude:9.20787, 
+          olpos: {lon: 9.213688373565114,lat: 49.14766022867995}, 
+          zoom: 16.4,
+          olzoom: 16, 
           tilt: 30, 
           rot: 10},
 
-        { pos: [{latitude:49.1480,longitude:9.20997},{lon: 9.211124181746541,lat: 49.14574431619457}], 
-          zoom: [18, 18], 
+        { latitude:49.1480,
+          longitude:9.20997,
+          olpos: {lon: 9.211124181746541,lat: 49.14574431619457}, 
+          zoom: 18,
+          olzoom: 18, 
           tilt: 50, 
-          rot: 15},
+          rot: 15},        
 
-        { pos: [{latitude:49.14498,longitude:9.21025}, {lon: 9.209589958189582,lat: 49.147235646404944}], 
-          zoom: [17.4, 18],
+        { latitude:49.14498,
+          longitude:9.21025,
+          olpos: {lon: 9.209589958189582,lat: 49.147235646404944},  
+          zoom: 17.4,
+          olzoom: 17,
           tilt: 59.5, 
           rot: 111.2},
-
-        { pos: [{latitude:49.14844,longitude:9.20444}, {lon: 9.210099577903108,lat: 49.14574431619457}], 
-          zoom: [17.2, 17], 
+          
+        { latitude:49.14844,
+          longitude:9.20444,
+          olpos: {lon: 9.210099577903108,lat: 49.14574431619457}, 
+          zoom: 17.2,
+          olzoom: 17,
           tilt: 60, 
           rot: 312.3},
 
-        { pos: [{latitude:49.14844,longitude:9.20444}, {lon: 9.210099577903108,lat: 49.14574431619457}], 
-          zoom: [17.2, 17], 
+        { latitude:49.14844,
+          longitude:9.20444,
+          olpos: {lon: 9.210099577903108,lat: 49.14574431619457}, 
+          zoom: 17.2,
+          olzoom: 17, 
           tilt: 60, 
-          rot: 312.3}
+          rot: 312.3}         
       ];
 
       function resetview(){
@@ -614,12 +630,55 @@
             }
         });
 
-        //any map zoom/pan/tilt/rotate will destroy the popover...
-        glmap.on('change', function(event) {   
+        
+        glmap.on('change', function(event) { 
+          //any map zoom/pan/tilt/rotate will destroy the popover...  
           $('.gl_popdiv').popover("destroy");
+
+          //always update current position, needed for e.g. tweening
+          zentrum[4].latitude = glmap.getPosition().latitude;
+          zentrum[4].longitude = glmap.getPosition().longitude;
+          zentrum[4].rot = glmap.getRotation().toFixed(3);
+          zentrum[4].tilt = glmap.getTilt().toFixed(2);
+          zentrum[4].zoom = map.getZoom().toFixed(1);
+
         });
 
+        //TWEENING via tween.js.
+        // adopted from http://blog.webkid.io/3d-maps-with-osmbuildings/
+        var animationTime = 5000;
+        var tween = null;
+        var isAnimating = false;
+
+        //fired by html onclick in this case...
+        function startAnimation(valuesFrom, valuesTo){
+          if(tween){
+            tween.stop();
+          }
+          
+          isAnimating = true;
+          tween = new TWEEN.Tween(valuesFrom)
+          .to(valuesTo, animationTime)
+          .onUpdate(function() {
+          
+            var currpos = {latitude: this.latitude, longitude: this.longitude};
+            glmap.setPosition(currpos);
+            glmap.setRotation(this.rot);
+            glmap.setZoom(this.zoom);
+            glmap.setTilt(this.tilt);
+          })
+          .onComplete(function(){
+            isAnimating = false;
+          })
+          .start();
+          requestAnimationFrame(animate);
+        }
+        function animate(time) {
+          requestAnimationFrame(animate);
+          TWEEN.update(time);
+        }
         
+
         //glmap BUGA buildings glmap... var bugaJSON stems from bugabuildings.js geojson
         //any styling within the external file will overwrite the default styling under var buidlingstyle.threedstyle, used in the glosmb.setStyle() method
         obj = glosmb.addGeoJSON(bugaJSON, {});
@@ -645,17 +704,20 @@
           switch (threed){
             case true: 
               no = this.attributes['no'].value;
-              glmap.setPosition(zentrum[no].pos[0]);
-              glmap.setZoom(zentrum[no].zoom[0]);
+              //start tweening
+              startAnimation(zentrum[4], zentrum[no]);
+              //version w/o tweening
+             /* glmap.setPosition({latitude: zentrum[no].latitude, longitude: zentrum[no].longitude});
+              glmap.setZoom(zentrum[no].zoom);
               glmap.setTilt(zentrum[no].tilt);
-              glmap.setRotation(zentrum[no].rot);
+              glmap.setRotation(zentrum[no].rot);*/
             break;
             default:
               nool = this.attributes['no'].value;
               proob = olmap.getProjectionObject(); 
               wgsproj = new OpenLayers.Projection('EPSG:4326'); 
-              lonlatol = new OpenLayers.LonLat(zentrum[nool].pos[1].lon, zentrum[nool].pos[1].lat);
-              zol = zentrum[nool].zoom[1];
+              lonlatol = new OpenLayers.LonLat(zentrum[nool].olpos.lon, zentrum[nool].olpos.lat);
+              zol = zentrum[nool].olzoom;
               olmap.setCenter(lonlatol.transform(wgsproj, proob), zol);
               
               break;
