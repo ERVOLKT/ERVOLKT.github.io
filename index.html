@@ -191,9 +191,12 @@
             $("#olmap").show();
             console.log("inside else:olmap is "+olmap);
             olmap = new OpenLayers.Map('olmap', 
-              {eventListeners: {
+              { panDuration: 150, 
+                panMethod: OpenLayers.Easing.Expo.easeInOut,
+                zoomDuration: 150, 
+                zoomMethod: OpenLayers.Easing.Expo.easeInOut,
+                eventListeners: {
                   move: function(e) {
-
                   if ((hdhillshade.getVisibility() === true) && (this.getZoom() > 15)){
                     console.log('AND condition: hillshade still visible and zoom gt 15...turnoff hillshade');
                     hdhillshade.setVisibility(false); 
@@ -374,7 +377,10 @@
                
         //++++2.5D:OpenLayers2-OSMB-MAP
         olmap = new OpenLayers.Map('olmap', 
-          {eventListeners: {
+          { panDuration: 150, 
+            panMethod: OpenLayers.Easing.Expo.easeInOut, 
+            zoomDuration: 150, zoomMethod: OpenLayers.Easing.Expo.easeInOut,
+            eventListeners: {
             move: function(e) {
               if ((hdhillshade.getVisibility() === true) && (this.getZoom() > 15)){
                 hdhillshade.setVisibility(false); 
@@ -718,7 +724,8 @@
               wgsproj = new OpenLayers.Projection('EPSG:4326'); 
               lonlatol = new OpenLayers.LonLat(zentrum[nool].olpos.lon, zentrum[nool].olpos.lat);
               zol = zentrum[nool].olzoom;
-              olmap.setCenter(lonlatol.transform(wgsproj, proob), zol);
+              olmap.panTo(lonlatol.transform(wgsproj, proob));
+              olmap.zoomTo(zol);
               
               break;
           }
