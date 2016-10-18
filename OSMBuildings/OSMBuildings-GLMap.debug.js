@@ -933,6 +933,7 @@ GLX.use = function(context) {
     glx.start = function(render) {
       return setInterval(function() {
         requestAnimationFrame(render);
+        TWEEN.update(1000);
       }, 17);
     };
 
@@ -1477,7 +1478,7 @@ glx.texture.Image = function(src, callback) {
 
     if (!this.id) {
       image = null;
-    } else {
+    } else {
       GL.bindTexture(GL.TEXTURE_2D, this.id);
       GL.texImage2D(GL.TEXTURE_2D, 0, GL.RGBA, GL.RGBA, GL.UNSIGNED_BYTE, image);
       GL.generateMipmap(GL.TEXTURE_2D);
@@ -1624,7 +1625,7 @@ glx.mesh.Triangle = function(size, color) {
   this.normalBuffer = new glx.Buffer(3, new Float32Array(data.normals));
   this.colorBuffer  = new glx.Buffer(4, new Float32Array(data.colors));
 
- 	this.transform = new glx.Matrix();
+    this.transform = new glx.Matrix();
 };
 
 
@@ -1647,7 +1648,7 @@ glx.mesh.Plane = function(size, color) {
   this.normalBuffer = new glx.Buffer(3, new Float32Array(data.normals));
   this.colorBuffer  = new glx.Buffer(4, new Float32Array(data.colors));
 
- 	this.transform = new glx.Matrix();
+    this.transform = new glx.Matrix();
 };
 
 
@@ -1709,7 +1710,7 @@ var OSMBuildings = function(options) {
     this.setStyle(options.style);
   }
 
-  APP.baseURL = options.baseURL || '.';
+  APP.baseURL = options.baseURL || '.';
 
   render.bendRadius = 500;
   render.bendDistance = 500;
@@ -1729,7 +1730,7 @@ var OSMBuildings = function(options) {
 };
 
 OSMBuildings.VERSION = '1.0.1';
-OSMBuildings.ATTRIBUTION =' © Data <a href="http://openstreetmap.org/copyright/">OpenStreetMap</a>|© 3D <a href="http://osmbuildings.org/copyright/">OSM Buildings</a> |© Basemap <a href="http://mapbox.com/">MapBox</a>    |' ;
+OSMBuildings.ATTRIBUTION = '© OSM Buildings <a href="http://osmbuildings.org">http://osmbuildings.org</a>';
 
 OSMBuildings.prototype = {
 
@@ -1945,7 +1946,7 @@ var Request = {};
 
 (function() {
 
-  var queue = {};
+  var queue = {};
 
   function load(url, callback) {
     if (queue[url]) {
@@ -2651,7 +2652,7 @@ mesh.GeoJSON = (function() {
   constructor.prototype = {
 
     onLoad: function(json) {
-      if (!json || !json.features.length) {
+      if (!json || !json.features.length) {
         return;
       }
 
@@ -3441,24 +3442,24 @@ OBJ.prototype = {
     var data = null;
 
     for (i = 0, il = lines.length; i < il; i++) {
-  	  cols = lines[i].trim().split(/\s+/);
+      cols = lines[i].trim().split(/\s+/);
 
       switch (cols[0]) {
-  	    case 'newmtl':
+        case 'newmtl':
           this.storeMaterial(materials, data);
           data = { id:cols[1], color:{} };
         break;
 
-  	    case 'Kd':
-  	      data.color.r = parseFloat(cols[1]);
-  	      data.color.g = parseFloat(cols[2]);
-  	      data.color.b = parseFloat(cols[3]);
-  	    break;
+        case 'Kd':
+          data.color.r = parseFloat(cols[1]);
+          data.color.g = parseFloat(cols[2]);
+          data.color.b = parseFloat(cols[3]);
+        break;
 
-  	    case 'd':
+        case 'd':
           data.color.a = parseFloat(cols[1]);
         break;
-  	  }
+      }
     }
 
     this.storeMaterial(materials, data);
@@ -3484,7 +3485,7 @@ OBJ.prototype = {
     var faces = [];
 
     for (i = 0, il = lines.length; i < il; i++) {
-  	  cols = lines[i].trim().split(/\s+/);
+      cols = lines[i].trim().split(/\s+/);
 
       switch (cols[0]) {
         case 'g':
@@ -3506,10 +3507,10 @@ OBJ.prototype = {
           this.vertexIndex.push([parseFloat(cols[1]), parseFloat(cols[2]), parseFloat(cols[3])]);
         break;
 
-  	    case 'f':
-  	      faces.push([ parseFloat(cols[1])-1, parseFloat(cols[2])-1, parseFloat(cols[3])-1 ]);
-  	    break;
-	    }
+        case 'f':
+          faces.push([ parseFloat(cols[1])-1, parseFloat(cols[2])-1, parseFloat(cols[3])-1 ]);
+        break;
+        }
     }
 
     this.storeMesh(meshes, id, color, faces);
@@ -3534,9 +3535,9 @@ OBJ.prototype = {
   },
 
   createGeometry: function(faces) {
-  	var v0, v1, v2;
-  	var e1, e2;
-  	var nor, len;
+    var v0, v1, v2;
+    var e1, e2;
+    var nor, len;
     var
       x =  Infinity, y =  Infinity, z =  Infinity,
       X = -Infinity, Y = -Infinity, Z = -Infinity;
@@ -3544,9 +3545,9 @@ OBJ.prototype = {
     var geometry = { vertices:[], normals:[] };
 
     for (var i = 0, il = faces.length; i < il; i++) {
-  		v0 = this.vertexIndex[ faces[i][0] ];
-  		v1 = this.vertexIndex[ faces[i][1] ];
-  		v2 = this.vertexIndex[ faces[i][2] ];
+        v0 = this.vertexIndex[ faces[i][0] ];
+        v1 = this.vertexIndex[ faces[i][1] ];
+        v2 = this.vertexIndex[ faces[i][2] ];
 
       x = Math.min(x, v0[0], v1[0], v2[0]);
       y = Math.min(x, v0[2], v1[2], v2[2]);
@@ -3557,22 +3558,22 @@ OBJ.prototype = {
       Z = Math.max(Z, v0[1], v1[1], v2[1]);
 
       e1 = [ v1[0]-v0[0], v1[1]-v0[1], v1[2]-v0[2] ];
-  		e2 = [ v2[0]-v0[0], v2[1]-v0[1], v2[2]-v0[2] ];
+        e2 = [ v2[0]-v0[0], v2[1]-v0[1], v2[2]-v0[2] ];
 
-  		nor = [ e1[1]*e2[2] - e1[2]*e2[1], e1[2]*e2[0] - e1[0]*e2[2], e1[0]*e2[1] - e1[1]*e2[0] ];
-  		len = Math.sqrt(nor[0]*nor[0] + nor[1]*nor[1] + nor[2]*nor[2]);
+        nor = [ e1[1]*e2[2] - e1[2]*e2[1], e1[2]*e2[0] - e1[0]*e2[2], e1[0]*e2[1] - e1[1]*e2[0] ];
+        len = Math.sqrt(nor[0]*nor[0] + nor[1]*nor[1] + nor[2]*nor[2]);
 
-  		nor[0] /= len;
+        nor[0] /= len;
       nor[1] /= len;
       nor[2] /= len;
 
-  		geometry.vertices.push(
+        geometry.vertices.push(
         v0[0], v0[2], v0[1],
         v1[0], v1[2], v1[1],
         v2[0], v2[2], v2[1]
       );
 
-  		geometry.normals.push(
+        geometry.normals.push(
         nor[0], nor[1], nor[2],
         nor[0], nor[1], nor[2],
         nor[0], nor[1], nor[2]
@@ -4383,7 +4384,7 @@ render.Basemap = {
     for (var key in layer.tiles) {
       tile = layer.tiles[key];
 
-      if (!tile.isReady || !(tile.key in layer.visibleTiles) ) {
+      if (!tile.isReady || !(tile.key in layer.visibleTiles) ) {
         continue;
       }
 

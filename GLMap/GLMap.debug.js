@@ -292,7 +292,7 @@ GLMap.prototype = {
   },
 
   setTilt: function(tilt) {
-    tilt = clamp(parseFloat(tilt), 0, 75);
+    tilt = clamp(parseFloat(tilt), 0, 60);
     if (this.tilt !== tilt) {
       this.tilt = tilt;
       this.emit('change');
@@ -493,6 +493,9 @@ Interaction.prototype = {
   },
 
   moveMap: function(e) {
+    console.log("e.clientX:"+e.clientX);
+    console.log("Obj prop name: "+Object.getOwnPropertyNames(this));
+  
     var dx = e.clientX - this.prevX;
     var dy = e.clientY - this.prevY;
     //this.map.setCenter({ x: this.map.center.x - dx, y: this.map.center.y - dy });

@@ -8,16 +8,16 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="GLMap/GLMap.css"/>
-    <link rel="stylesheet" href="./style/mobile-console.min.css">
-    <script src="./mobile-console.min.js"></script>
-    <script src="jquery/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" href="css/style/mobile-console.min.css">
+    <script src="js/mobile-console.min.js"></script>
+    <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="OpenLayers-2.13.1/OpenLayers.js"></script> 
-    <script src="OSMBuildings-OpenLayers.debug.js"></script>
+    <script src="OSMBuildings/OSMBuildings-OpenLayers.debug.js"></script>
     <script src="GLMap/GLMap.debug.js"></script>   
     <script src="OSMBuildings/OSMBuildings-GLMap.debug.js"></script>
     <script src="js/hammer.js"></script>
-    <script src="https://cdn.rawgit.com/tweenjs/tween.js/master/src/Tween.js"></script>
+    <script src="js/Tween.js"></script>
     <!-- Additional GeoJSON Data -->
     <script src="geojson/bugabuildings.js"></script>      
     <style>
@@ -330,7 +330,7 @@
 
           var pospop;
           olosmb.click(function(e) {
-            pospop = new OpenLayers.Popup.FramedCloud("pospop", new OpenLayers.LonLat(e.lon,e.lat).transform(new OpenLayers.Projection('EPSG:4326'),olmap.getProjectionObject()), new OpenLayers.Size(25,25), '<b>...lade OSM ID '+e.feature+'...</b><br><img src="ajax-loader.gif" alt="loading"></br>', null, false
+            pospop = new OpenLayers.Popup.FramedCloud("pospop", new OpenLayers.LonLat(e.lon,e.lat).transform(new OpenLayers.Projection('EPSG:4326'),olmap.getProjectionObject()), new OpenLayers.Size(25,25), '<b>...lade OSM ID '+e.feature+'...</b><br><img src="OpenLayers-2.13.1/gif/ajax-loader.gif" alt="loading"></br>', null, false
             );
             olmap.addPopup(pospop);
             // only 2 popups
@@ -654,7 +654,7 @@
         //any styling within the external file will overwrite the default styling under var buidlingstyle.threedstyle, used in the glosmb.setStyle() method
         obj = glosmb.addGeoJSON(bugaJSON, {});
 
-        // separate,  overpass-generated geoJSON features can be referenced here
+        // separate,  overpass-generated geoJSON features can be referenced here for 3d
         /*obj = glosmb.addGeoJSON('geojson/weinberge.geojson', { 
             //explicit styling
             "color": 'rgb(243,194,80)'
