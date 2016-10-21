@@ -1,8 +1,8 @@
 # ERVOLKT.github.io
 
-This is a webdev playground for the visualisation of the BUGA HN. It is founded mainly on [OSMBuildings](http://www.osmbuildings.org) code
+This is a webdev playground for the visualisation of the BUGA HN. It is mainly based on [OSMBuildings](http://www.osmbuildings.org) code
 
-<img src='view1.jpeg' width='100%' />
+<img src='view1.jpg' width='100%' />
 #Interaction
 -Press Ctrl + Alt + drag the Mouse w/ a leftclick to move around the 3D scene
 
