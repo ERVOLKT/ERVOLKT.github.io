@@ -1,3 +1,4 @@
+
 # ERVOLKT.github.io
 
 This is a webdev playground for the visualisation of the BUGA HN. It is mainly based on [OSMBuildings](http://www.osmbuildings.org) code
@@ -6,13 +7,17 @@ This is a webdev playground for the visualisation of the BUGA HN. It is mainly b
 #Interaction
 -Press Ctrl + Alt + drag the Mouse w/ a leftclick to move around the 3D scene
 
+-Use pinch, rotate, press and tap gestures on mobile devices to move around
+
 -Control the 2d scene as usual
+
+-Use 
 
 #To-Do:
 
--Adapt to reality ... up until now the focus was only on buildings
+-Adapt to reality: include planned lakes / orchards etc. as .OBJ files, instead of only buildings
 
--Timeline: Switch from one point in time to another during the BUGA concept
+-Timeline function: Switch from one point in time to another during the BUGA concept
 
 -Supply popover info for planned buildings as well
 
@@ -30,4 +35,4 @@ This is a webdev playground for the visualisation of the BUGA HN. It is mainly b
 
 -Highlight buildings in 2d-map
 
--Debug Glmap Popovers f
+-Debug Glmap Popovers
