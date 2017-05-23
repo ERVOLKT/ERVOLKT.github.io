@@ -1,6 +1,8 @@
 
 # ERVOLKT.github.io
 
+[Website](http://ERVOLKT.github.io) (GH-Pages)
+
 This is a webdev playground for the visualisation of the BUGA HN. It is mainly based on [OSMBuildings](http://www.osmbuildings.org) code
 
 <img src='view1.jpg' width='100%' />
@@ -13,7 +15,7 @@ This is a webdev playground for the visualisation of the BUGA HN. It is mainly b
 
 -Use 
 
-#To-Do:
+# To-Do:
 
 -Adapt to reality: include planned lakes / orchards etc. as .OBJ files, instead of only buildings
 
